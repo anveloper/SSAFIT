@@ -1,7 +1,7 @@
 # VUSP_SSAFIT_220516 (가칭, 수정예정)   
 <details>
 <summary>220516 작업내역</summary>
- <strong>프로젝트 생성</strong>
+ <strong>·프로젝트 생성</strong>
   * vue 프로젝트 생성 (vue create ssafit-vue)
     <details>
     <summary>* dependencies</summary>
