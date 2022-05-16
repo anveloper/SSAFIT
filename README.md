@@ -27,8 +27,8 @@
       - 
 ![SQL](https://github.com/anveloper/VUSP_SSAFIT_220516/blob/main/ssafit-mysql/sql_v1.JPG)
 
-    **MySQL database 구성**     
-    
+**MySQL database 구성**     
+
     - Table
       - SF_VIDEO - PART_NO
       - SF_MEMBER
