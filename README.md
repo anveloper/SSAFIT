@@ -1,9 +1,10 @@
 # VUSP_SSAFIT_220516 (가칭, 수정예정)   
-<details>
-<summary>220516 작업내역</summary>
- <strong>프로젝트 생성</strong> <br/>
-  &nbsp;>vue 프로젝트 생성(vue create ssafit-vue)<br/>
-    <details>
+  <details>
+  <summary>220516 작업내역</summary> 
+  <div markdown="1">
+  <strong>프로젝트 생성</strong><br/>
+  &nbsp;vue 프로젝트 생성(vue create ssafit-vue)<br/>
+    <details style="margin-left:5px">
     <summary>dependencies</summary>
     <div markdown="1">
       : router, vuex, axios, bootstrap-vue 적용
@@ -24,5 +25,6 @@
       * MySQL Driver, 
       * Spring Boot DevTools, 
       * Spring Web
+  </div>
 </details>
 
