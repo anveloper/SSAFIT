@@ -1,5 +1,6 @@
 # VUSP_SSAFIT_220516 (가칭, 수정예정)   
 **220516 작업내역**
+---------
 * 프로젝트 생성   
   * vue 프로젝트 생성 (vue create ssafit-vue)
     * dependencies : router, vuex, axios, bootstrap-vue 적용
