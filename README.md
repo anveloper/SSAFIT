@@ -2,7 +2,7 @@
 <details>
 <summary>220516 작업내역</summary>
  <strong>·프로젝트 생성</strong>
-  * vue 프로젝트 생성 (vue create ssafit-vue)
+  &nbsp;* vue 프로젝트 생성 (vue create ssafit-vue)
     <details>
     <summary>* dependencies</summary>
     <div markdown="1">
