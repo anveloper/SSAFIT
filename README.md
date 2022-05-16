@@ -1,10 +1,12 @@
 # VUSP_SSAFIT_220516 (가칭, 수정예정)   
-**220516 작업내역**
-* **프로젝트 생성**   
+<details>
+<summary>220516 작업내역</summary>
+ <strong>프로젝트 생성</strong>
   * vue 프로젝트 생성 (vue create ssafit-vue)
     <details>
-    <summary>* dependencies : router, vuex, axios, bootstrap-vue 적용</summary>
+    <summary>* dependencies</summary>
     <div markdown="1">
+      : router, vuex, axios, bootstrap-vue 적용
       * vue add router <br/>   
       * vue add vuex  <br/>   
       * npm install axios  <br/>
@@ -22,5 +24,5 @@
       * MySQL Driver, 
       * Spring Boot DevTools, 
       * Spring Web
-
+</details>
 
