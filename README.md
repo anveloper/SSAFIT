@@ -5,15 +5,15 @@
     <details>
     <summary>* dependencies : router, vuex, axios, bootstrap-vue 적용</summary>
     <div markdown="1">
-      * vue add router   
-      * vue add vuex    
-      * npm install axios
-      * npm install vue bootstrap-vue bootstrap   
-        * main.js 추가
-        * import BootstrapVue from 'bootstrap-vue'
-        * import 'bootstrap/dist/css/bootstrap.min.css'
-        * import 'bootstrap-vue/dist/bootstrap-vue.css'
-        * Vue.use(BootstrapVue)
+      * vue add router <br/>   
+      * vue add vuex  <br/>   
+      * npm install axios  <br/>
+      * npm install vue bootstrap-vue bootstrap    <br/>
+        * main.js 추가 <br/>
+        * import BootstrapVue from 'bootstrap-vue' <br/>
+        * import 'bootstrap/dist/css/bootstrap.min.css' <br/>
+        * import 'bootstrap-vue/dist/bootstrap-vue.css' <br/>
+        * Vue.use(BootstrapVue) <br/>
      </div>
    </details>
   * springboot 프로젝트 생성(Spring starter project)
