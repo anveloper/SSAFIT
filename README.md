@@ -2,6 +2,7 @@
 **220516 작업내역**
 * **프로젝트 생성**   
   * vue 프로젝트 생성 (vue create ssafit-vue)
+    <details>
     <summary>* dependencies : router, vuex, axios, bootstrap-vue 적용</summary>
     <div markdown="1">
       * vue add router   
@@ -14,6 +15,7 @@
         * import 'bootstrap-vue/dist/bootstrap-vue.css'
         * Vue.use(BootstrapVue)
      </div>
+   </details>
   * springboot 프로젝트 생성(Spring starter project)
     * dependencies : 
       * MyBatis Framwork, 
