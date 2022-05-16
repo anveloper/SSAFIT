@@ -24,15 +24,20 @@
       - MySQL Driver,
       - Spring Boot DevTools,
       - Spring Web
-      - 
-![SQL](https://github.com/anveloper/VUSP_SSAFIT_220516/blob/main/ssafit-mysql/sql_v1.JPG)
-
-**MySQL database 구성**     
-
+      
+      ![SQL](https://github.com/anveloper/VUSP_SSAFIT_220516/blob/main/ssafit-mysql/sql_v1.JPG)
+      
+    **MySQL database 구성** 
+    
     - Table
       - SF_VIDEO - PART_NO
       - SF_MEMBER
       - SF_REVIEW
       - ZZIM
       - FOLLOW_MEMBER
+
+
+
+
+
     
