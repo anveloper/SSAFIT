@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.ssafit.model.dao.MemberDao">
+	<resultMap type="member" id="memberMap">
+		<id column="member_seq" property="memberSeq" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+
+	<select id="selectFollowList" resultMap="memberMap" parameterType="String">
+		SELECT user_id, username 
+		  FROM follow_member f
+		  LEFT JOIN sf_member s
+		    ON f.to_seq = s.member_seq
+		 WHERE f.from_seq = (SELECT member_seq
+							   FROM sf_member
+		                      WHERE user_id = #{userId}	) 
+	</select>
+	
+	<select id="selectLeadList" resultMap="memberMap" parameterType="String">
+		 SELECT user_id, username 
+		  FROM follow_member f
+		  LEFT JOIN sf_member s
+		    ON f.from_seq = s.member_seq
+		 WHERE f.to_seq = (SELECT member_seq
+							   FROM sf_member
+		                      WHERE user_id = #{userId}	)		
+	</select>
+
+	<select id="selectMember" resultMap="memberMap" parameterType="String">
+		SELECT member_seq, user_id, password, username 
+		  FROM sf_member
+		 WHERE user_id = #{userId}
+	</select>
+
+	<insert id="insertMember" parameterType="member">
+		INSERT INTO sf_member (user_id, password, username)
+		VALUES (#{userId}, #{password}, #{username})
+	</insert>
+	
+	<update id="updateMember" parameterType="member">
+		UPDATE sf_member
+		   SET password = #{password},
+		       username = #{username}
+		 WHERE member_seq = #{memberSeq}
+		 
+		 
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		DELETE FROM sf_member WHERE user_id = #{userId}
+	</delete>
+
+</mapper>
