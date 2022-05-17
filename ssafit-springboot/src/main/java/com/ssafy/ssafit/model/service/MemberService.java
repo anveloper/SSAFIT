@@ -1,5 +1,6 @@
 package com.ssafy.ssafit.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.ssafy.ssafit.model.dto.Member;
@@ -16,5 +17,9 @@ public interface MemberService {
 	public void updateMember(Member member) throws Exception;
 
 	public void deleteMember(String userId);
+
+	public void followId(HashMap<String, String> params);
+
+	public void unFollowId(HashMap<String, String> params);
 
 }

@@ -3,6 +3,8 @@ package com.ssafy.ssafit.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ import com.ssafy.ssafit.util.JWTUtil;
 public class ApiMemberController {
 	private static final String SUCESS = "sucess";
 	private static final String FAIL = "fail";
+	private static final String HEADER_AUTH = "auth-token";
 
 	@Autowired
 	private MemberService memberService;
@@ -116,4 +119,38 @@ public class ApiMemberController {
 		return new ResponseEntity<String>("deleted : " + userId, HttpStatus.NO_CONTENT);
 	} // followlist에 FK설정되어있어서 팔로우가 있으면 삭제 불가
 
+	@GetMapping("/follow/{userId}")
+	public ResponseEntity<String> follow(@PathVariable String userId, HttpServletRequest req) {
+		HttpStatus status = null;
+		String token = req.getHeader(HEADER_AUTH);
+		HashMap<String, String> params = new HashMap<>();
+		params.put("userId", userId);
+		try {
+			String myId = jwtUtil.getTokenId(token);
+			params.put("myId", myId);
+			memberService.followId(params);
+			status = HttpStatus.CREATED;
+		} catch (Exception e) {
+			status = HttpStatus.CONFLICT;
+		}
+
+		return new ResponseEntity<String>("", status);
+	}
+	@DeleteMapping("/follow/{userId}")
+	public ResponseEntity<String> unfollow(@PathVariable String userId, HttpServletRequest req) {
+		HttpStatus status = null;
+		String token = req.getHeader(HEADER_AUTH);
+		HashMap<String, String> params = new HashMap<>();
+		params.put("userId", userId);
+		try {
+			String myId = jwtUtil.getTokenId(token);
+			params.put("myId", myId);
+			memberService.unFollowId(params);
+			status = HttpStatus.CREATED;
+		} catch (Exception e) {
+			status = HttpStatus.CONFLICT;
+		}
+		
+		return new ResponseEntity<String>("", status);
+	}
 }
