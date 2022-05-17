@@ -31,4 +31,12 @@ public class JWTUtil {
 				.setSigningKey(SALT.getBytes("UTF-8")) //
 				.parseClaimsJws(token);
 	}
+
+	public String getTokenId(String token) throws Exception {
+		return Jwts.parser() //
+				.setSigningKey(SALT.getBytes("UTF-8")) //
+				.parseClaimsJws(token) //
+				.getBody().get("userId").toString();
+	}
+
 }

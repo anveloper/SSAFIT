@@ -1,5 +1,6 @@
 package com.ssafy.ssafit.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void deleteMember(String userId) {
 		memberDao.deleteMember(userId);
+	}
+
+	@Override
+	public void followId(HashMap<String, String> params) {
+		memberDao.followId(params);
+	}
+
+	@Override
+	public void unFollowId(HashMap<String, String> params) {
+		memberDao.unFollowId(params);
 	}
 
 }
