@@ -18,6 +18,16 @@
     - 배포는 하지 않으므로 release는 사용하지 않는다.
     - 병합 시 오류가 발생하면 중복 수정된 내용을 조정하고, 
     - 만약, develop 브랜치 상태에서 프로젝트가 실행이 되지 않으면, 실행이 가능한 master브랜치로 초기화한다.
+  - **SpringBoot 작업내역**
+    - Member 관련 기능 구현, sql 수정, mapper 세팅완료
+      - ApiMemberController 기능 구현
+        - JWT를 이용한 login 기능 구현( 미완 : UserNotFoundEx, PWIncorrectEx 기능이 미작동 다르게 캐치됨.) 
+        - GetMember 개인상세 정보 불러오기, 내가 follow한 목록, 나를 follow한 목록 불러오기 완료(토큰 필요)
+        - Join 기능 구현, userId, password, username을 받고, 성공 시 CREATED, sql에 id중복시 CONFLICT상태값 반환 
+        - update 기능 구현, password와 username만 수정 가능(토큰 필요)
+        - delete 기능 구현, userId 기준으로 삭제(토큰 필요, 토큰과 호출된 userId 맞는 지 비교 기능 추가예정)
+    - asdf
+      - asdf  
 
 --------------
 - **220516 작업내역**
