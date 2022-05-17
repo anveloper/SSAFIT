@@ -11,6 +11,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 
+@Configuration
+@EnableWebMvc
+public class WEBConfig { 
+
 import com.ssafy.ssafit.interceptor.JWTInterceptor;
 
 @Configuration

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.ssafit.model.dao.VideoDao">
+	<resultMap type="video" id="videoMap">
+		<result column="video_seq" property="videoSeq"/>
+			<result column="video_seq" property="videoSeq"/>
+			<result column="youtube_id" property="youtubeId"/>
+			<result column="video_title" property="videoTitle"/>
+			<result column="view_cnt" property="viewCnt"/>
+			<result column="part_code" property="partCode"/>
+	</resultMap>
+	<!-- 모든 비디오 가져오기 -->
+	<select id="selectVideos" resultMap="videoMap">
+		SELECT *
+		  FROM sf_video;
+	</select>
+	<!-- 부위별 비디오 가져오기 -->
+	<select id="selectVideosByPartCode" resultMap="videoMap" >
+		SELECT *
+		  FROM sf_video
+		 WHERE part_code = #{partCode};
+	</select>
+	<!-- 검색한 비디오 가져오기 -->
+	<select id="selectVideosByQuery" resultMap="videoMap" parameterType="String">
+		SELECT *
+		  FROM sf_video	
+  		 WHERE video_title LIKE '%${key}%'
+	</select>
+	<!-- 유투브 아이디로 영상 가져오기 -->
+	<select id="selectVideoByYoutubeId" parameterType="String" resultMap="videoMap">
+		SELECT *
+		  FROM sf_video
+		 WHERE youtube_id = #{youtubeId}
+	</select>
+	<!-- 영상 정보 업데이트하기 -->
+	<update id="updateVideo" parameterType="video">
+		UPDATE sf_video
+		   SET
+		   video_seq = #{videoSeq},
+		   video_title = #{videoTitle},
+		   view_cnt = #{viewCnt},
+		   part_code = #{partCode}
+		 WHERE  
+		   youtube_id = #{youtubeId};
+	</update>
+</mapper>
