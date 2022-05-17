@@ -1,5 +1,12 @@
 # SSAFIT_220516
+- **220517 작업내역**
 
+  - 기존 back-end 프로젝트 이식, 명칭 및 기능 변경
+    -  WebConfig, DBConfig, application.properties 세팅
+
+
+
+--------------
 - **220516 작업내역**
 
   - 프로젝트 생성
