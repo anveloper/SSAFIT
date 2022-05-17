@@ -43,7 +43,7 @@
       - Spring Boot DevTools,
       - Spring Web
       
-      ![SQL](https://github.com/anveloper/VUSP_SSAFIT_220516/blob/main/ssafit-mysql/sql_v1.JPG)
+      ![SQL](./ssafit-mysql/sql_v1.JPG)
       
     **MySQL database 구성** 
     

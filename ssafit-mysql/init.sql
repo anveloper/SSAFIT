@@ -143,3 +143,31 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- part_info, sf_video 초기 
+-- -----------------------------------------------------
+
+INSERT INTO part_info
+VALUES
+('000', '미분류'),
+('100', '전신'),
+('200', '상체'),
+('300', '하체'),
+('400', '복부'),
+('500', '스트레칭');
+
+SELECT * FROM part_info;
+
+INSERT INTO sf_video
+VALUES
+(0, 'gMaB-fG4u4g', '전신 다이어트 최고의 운동 [칼소폭 찐 핵핵매운맛]', 0 , 100 ),
+(0, 'swRNeYw1JkY', '하루 15분! 전신 칼로리 불태우는 다이어트 운동', 0 , 100 ),
+(0, '54tTYO-vU2E', '상체 다이어트 최고의 운동 BEST [팔뚝살/겨드랑이살/등살/가슴어깨라인]', 0 , 200 ),
+(0, 'QqqZH3j_vH0', '상체비만 다이어트 최고의 운동 [상체 핵매운맛]', 0 , 200 ),
+(0, 'tzN6ypk6Sps', '하체운동이 중요한 이유? 이것만 보고 따라하자 ! [하체운동 교과서]', 0 , 300 ),
+(0, 'u5OgcZdNbMo', '저는 하체 식주의자 입니다', 0 , 300 ),
+(0, 'PjGcOP-TQPE', '11자복근 복부 최고의 운동 [복근 핵매운맛]', 0 , 400 ),
+(0, '7TLk7pscICk', '(Sub)누워서하는 5분 복부운동!! 효과보장! (매일 2주만 해보세요!)', 0 , 400 );
+
+SELECT * FROM sf_video;
