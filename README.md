@@ -26,6 +26,7 @@
         - Join 기능 구현, userId, password, username을 받고, 성공 시 CREATED, sql에 id중복시 CONFLICT상태값 반환 
         - update 기능 구현, password와 username만 수정 가능(토큰 필요)
         - delete 기능 구현, userId 기준으로 삭제(토큰 필요, 토큰과 호출된 userId 맞는 지 비교 기능 추가예정)
+        - follow/unfollow 기능 구현 로그인 아이디는 헤더 토큰으로 식별, 타겟 ID는 url로 요청
     - asdf
       - asdf  
 
