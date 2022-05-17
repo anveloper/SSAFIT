@@ -9,7 +9,7 @@
 	</resultMap>
 
 	<select id="selectFollowList" resultMap="memberMap" parameterType="String">
-		SELECT user_id, username 
+		SELECT member_seq, user_id, username 
 		  FROM follow_member f
 		  LEFT JOIN sf_member s
 		    ON f.to_seq = s.member_seq
@@ -19,13 +19,13 @@
 	</select>
 	
 	<select id="selectLeadList" resultMap="memberMap" parameterType="String">
-		 SELECT user_id, username 
+		SELECT member_seq, user_id, username 
 		  FROM follow_member f
 		  LEFT JOIN sf_member s
 		    ON f.from_seq = s.member_seq
 		 WHERE f.to_seq = (SELECT member_seq
-							   FROM sf_member
-		                      WHERE user_id = #{userId}	)		
+							 FROM sf_member
+		                    WHERE user_id = #{userId} )		
 	</select>
 
 	<select id="selectMember" resultMap="memberMap" parameterType="String">
@@ -43,13 +43,30 @@
 		UPDATE sf_member
 		   SET password = #{password},
 		       username = #{username}
-		 WHERE member_seq = #{memberSeq}
-		 
-		 
+		 WHERE member_seq = #{memberSeq}		 
 	</update>
 	
 	<delete id="deleteMember" parameterType="String">
 		DELETE FROM sf_member WHERE user_id = #{userId}
 	</delete>
-
+	
+	<insert id="followId" parameterType="HashMap">
+		INSERT INTO follow_member
+		VALUES ((SELECT member_seq 
+		          FROM sf_member 
+		         WHERE user_id = #{myId}), 
+		        (SELECT member_seq 
+		          FROM sf_member 
+		         WHERE user_id = #{userId}))	
+	</insert>
+	
+	<delete id="unFollowId" parameterType="HashMap">
+		DELETE FROM follow_member
+		 WHERE from_seq = (SELECT member_seq 
+		                     FROM sf_member 
+		                    WHERE user_id = #{myId})
+		   AND to_seq = (SELECT member_seq 
+				           FROM sf_member 
+				          WHERE user_id = #{userId})
+	</delete>
 </mapper>
