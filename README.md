@@ -6,11 +6,13 @@
     
   **github 브랜치 룰(토의)**
     - master > (release) > develop > feature/'기능' or '작업자명'
-      - master : 오류 없이 정상작동 되는 상태의 프로젝트 원본
+      - master : 오류 없이 정상작동 되는 상태의 프로젝트 원본, develop과 동일하지만, 안정된 코드만 포함
       - (release) : 프로젝트를 배포하기 위한 브랜치
       - develop : 브랜치를 분기하는 브랜치 지점, 기능 개발 후 병합하는 지점
       - feature/이름 : 실질적으로 기능을 개발하는 브랜치, 완료 혹은 저장 시 develop으로 병합
-    - 일일 작업은 develop에서 feature브랜치를 생성해서 작업을 실시하고, 병합 시 원격 브랜치에 푸시하고, develop으로 병합요청을 한다.
+      - [브랜치 설명 참조](https://gmlwjd9405.github.io/2018/05/11/types-of-git-branch.html)
+    - 일일 작업은 develop(master)에서 feature브랜치를 생성해서 작업을 실시하고, 
+    - 병합 시 원격 브랜치(origin/feature/---)에 푸시하고, develop으로 병합요청을 한다.
     - 병합 가능 여부를 확인하고, 본인이 승인한다.
     - 기능이 완전히 구현되어 master 브랜치 반영이 가능하면 전체 병합을 한다.
     - 배포는 하지 않으므로 release는 사용하지 않는다.
