@@ -11,10 +11,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 
-@Configuration
-@EnableWebMvc
-public class WEBConfig { 
-
 import com.ssafy.ssafit.interceptor.JWTInterceptor;
 
 @Configuration
@@ -36,7 +32,7 @@ public class WEBConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(jwtInterceptor)//
 				.addPathPatterns("/**")//
-				.excludePathPatterns("/member/login", "/member/join");
+				.excludePathPatterns("/member/login", "/member/join", "/**");
 	}
 
 	@Bean
