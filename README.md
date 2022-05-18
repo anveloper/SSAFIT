@@ -1,5 +1,18 @@
 ## SSAFIT
 
+
+- **220518 작업내역**
+
+  - Database update
+    - **SQL Init v2**
+      - review -> reply 리플형식으로 제목없이 내용으로 출력
+      - reply_seq 외에 댓글의 대댓글 추후에 추가 할 것을 고려 re_seq 칼럼 추가
+        - 영상에 달린 댓글은 디폴트로 0을 넣어서 관리
+    - ![SQL](./ssafit-mysql/sql_v2.JPG)
+  - 
+
+--------------
+
 - **220517 작업내역**
 
   **기존 back-end 프로젝트 이식, 명칭 및 기능 변경**
