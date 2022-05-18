@@ -10,7 +10,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JWTUtil {
 	private static final String SALT = "SSAFIT";
-	private static final long EXP_TIME = 1000L * 3000;
+	private static final long EXP_TIME = 1000L * 60 * 10;
 
 	public String createToken(String claimId, String data) throws Exception {
 		return Jwts.builder() //
