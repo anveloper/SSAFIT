@@ -26,8 +26,7 @@ export default {
 <style>
 @import "/src/common/font/font.css";
 
-#app {
-  font-family: "OTWelcomeRA", Helvetica, Arial, sans-serif;
-  color: #2c3e50;
+* {
+  font-family: "GangwonEduPowerExtraBoldA", Helvetica, Arial, sans-serif;
 }
 </style>
