@@ -3,13 +3,25 @@
 
 - **220518 작업내역**
 
+  - Spring update
+    - member정보 수정,삭제 시 토큰에 저장된 id와 직접 비교하여 동일하면 삭제하도록하여 비정상 접근 방지    
+    - **video -> zzim** 기능 추가
+      - video에서 member와 복합되는 zzim기능 추가, member의 userId를 받아서 접근한다.
+    - ㅁㄴㅇㄹ
+    - ㅁㄴㅇㄹ
+  - Vue update
+    - 테스트를 위한 HeaderNav구성(메인-video, 로그인, 회원가입x) / (로그아웃, 마이페이지x) 
+    - **login기능** 구현 완료
+      - DB에 저장된 test ID를 기반으로 로그인 기능 구현, 쿠키 저장을 통한 아이디 저장 버튼 구현, 쿠키에 savedId키워드로 value값이 있으면 기입되어있게 구현
+      - 로그인 시 Spring에서 생성된 auth-token과 logonMember 정보를 받아와서 sessionStorage와 router.state에 저장하도록 구현,
+      - 사용자에게는 로그인된 본인의 member 정보를 줘도 되지 않을까 하는 부분을 생각해봐야 할 것 같음.      
   - Database update
     - **SQL Init v2**
       - review -> reply 리플형식으로 제목없이 내용으로 출력
       - reply_seq 외에 댓글의 대댓글 추후에 추가 할 것을 고려 re_seq 칼럼 추가
         - 영상에 달린 댓글은 디폴트로 0을 넣어서 관리
     - ![SQL](./ssafit-mysql/sql_v2.JPG)
-  - 
+   
 
 --------------
 
