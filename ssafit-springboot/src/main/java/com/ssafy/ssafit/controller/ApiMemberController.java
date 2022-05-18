@@ -46,24 +46,23 @@ public class ApiMemberController {
 			if (member.getUserId() != null || member.getUserId().length() > 0) {
 				Member m = memberService.getMember(member.getUserId());
 				System.out.println(m.getUserId());
-				if (m.getUserId().equals(""))
+				if (m == null || m.getUserId().equals(""))
 					throw new UserNotFoundException();
 				if (!member.getPassword().equals(m.getPassword()))
 					throw new PWIncorrectException();
-
 				result.put("auth-token", jwtUtil.createToken("userId", member.getUserId()));
 				result.put("msg", SUCESS);
-				result.put("logonMember", memberService.getMember(member.getUserId()));
+				result.put("logonMember", m);
 				status = HttpStatus.ACCEPTED;
 			} else {
 				result.put("msg", FAIL);
 				status = HttpStatus.UNAUTHORIZED; // 권한없음
 			}
 		} catch (UserNotFoundException e) {
-			e.printStackTrace();
+			result.put("msg", "UserNotFoundException");
 			status = HttpStatus.UNAUTHORIZED;
 		} catch (PWIncorrectException e) {
-			e.printStackTrace();
+			result.put("msg", "PWIncorrectException");
 			status = HttpStatus.UNAUTHORIZED;
 		} catch (Exception e) {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
