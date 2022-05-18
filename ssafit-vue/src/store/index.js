@@ -13,7 +13,8 @@ export default new Vuex.Store({
       userId: '',
       password: '',
       username: ''
-    }
+    },
+    savedId: '',
   },
   getters: {
   },
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         password: '',
         username: ''
       }
+    },
+    MEMBER_LOGON(state, payload) {
+      state.logonMember = payload
     }
   },
   actions: {
@@ -32,9 +36,19 @@ export default new Vuex.Store({
       commit('LOGOUT');
     },
     memberLogin({ commit }, member) {
-      apiMember.loginMember(member)
+      let loginMember = { userId: member.id, password: member.pw }
+      if (member.saveId) {
+        this.savedId = member.id
+        var today = new Date();
+        today.setDate(today.getDate() + 7);
+        document.cookie = "savedId=" + member.id + "; path=/; expires=" + today.toGMTString() + ";"
+      } else {
+        document.cookie = "savedId=" + "; path=/; expires=" + -1 + ";"
+      }
+      apiMember.loginMember(loginMember)
         .then((res) => {
-          commit('USER_LOGIN', res.data.logonMember)
+          console.log(res.data.logonMember)
+          commit('MEMBER_LOGON', { logonMember: res.data.logonMember, })
           sessionStorage.setItem("auth-token", res.data["auth-token"])
           router.push({ name: 'video' })
         }).catch((err) => { console.log(err) })

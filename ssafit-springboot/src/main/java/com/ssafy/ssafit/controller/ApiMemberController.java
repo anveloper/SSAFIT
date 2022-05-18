@@ -40,7 +40,7 @@ public class ApiMemberController {
 	public ResponseEntity<Map<String, Object>> login(@RequestBody Member member) {
 		HttpStatus status = null;
 		HashMap<String, Object> result = new HashMap<>();
-
+		System.out.println(member);
 		try {
 			// user 정보 DB확인
 			if (member.getUserId() != null || member.getUserId().length() > 0) {

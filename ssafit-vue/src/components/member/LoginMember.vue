@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3>로그인</h3>
     <div>
-      <div class="col-md-8 col-lg-6 col-xl-4">
+      <div class="container col-md-8 col-lg-6 col-xl-4">
+        <h3>로그인</h3>
         <!-- userId input -->
         <div class="form-outline mb-4">
           <input
@@ -21,7 +21,7 @@
             type="password"
             id="input-pw"
             class="form-control"
-            v-model="user.pw"            
+            v-model="user.pw"
           />
           <label class="form-label" for="input-pw">Password</label>
         </div>
@@ -52,7 +52,7 @@
         <button
           type="button"
           class="btn btn-primary btn-block mb-4"
-          @clink="login"
+          @click="login"
         >
           로그인
         </button>
@@ -75,8 +75,17 @@ export default {
   },
   methods: {
     login() {
-      this.$store.dispatch("userLogin", this.user);
+      this.$store.dispatch("memberLogin", this.user);
     },
+  },
+  created() {
+    let savedId = document.cookie.match(
+      "(^|;) ?" + "savedId" + "=([^;]*)(;|$)"
+    );
+    if (savedId[2]) {
+      this.user.saveId = true;
+      this.user.id = savedId[2];
+    }
   },
 };
 </script>
