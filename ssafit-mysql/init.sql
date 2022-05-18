@@ -119,7 +119,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ssafit`.`sf_review` ;
 
 CREATE TABLE IF NOT EXISTS `ssafit`.`sf_review` (
-  `review_seq` INT NOT NULL,
+  `review_seq` INT auto_increment NOT NULL,
   `youtube_id` VARCHAR(45) NULL,
   `writer` VARCHAR(45) NULL,
   `title` VARCHAR(45) NOT NULL,
@@ -170,4 +170,14 @@ VALUES
 (0, 'PjGcOP-TQPE', '11자복근 복부 최고의 운동 [복근 핵매운맛]', 0 , 400 ),
 (0, '7TLk7pscICk', '(Sub)누워서하는 5분 복부운동!! 효과보장! (매일 2주만 해보세요!)', 0 , 400 );
 
-SELECT * FROM sf_video;
+INSERT INTO sf_member
+VALUES
+(0, 'ssafy', 'ssafy', '김우원');
+
+INSERT INTO sf_review
+VALUES
+(0, 'gMaB-fG4u4g', 'ssafy', '최고에요', '땀이 뻘뻘 나요');
+
+
+
+select * FROM sf_review;
