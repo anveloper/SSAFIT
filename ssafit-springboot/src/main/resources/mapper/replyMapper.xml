@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.ssafit.model.dao.ReplyDao">
+	<resultMap type="reply" id="replyMap">
+		<id column="reply_seq" property="replySeq" />
+		<result column="re_seq" property="reSeq" />
+		<result column="youtube_id" property="youtubeId"/>
+	</resultMap>
+	
+	<select id="selectReplyByYoutubeId" resultMap="replyMap" parameterType="String">
+		SELECT *
+		  FROM sf_reply
+		 WHERE youtube_id = #{youtubeId}
+	</select>
+	
+	<insert id="insertReply" parameterType="reply">
+		INSERT
+		  INTO sf_reply
+		VALUES (0, 0, #{youtubeId}, #{writer}, #{content})
+	</insert>
+	
+	<update id="updateReply" parameterType="reply">
+		UPDATE sf_reply
+		   SET content = #{content}
+		 WHERE reply_seq = #{replySeq}
+	</update>
+	
+	<delete id="deleteReply" parameterType="int">
+		DELETE
+		  FROM sf_reply
+		 WHERE reply_seq = #{replySeq}
+	</delete>
+</mapper>
