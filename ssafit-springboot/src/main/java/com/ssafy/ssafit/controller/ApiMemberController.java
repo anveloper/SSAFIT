@@ -51,8 +51,9 @@ public class ApiMemberController {
 				if (!member.getPassword().equals(m.getPassword()))
 					throw new PWIncorrectException();
 
-				result.put("auto-token", jwtUtil.createToken("userId", member.getUserId()));
+				result.put("auth-token", jwtUtil.createToken("userId", member.getUserId()));
 				result.put("msg", SUCESS);
+				result.put("logonMember", memberService.getMember(member.getUserId()));
 				status = HttpStatus.ACCEPTED;
 			} else {
 				result.put("msg", FAIL);
@@ -101,23 +102,38 @@ public class ApiMemberController {
 	}
 
 	@PutMapping("/{userId}")
-	public ResponseEntity<Member> update(@PathVariable String userId, @RequestBody Member member) {
+	public ResponseEntity<Member> update(@PathVariable String userId, @RequestBody Member member,
+			HttpServletRequest req) {
 		HttpStatus status = null;
+		String token = req.getHeader(HEADER_AUTH);
 		try {
-			memberService.updateMember(member);
-			status = HttpStatus.CREATED; // 수정 완료
+			if (jwtUtil.getTokenId(token).equals(userId)) {
+				System.out.println(member);
+				memberService.updateMember(member);
+				status = HttpStatus.CREATED; // 수정 완료
+			} else
+				status = HttpStatus.CONFLICT;
 		} catch (Exception e) {
-			e.printStackTrace();
 			status = HttpStatus.CONFLICT; //
 		}
 		return new ResponseEntity<Member>(memberService.getMember(userId), status);
-	}
+	} // memberSeq가 반드시 담겨있어야 함.
 
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<String> delete(@PathVariable String userId) {
-		memberService.deleteMember(userId);
-		return new ResponseEntity<String>("deleted : " + userId, HttpStatus.NO_CONTENT);
-	} // followlist에 FK설정되어있어서 팔로우가 있으면 삭제 불가
+	public ResponseEntity<String> delete(@PathVariable String userId, HttpServletRequest req) {
+		HttpStatus status = null;
+		String token = req.getHeader(HEADER_AUTH);
+		try {
+			if (jwtUtil.getTokenId(token).equals(userId)) {
+				memberService.deleteMember(userId);
+				status = HttpStatus.NO_CONTENT;
+			} else
+				status = HttpStatus.CONFLICT;
+		} catch (Exception e) {
+			status = HttpStatus.CONFLICT;
+		}
+		return new ResponseEntity<String>("deleted : " + userId, status);
+	}
 
 	@GetMapping("/follow/{userId}")
 	public ResponseEntity<String> follow(@PathVariable String userId, HttpServletRequest req) {
@@ -136,6 +152,7 @@ public class ApiMemberController {
 
 		return new ResponseEntity<String>("", status);
 	}
+
 	@DeleteMapping("/follow/{userId}")
 	public ResponseEntity<String> unfollow(@PathVariable String userId, HttpServletRequest req) {
 		HttpStatus status = null;
@@ -146,11 +163,11 @@ public class ApiMemberController {
 			String myId = jwtUtil.getTokenId(token);
 			params.put("myId", myId);
 			memberService.unFollowId(params);
-			status = HttpStatus.CREATED;
+			status = HttpStatus.NO_CONTENT;
 		} catch (Exception e) {
 			status = HttpStatus.CONFLICT;
 		}
-		
+
 		return new ResponseEntity<String>("", status);
 	}
 }

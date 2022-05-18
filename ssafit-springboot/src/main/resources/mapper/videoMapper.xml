@@ -29,21 +29,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM sf_video	
   		 WHERE video_title LIKE '%${key}%'
 	</select>
+	
 	<!-- 유투브 아이디로 영상 가져오기 -->
 	<select id="selectVideoByYoutubeId" parameterType="String" resultMap="videoMap">
 		SELECT *
 		  FROM sf_video
 		 WHERE youtube_id = #{youtubeId}
 	</select>
-	<!-- 영상 정보 업데이트하기 -->
+	
+	<!-- 영상 정보 업데이트하기 -->	
 	<update id="updateVideo" parameterType="video">
 		UPDATE sf_video
 		   SET
-		   video_seq = #{videoSeq},
-		   video_title = #{videoTitle},
-		   view_cnt = #{viewCnt},
-		   part_code = #{partCode}
+			   video_seq = #{videoSeq},
+			   video_title = #{videoTitle},
+			   view_cnt = #{viewCnt},
+			   part_code = #{partCode}
 		 WHERE  
-		   youtube_id = #{youtubeId};
+		       youtube_id = #{youtubeId}
 	</update>
+	
+	<select id="selectZzim" parameterType="String" resultMap="videoMap">
+		SELECT v.*
+		  FROM zzim z
+		  LEFT JOIN sf_video v
+		    ON z.video_seq = v.video_seq
+		 WHERE z.member_seq =(SELECT member_seq 
+			        		    FROM sf_member 
+			        	       WHERE user_id = #{userId})
+			  
+	</select>
+	
+	
+	<insert id="insertZzim" parameterType="HashMap">
+		INSERT INTO zzim
+		VALUES ((SELECT member_seq 
+		          FROM sf_member 
+		         WHERE user_id = #{userId}), 
+		        (SELECT video_seq 
+		          FROM sf_video 
+		         WHERE youtube_id = #{youtubeId}))
+	</insert>
+	
+	<delete id="deleteZzim" parameterType="HashMap">
+		DELETE FROM zzim
+		 WHERE member_seq = (SELECT member_seq 
+		                       FROM sf_member 
+		                      WHERE user_id = #{userId})
+		   AND video_seq = (SELECT video_seq 
+				              FROM sf_video 
+				             WHERE youtube_id = #{youtubeId})
+	</delete>
 </mapper>
