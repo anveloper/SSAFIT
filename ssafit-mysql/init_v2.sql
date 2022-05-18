@@ -106,7 +106,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `ssafit`.`sf_reply` ;
 
 CREATE TABLE IF NOT EXISTS `ssafit`.`sf_reply` (
-  `reply_seq` INT NOT NULL,
+  `reply_seq` INT NOT NULL AUTO_INCREMENT,
   `re_seq` INT NULL DEFAULT 0,
   `youtube_id` VARCHAR(45) NOT NULL,
   `writer` VARCHAR(45) NOT NULL,
