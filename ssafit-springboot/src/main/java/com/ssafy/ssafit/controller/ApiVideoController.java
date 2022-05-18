@@ -43,8 +43,8 @@ public class ApiVideoController {
 		return new ResponseEntity<List<Video>>(videoService.getVideoListByQuery(key), HttpStatus.OK);
 	}
 
-	@GetMapping("/partNo")
-	public ResponseEntity<List<Video>> videoByPartCode(@RequestParam int code) {
+	@GetMapping("/partCode/{code}")
+	public ResponseEntity<List<Video>> videoByPartCode(@PathVariable int code) {
 		return new ResponseEntity<List<Video>>(videoService.getVideoListByPartCode(code), HttpStatus.OK);
 	}
 
