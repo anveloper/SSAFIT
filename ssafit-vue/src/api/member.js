@@ -6,7 +6,7 @@ export default {
   getMember(userId) {
     return axios.get(ROOT_URL + `member/${userId}`);
   },
-  loginMember(user) {
-    return axios.post(ROOT_URL + `member/`, {user});
+  loginMember(member) {
+    return axios.post(ROOT_URL + `member/login`, member );
   }
 }
