@@ -1,18 +1,15 @@
-import axios from 'axios'
+import { axiosService } from '@/api'
 
 const ROOT_URL = process.env.VUE_APP_API_SERVER;
 
 export default {
-  getVideoList(params) {
-    return axios.get(ROOT_URL + `/video`, { params });
+  getVideoList() {
+    return axiosService.get(ROOT_URL + `/video`);
   },
   getVideo(youtubeId) {
-    return axios.get(ROOT_URL + `/video/${youtubeId}`);
+    return axiosService.get(ROOT_URL + `/video/${youtubeId}`);
   },
   createVideo(video) {
-    return axios.post(ROOT_URL + `video/`, video);
+    return axiosService.post(ROOT_URL + `/video`, video);
   },
-  getReplyList(youtubeId){
-    return axios.get(ROOT_URL+`reply/${youtubeId}`);
-  }
 }

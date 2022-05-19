@@ -55,4 +55,9 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.unFollowId(params);
 	}
 
+	@Override
+	public Member getMemberByName(String username) {		
+		return memberDao.selectMemberByName(username);
+	}
+
 }

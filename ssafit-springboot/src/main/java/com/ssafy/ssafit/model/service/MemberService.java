@@ -22,4 +22,6 @@ public interface MemberService {
 
 	public void unFollowId(HashMap<String, String> params);
 
+	public Member getMemberByName(String username);
+
 }

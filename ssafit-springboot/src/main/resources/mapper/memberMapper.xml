@@ -34,6 +34,12 @@
 		 WHERE user_id = #{userId}
 	</select>
 
+	<select id="selectMemberByName" resultMap="memberMap" parameterType="String">
+		SELECT member_seq, user_id, password, username 
+		  FROM sf_member
+		 WHERE username = #{username}
+	</select>
+
 	<insert id="insertMember" parameterType="member">
 		INSERT INTO sf_member (user_id, password, username)
 		VALUES (#{userId}, #{password}, #{username})
