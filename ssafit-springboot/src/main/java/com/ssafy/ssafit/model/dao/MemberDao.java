@@ -22,4 +22,6 @@ public interface MemberDao {
 
 	public void unFollowId(HashMap<String, String> params);
 
+	public Member selectMemberByName(String username);
+
 }

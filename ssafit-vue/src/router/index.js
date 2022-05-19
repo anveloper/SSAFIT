@@ -1,13 +1,16 @@
 import Vue from 'vue'
+import store from '@/store'
 import VueRouter from 'vue-router'
 
 import VideoView from '@/views/VideoView.vue'
-import VideoDetail from '../components/video/VideoDetail.vue'
 import VideoList from '@/components/video/VideoList.vue'
-import MemberView from '@/views/MemberView.vue'
+import VideoDetail from '../components/video/VideoDetail.vue'
+
+import MyPage from '@/components/member/MyPage.vue'
+
 import LoginMember from '@/components/member/LoginMember.vue'
 import JoinMember from '@/components/member/JoinMember.vue'
-import store from '@/store'
+
 
 
 Vue.use(VueRouter)
@@ -29,7 +32,6 @@ const routes = [
     name: 'member',
     component: MemberView,
     childen: [
-
     ],
     beforeEnter: checkLogin(),
   },
@@ -38,16 +40,22 @@ const routes = [
     component: VideoView,
     children: [
       {
+        path: "",
+        name: "video",
+        component: VideoList
+      },
+      {
         path: ":id",
         name: "videoDetail",
         component: VideoDetail
       },
-      {
-      path: "",
-      name: "video",
-      component: VideoList
-      }
     ]
+  },
+  {
+    path: '/member/:userId',
+    name: 'myPage',
+    component: MyPage,
+    beforeEnter: checkLogin(),
   },
   {
     path: '/login',
