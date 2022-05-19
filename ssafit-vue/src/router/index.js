@@ -1,14 +1,16 @@
 import Vue from 'vue'
+import store from '@/store'
 import VueRouter from 'vue-router'
 
-import VideoDetail from '../components/VideoDetail.vue'
 import VideoView from '@/views/VideoView.vue'
+import VideoList from '@/components/video/VideoList.vue'
+import VideoDetail from '../components/video/VideoDetail.vue'
 
-// import MemberView from '@/views/MemberView.vue'
 import MyPage from '@/components/member/MyPage.vue'
+
 import LoginMember from '@/components/member/LoginMember.vue'
 import JoinMember from '@/components/member/JoinMember.vue'
-import store from '@/store'
+
 
 
 Vue.use(VueRouter)
@@ -26,15 +28,27 @@ const checkLogin = () => (from, to, next) => {
 
 const routes = [
   {
+    path: '/member',
+    name: 'member',
+    component: MemberView,
+    childen: [
+    ],
+    beforeEnter: checkLogin(),
+  },
+  {
     path: '/video',
-    name: 'video',
     component: VideoView,
     children: [
+      {
+        path: "",
+        name: "video",
+        component: VideoList
+      },
       {
         path: ":id",
         name: "videoDetail",
         component: VideoDetail
-      }
+      },
     ]
   },
   {
