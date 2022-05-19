@@ -31,10 +31,11 @@ public class ApiReplyController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<String> insert(@RequestBody Reply reply){
+	public ResponseEntity<List<Reply>> insert(@RequestBody Reply reply){
 		replyService.writeReply(reply);
-		return new ResponseEntity<String>(
-				"SUCESS", HttpStatus.CREATED);
+		String youtubeId = reply.getYoutubeId();
+		return new ResponseEntity<List<Reply>>(
+				replyService.getVideoReply(youtubeId), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("")
@@ -48,7 +49,7 @@ public class ApiReplyController {
 	public ResponseEntity<String> delete(@PathVariable int replySeq){
 		replyService.deleteReply(replySeq);
 		return new ResponseEntity<String>(
-				"SUCESS", HttpStatus.MOVED_PERMANENTLY);	
+				"SUCESS", HttpStatus.RESET_CONTENT);	
 	}
 	
 }
