@@ -13,6 +13,8 @@
 		SELECT *
 		  FROM sf_reply
 		 WHERE youtube_id = #{youtubeId}
+		 ORDER 
+		    BY reply_seq desc 
 	</select>
 	
 	<insert id="insertReply" parameterType="reply">

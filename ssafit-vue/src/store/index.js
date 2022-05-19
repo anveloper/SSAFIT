@@ -11,7 +11,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    videos:[],
     video: {},
     reply: [],
     logonMember: {
@@ -28,8 +28,21 @@ export default new Vuex.Store({
     GET_VIDEO(state, payload) {
       state.video = payload;
     },
+    GET_VIDEOS(state, payload){
+      state.videos = payload;  
+    },
     GET_REPLY(state, payload) {
       state.reply = payload
+    },
+    CREATE_REPLY(state, payload){
+      state.reply = payload
+    },
+    DELETE_REPLY(state, payload){
+      state.reply.forEach((repl, index)=>{
+        if(repl.replySeq == payload) {
+          state.reply.splice(index,1);
+        } 
+      })
     },
     MEMBER_LOGOUT(state) {
       state.logonMember = { memberSeq: '', userId: '', password: '', username: '' }
@@ -46,11 +59,18 @@ export default new Vuex.Store({
     getVideo({ commit }, id) {
       apiVideo.getVideo(id)
         .then((res) => {
-          console.log(res);
           commit('GET_VIDEO', res.data)
         }).catch((err) => {
           console.log(err);
         })
+    },
+    getVideos(){
+      apiVideo.getVideoList()
+      .then((res)=>{
+        this.commit('GET_VIDEOS', res.data)
+      }).catch((err)=>{
+        console.log(err);
+      })
     },
     getReply({ commit }, id) {
       apiReply.getReplyList(id)
@@ -59,6 +79,20 @@ export default new Vuex.Store({
         }).catch((err) => {
           console.log(err)
         })
+    },
+    createReply({commit}, reply) {
+      apiReply.createReply(reply)
+      .then((res)=>{
+        commit('CREATE_REPLY', res.data)
+      })
+    },
+    deleteReply({commit}, replySeq){
+      apiReply.deleteReply(replySeq)
+      .then(()=>{
+        commit('DELETE_REPLY',replySeq)
+      }).catch((err) => {
+        console.log(err)
+      })
     },
     memberLogin({ commit }, { member, call }) {
       let loginMember = { userId: member.id, password: member.pw }

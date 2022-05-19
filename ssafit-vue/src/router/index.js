@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import VideoDetail from '../components/VideoDetail.vue'
 import VideoView from '@/views/VideoView.vue'
+import VideoDetail from '../components/video/VideoDetail.vue'
+import VideoList from '@/components/video/VideoList.vue'
 import MemberView from '@/views/MemberView.vue'
 import LoginMember from '@/components/member/LoginMember.vue'
 import JoinMember from '@/components/member/JoinMember.vue'
@@ -24,14 +25,6 @@ const checkLogin = () => (from, to, next) => {
 
 const routes = [
   {
-    path: '/video',
-    name: 'video',
-    component: VideoView,
-    childen: [
-
-    ],
-  },
-  {
     path: '/member',
     name: 'member',
     component: MemberView,
@@ -48,6 +41,11 @@ const routes = [
         path: ":id",
         name: "videoDetail",
         component: VideoDetail
+      },
+      {
+      path: "",
+      name: "video",
+      component: VideoList
       }
     ]
   },
