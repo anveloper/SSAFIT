@@ -21,6 +21,10 @@ export default new Vuex.Store({
     },
     savedId: '',
     availale: { id: false, pw: false, nick: false, },
+    page: 1,
+    followList: [],
+    leadList: [],
+    zzimList: []
   },
   getters: {
   },
@@ -58,6 +62,11 @@ export default new Vuex.Store({
       if (ok == 'ok') state.availale.nick = true;
       else state.availale.nick = false;
     },
+    GET_MEMBER(state, payload) {
+      state.followList = payload.followList;
+      state.leadList = payload.leadList;
+      state.zzimList = payload.zzimList;
+    }
   },
   actions: {
     getVideo({ commit }, id) {
@@ -89,7 +98,6 @@ export default new Vuex.Store({
       }
       apiMember.loginMember(loginMember)
         .then((res) => {
-          console.log(res.data.logonMember)
           commit('MEMBER_LOGIN', { logonMember: res.data.logonMember, token: res.data["auth-token"] })
           if (call) router.push(call)
           else router.push({ name: 'video' })
@@ -100,8 +108,7 @@ export default new Vuex.Store({
     },
     join({ commit }, payload) {
       commit;
-      apiMember.joinMember(payload).then((res) => {
-        console.log(res.data)
+      apiMember.joinMember(payload).then(() => {
         router.push({ name: 'login' })
       }).catch((err) => {
         if (err)
@@ -111,7 +118,6 @@ export default new Vuex.Store({
     checkUserId({ commit }, userId) {
       apiMember.checkUserId(userId)
         .then((res) => {
-          console.log(res.data);
           commit('CHECK_USER_ID', res.data);
         }).catch((err) => { console.log(err) });
     },
@@ -124,9 +130,13 @@ export default new Vuex.Store({
     checkUserName({ commit }, userId) {
       apiMember.checkUserName(userId)
         .then((res) => {
-          console.log(res.data);
           commit('CHECK_USER_NAME', res.data);
         }).catch((err) => { console.log(err) });
+    },
+    getMember({ commit }, userId) {
+      apiMember.getMember(userId).then((res) => {
+        commit("GET_MEMBER",res.data);
+      }).catch((err) => {console.log(err) });
     }
   },
   modules: {

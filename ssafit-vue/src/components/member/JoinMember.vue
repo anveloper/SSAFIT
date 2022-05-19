@@ -30,6 +30,8 @@
           trim
           :disabled="availale.id == false"
           @blur="inputPass"
+          @keyup.13="inputPass"
+          @keydown.tab="inputPass"
           ref="inPw"
         />
       </div>
@@ -132,7 +134,7 @@ export default {
     },
     checkUserName() {
       if (this.newMember.username != "") {
-        this.$store.dispatch("checkUserName", this.newMember.username);        
+        this.$store.dispatch("checkUserName", this.newMember.username);
         this.$refs.inNick.focus();
         this.nmsg = "이미 사용중인 닉네임입니다.";
       } else {

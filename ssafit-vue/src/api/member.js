@@ -8,7 +8,7 @@ export default {
     return axiosService.post(`/member/login`, member);
   },
   joinMember(member) {
-    return axiosService.post(`/member/join`,member)
+    return axiosService.post(`/member/join`, member)
   },
   checkUserId(userId) {
     return axiosService.post(`/member/join/checkId`, userId);

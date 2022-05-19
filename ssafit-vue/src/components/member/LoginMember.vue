@@ -22,6 +22,7 @@
             id="input-pw"
             class="form-control"
             v-model="user.pw"
+            @keyup.13="login"
           />
           <label class="form-label" for="input-pw">Password</label>
         </div>
