@@ -11,5 +11,8 @@ export default {
   },
   createVideo(video) {
     return axios.post(ROOT_URL + `video/`, video);
+  },
+  getReplyList(youtubeId){
+    return axios.get(ROOT_URL+`reply/${youtubeId}`);
   }
 }

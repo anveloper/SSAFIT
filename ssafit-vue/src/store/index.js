@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+
+import videoApi from '@/api/video.js'
 import router from '@/router'
 // import apiBoard from "@/api/board.js"
 import apiMember from "@/api/member.js"
@@ -8,6 +10,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+
+    video:{},
+    reply:[],
     logonMember: {
       memberSeq: '',
       userId: '',
@@ -19,6 +24,31 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
+
+    GET_VIDEO(state, payload){
+      state.video = payload;
+    },
+    GET_REPLY(state, payload){
+      state.reply = payload
+    }
+  },
+  actions: {
+    getVideo({commit}, id){
+      videoApi.getVideo(id)
+      .then((res) => {
+        console.log(res);
+        commit('GET_VIDEO', res.data)
+      }).catch((err) => {
+        console.log(err);
+      })
+    },
+    getReply({commit}, id){
+      videoApi.getReplyList(id)
+      .then((res)=>{
+        commit('GET_REPLY', res.data)
+      }).catch((err)=>{
+        console.log(err)
+      })
     LOGOUT(state) {
       state.logonMember = {
         memberSeq: '',
