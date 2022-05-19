@@ -1,19 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '@/router'
-import apiVideo from '@/api/video.js'
-// import apiMember from "@/api/member.js"
-import axiosService from '@/api'
-import apiMember from "@/api/indexmember.js"
 
+import axiosService from '@/api'
+import apiVideo from '@/api/video.js'
+import apiMember from "@/api/member.js"
+import apiReply from "@/api/reply.js"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
 
-    video:{},
-    reply:[],
+    video: {},
+    reply: [],
     logonMember: {
       memberSeq: '',
       userId: '',
@@ -25,43 +25,41 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
+    GET_VIDEO(state, payload) {
+      state.video = payload;
+    },
+    GET_REPLY(state, payload) {
+      state.reply = payload
+    },
     MEMBER_LOGOUT(state) {
       state.logonMember = { memberSeq: '', userId: '', password: '', username: '' }
       sessionStorage.removeItem("auth-token")
       router.push('/video').catch(() => { })
     },
-    GET_VIDEO(state, payload){
-      state.video = payload;
-    },
-    GET_REPLY(state, payload){
-      state.reply = payload
-    }
-  },
-  actions: {
-    getVideo({commit}, id){
-      apiVideo.getVideo(id)
-      .then((res) => {
-        console.log(res);
-        commit('GET_VIDEO', res.data)
-      }).catch((err) => {
-        console.log(err);
-      })
-    },
-    getReply({commit}, id){
-      apiVideo.getReplyList(id)
-      .then((res)=>{
-        commit('GET_REPLY', res.data)
-      }).catch((err)=>{
-        console.log(err)
-      })  
-    },
     MEMBER_LOGIN(state, { logonMember, token }) {
       state.logonMember = logonMember;
       sessionStorage.setItem("auth-token", token);
       axiosService.headers["auth-token"] = token;
-    }
+    },
   },
   actions: {
+    getVideo({ commit }, id) {
+      apiVideo.getVideo(id)
+        .then((res) => {
+          console.log(res);
+          commit('GET_VIDEO', res.data)
+        }).catch((err) => {
+          console.log(err);
+        })
+    },
+    getReply({ commit }, id) {
+      apiReply.getReplyList(id)
+        .then((res) => {
+          commit('GET_REPLY', res.data)
+        }).catch((err) => {
+          console.log(err)
+        })
+    },
     memberLogin({ commit }, { member, call }) {
       let loginMember = { userId: member.id, password: member.pw }
       if (member.saveId) {
