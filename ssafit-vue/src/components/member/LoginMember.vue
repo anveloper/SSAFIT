@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div class="mt-8">
+  <div class="mt-4">
+    <div class="mt-4">
       <div class="container col-md-8 col-lg-6 col-xl-4">
-        <h3>로그인</h3>
+        <h3 class="mt-4">로그인</h3>
         <!-- userId input -->
         <div class="form-outline mb-4">
           <input
