@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="mt-8">
       <div class="container col-md-8 col-lg-6 col-xl-4">
         <h3>로그인</h3>
         <!-- userId input -->
@@ -75,7 +75,10 @@ export default {
   },
   methods: {
     login() {
-      this.$store.dispatch("memberLogin", this.user);
+      this.$store.dispatch("memberLogin", {
+        member: this.user,
+        call: this.$route.query.call,
+      });
     },
   },
   created() {

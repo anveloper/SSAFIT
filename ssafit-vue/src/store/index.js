@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '@/router'
-// import apiBoard from "@/api/board.js"
-import apiMember from "@/api/member.js"
+// import apiVideo from "@/api/video.js"
+// import apiMember from "@/api/member.js"
+import axiosService from '@/api'
+import apiMember from "@/api/indexmember.js"
+
 
 Vue.use(Vuex)
 
@@ -19,23 +22,19 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
-    LOGOUT(state) {
-      state.logonMember = {
-        memberSeq: '',
-        userId: '',
-        password: '',
-        username: ''
-      }
+    MEMBER_LOGOUT(state) {
+      state.logonMember = { memberSeq: '', userId: '', password: '', username: '' }
+      sessionStorage.removeItem("auth-token")
+      router.push('/video').catch(() => { })
     },
-    MEMBER_LOGON(state, payload) {
-      state.logonMember = payload
+    MEMBER_LOGIN(state, { logonMember, token }) {
+      state.logonMember = logonMember;
+      sessionStorage.setItem("auth-token", token);
+      axiosService.headers["auth-token"] = token;
     }
   },
   actions: {
-    logout({ commit }) {
-      commit('LOGOUT');
-    },
-    memberLogin({ commit }, member) {
+    memberLogin({ commit }, { member, call }) {
       let loginMember = { userId: member.id, password: member.pw }
       if (member.saveId) {
         this.savedId = member.id
@@ -48,9 +47,9 @@ export default new Vuex.Store({
       apiMember.loginMember(loginMember)
         .then((res) => {
           console.log(res.data.logonMember)
-          commit('MEMBER_LOGON', { logonMember: res.data.logonMember, })
-          sessionStorage.setItem("auth-token", res.data["auth-token"])
-          router.push({ name: 'video' })
+          commit('MEMBER_LOGIN', { logonMember: res.data.logonMember, token: res.data["auth-token"] })
+          if (call) router.push(call)
+          else router.push({ name: 'video' })
         }).catch((err) => { console.log(err) })
     }
   },
