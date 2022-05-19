@@ -28,14 +28,6 @@ const checkLogin = () => (from, to, next) => {
 
 const routes = [
   {
-    path: '/member',
-    name: 'member',
-    component: MemberView,
-    childen: [
-    ],
-    beforeEnter: checkLogin(),
-  },
-  {
     path: '/video',
     component: VideoView,
     children: [

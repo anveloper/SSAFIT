@@ -34,9 +34,8 @@ public class ApiVideoController {
 	}
 
 	@GetMapping("/{youtubeId}")
-	public ResponseEntity<Video> videoById(@PathVariable String youtubeId){
-		return new ResponseEntity<Video>(
-				videoService.readVideoByYoutubeId(youtubeId), HttpStatus.PARTIAL_CONTENT);
+	public ResponseEntity<Video> videoById(@PathVariable String youtubeId) {
+		return new ResponseEntity<Video>(videoService.readVideoByYoutubeId(youtubeId), HttpStatus.PARTIAL_CONTENT);
 
 	}
 
