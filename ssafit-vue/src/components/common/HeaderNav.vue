@@ -23,18 +23,18 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "headerNav",
   data() {
     return {
-      isLogon: false,
     };
   },
   methods: {
+    ...mapMutations(["MEMBER_LOGOUT"]),
     logout() {
-      this.$store.dispatch("logout");
+      this.MEMBER_LOGOUT();
     },
   },
   computed: {
