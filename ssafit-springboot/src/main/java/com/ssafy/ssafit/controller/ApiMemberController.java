@@ -88,9 +88,9 @@ public class ApiMemberController {
 	}
 
 	@PostMapping("/join")
-	public ResponseEntity<Member> join(@RequestBody Member member) {		
+	public ResponseEntity<Member> join(@RequestBody Member member) {
 		HttpStatus status = null;
-		try { 
+		try {
 			memberService.joinMember(member);
 			status = HttpStatus.CREATED;
 			member = null; // 정보는 제거하고, 로그인 페이지로 이동
@@ -175,7 +175,7 @@ public class ApiMemberController {
 	public ResponseEntity<String> checkId(@RequestBody String userId) {
 		String msg = "";
 		HttpStatus status = null;
-		userId=userId.replaceAll("\"", ""); // 이거 왜?
+		userId = userId.replaceAll("\"", ""); // 이거 왜?
 		Member member = memberService.getMember(userId);
 		if (member == null) {
 			msg = "ok";
@@ -186,12 +186,12 @@ public class ApiMemberController {
 		}
 		return new ResponseEntity<String>(msg, status);
 	}
-	
+
 	@PostMapping("/join/checkName")
 	public ResponseEntity<String> checkName(@RequestBody String username) {
 		String msg = "";
 		HttpStatus status = null;
-		username=username.replaceAll("\"", ""); // 이거 왜?
+		username = username.replaceAll("\"", ""); // 이거 왜?
 		Member member = memberService.getMemberByName(username);
 		if (member == null) {
 			msg = "ok";
