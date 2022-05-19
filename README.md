@@ -13,10 +13,14 @@
       - 수정기능(구현 예정)
       - 로그인을 안하면 댓글 작성 불가
     - api 디렉토리 구조 변경
-      - api > index.js에서 axios를 생성해서 member.js 및 video.js로 상속하여 기능 모듈화
-      - 아직 header에 auth-token 넣기가 되지 않음.
-      - join 회원가입 기능 구현중
-        - userId입력폼을 벗어날때 중복검사(비동기 요청) 실시, 입력값이 없으면 아이디 입력폼으로 포커스 이동
+      - api > index.js에서 axios를 생성해서 member.js 및 video.js로 상속하여 기능 모듈화      
+    - join 회원가입 기능 구현
+      - userId입력폼을 벗어날때 중복검사(비동기 요청) 실시, 입력값이 없으면 아이디 입력폼으로 포커스 이동
+      - userId 중복여부, pass재확인 여부, username중복여부 모두 true값이어야 api에 insert요청 실시
+      - 기능 구현하려는 부분 : 동적인 입력폼으로 엔터나 탭키에 반응해서 다음 자동이동 되는 기능(disabled로 막는 기능도 넣어놔서 수월하지 않음)
+    - MyPage 기능 구현 중
+      - 멤버(followList, leadList), 영상(zzimList)를 반환하여 my page에서 볼 수 있도록 구현중. data 요청 확인, table배치중
+      - 팔로우한 사람 버튼 누르면 해당 인원의 상세보기로 넘어가는 것 구현예정
 
 --------------
 
