@@ -1,25 +1,31 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import VideoView from '../views/VideoView.vue'
 
 import VideoDetail from '../components/VideoDetail.vue'
+import VideoView from '@/views/VideoView.vue'
+import MemberView from '@/views/MemberView.vue'
+import LoginMember from '@/components/member/LoginMember.vue'
+import JoinMember from '@/components/member/JoinMember.vue'
+
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/video',
+    name: 'video',
+    component: VideoView,
+    childen: [
+
+    ]
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/member',
+    name: 'member',
+    component: MemberView,
+    childen: [
+
+    ]
   },
   {
     path: '/video',
@@ -31,7 +37,17 @@ const routes = [
         component: VideoDetail
       }
     ]
-  }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginMember,
+  },
+  {
+    path: '/join',
+    name: 'join',
+    component: JoinMember,
+  },
 ]
 
 const router = new VueRouter({

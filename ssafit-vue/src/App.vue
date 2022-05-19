@@ -1,32 +1,32 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <header-nav></header-nav>
+    <b-container class="mt-3">
+      <router-view />
+    </b-container>
   </div>
 </template>
 
+<script>
+import HeaderNav from "@/components/common/HeaderNav.vue";
+
+export default {
+  name: "App",
+  components: {
+    HeaderNav,
+  },
+  data() {
+    return {
+      logonUser: null,
+    };
+  },
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+@import "/src/common/font/font.css";
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+* {
+  font-family: "GangwonEduPowerExtraBoldA", Helvetica, Arial, sans-serif;
 }
 </style>

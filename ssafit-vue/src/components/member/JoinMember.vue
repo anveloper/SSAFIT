@@ -1,21 +1,12 @@
 <template>
   <div>
-
-    <router-view/>
-    <h3>VIDEO</h3>
-
+    <h3>회원가입</h3>
   </div>
 </template>
 
 <script>
 export default {
-  
-}
-</script>
-
-<style>
-
-  name: "videoView",
+  name: "joinView",
 };
 </script>
 
