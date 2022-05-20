@@ -29,7 +29,7 @@
         class="flex-column align-items-start"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ repl.writer }}</h5>
+          <h5 style="font-size:1rem">{{ repl.writer }}</h5>
           <b-button-group size="sm" v-if="repl.writer == logonMember.userId">
             <b-button variant="warning" @click="updateReply(index, repl)"
               >수정</b-button
@@ -45,7 +45,7 @@
           style="font-family: initial"
         >
           <b-form-input
-            :placeholder="`${repl.content}`"
+            placeholder="?"
             v-model="newComment"
           ></b-form-input>
           <b-input-group-append>
@@ -66,8 +66,30 @@
         </b-collapse>
         <b-list-group>
           <b-list-group-item v-for="rerepl in rereply" :key="rerepl.replySeq"  v-show="repl.replySeq == rerepl.reSeq">
-            <h5 style="font-size:0.8rem" class="mb-1">{{ rerepl.writer }}</h5>
-            <div>{{rerepl.content}}</div>
+            <div class="d-flex w-100 justify-content-between">
+              <h5 style="font-size:0.8rem" class="mb-1">{{ rerepl.writer }}</h5>
+              <b-button-group size="sm" v-if="rerepl.writer == logonMember.userId">
+                <b-button variant="warning" @click="setRereplyIdx(rerepl)"
+                  >수정</b-button
+                >
+                <b-button variant="danger" @click="deleteReply(rerepl.replySeq)"
+                  >삭제</b-button
+                >
+              </b-button-group>
+            </div>
+            <div v-if="rereCommentIdx != rerepl.replySeq">{{rerepl.content}}</div>
+            <b-input-group
+              class="mt-3"
+              v-else
+              style="font-family: initial"
+            >
+              <b-form-input
+                v-model="newreComment"
+              ></b-form-input>
+              <b-input-group-append>
+                <b-button variant="info" @click="updatere(rerepl)">등록</b-button>
+              </b-input-group-append>
+            </b-input-group>
           </b-list-group-item>
         </b-list-group>
       </b-list-group-item>
@@ -84,10 +106,12 @@ export default {
       comment: "",
       reComment:"",
       reCommentIdx:"-1",
+      updateComment: "-1",
+      rereCommentIdx:"-1",
       writer: "",
       youtubeId: "",
-      updateComment: "-1",
       newComment: "",
+      newreComment:"",
     };
   },
   computed: {
@@ -138,20 +162,34 @@ export default {
     setReComIdx(index){
       this.reCommentIdx = index
     },
+    setRereplyIdx(repl){
+      this.rereCommentIdx = repl.replySeq
+      this.newreComment = repl.content
+    },
     deleteReply(replySeq) {
       console.log(replySeq);
       this.$store.dispatch("deleteReply", replySeq);
     },
     updateReply(index, repl) {
+      if(repl.reSeq == 0) {
       this.updateComment = index;
       this.newComment = repl.content;
+      }
     },
     update(repl) {
       let newrepl = repl;
       newrepl.content = this.newComment;
       this.$store.dispatch("updateReply", newrepl);
       this.updateComment = "-1";
+      this.reComment="";
     },
+    updatere(rerepl){
+      let newrepl = rerepl;
+      newrepl.content = this.newreComment;
+      this.$store.dispatch("updateReply", newrepl);
+      this.rereCommentIdx = "-1";
+      this.newreComment = "";
+    }
   },
 };
 </script>
