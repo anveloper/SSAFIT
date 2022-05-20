@@ -11,7 +11,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    videos:[],
+    videos: [],
     video: {},
     reply: [],
     logonMember: {
@@ -21,7 +21,7 @@ export default new Vuex.Store({
       username: ''
     },
     savedId: '',
-    availale: { id: false, pw: false, nick: false, },
+    available: { id: false, pw: false, nick: false, },
     page: 1,
     followList: [],
     leadList: [],
@@ -33,20 +33,23 @@ export default new Vuex.Store({
     GET_VIDEO(state, payload) {
       state.video = payload;
     },
-    GET_VIDEOS(state, payload){
-      state.videos = payload;  
+    GET_VIDEOS(state, payload) {
+      state.videos = payload;
+    },
+    GET_ZZIM(state, payload) {
+      state.zzimList = payload;
     },
     GET_REPLY(state, payload) {
       state.reply = payload
     },
-    CREATE_REPLY(state, payload){
+    CREATE_REPLY(state, payload) {
       state.reply = payload
     },
-    DELETE_REPLY(state, payload){
-      state.reply.forEach((repl, index)=>{
-        if(repl.replySeq == payload) {
-          state.reply.splice(index,1);
-        } 
+    DELETE_REPLY(state, payload) {
+      state.reply.forEach((repl, index) => {
+        if (repl.replySeq == payload) {
+          state.reply.splice(index, 1);
+        }
       })
     },
     MEMBER_LOGOUT(state) {
@@ -91,14 +94,20 @@ export default new Vuex.Store({
           console.log(err);
         })
     },
-    getVideos(){
+    getVideos() {
       apiVideo.getVideoList()
-      .then((res)=>{
-        this.commit('GET_VIDEOS', res.data)
-      }).catch((err)=>{
-        console.log(err);
-      })
+        .then((res) => {
+          this.commit('GET_VIDEOS', res.data)
+        }).catch((err) => {
+          console.log(err);
+        })
     },
+    getZzim({ commit }, userId) {
+      apiVideo.getZzim(userId).then((res) => {        
+        commit('GET_ZZIM', res.data.zzimList)
+      }).catch((err) => { console.log(err) });
+    }
+    ,
     getReply({ commit }, id) {
       apiReply.getReplyList(id)
         .then((res) => {
@@ -107,19 +116,19 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    createReply({commit}, reply) {
+    createReply({ commit }, reply) {
       apiReply.createReply(reply)
-      .then((res)=>{
-        commit('CREATE_REPLY', res.data)
-      })
+        .then((res) => {
+          commit('CREATE_REPLY', res.data)
+        })
     },
-    deleteReply({commit}, replySeq){
+    deleteReply({ commit }, replySeq) {
       apiReply.deleteReply(replySeq)
-      .then(()=>{
-        commit('DELETE_REPLY',replySeq)
-      }).catch((err) => {
-        console.log(err)
-      })
+        .then(() => {
+          commit('DELETE_REPLY', replySeq)
+        }).catch((err) => {
+          console.log(err)
+        })
     },
     memberLogin({ commit }, { member, call }) {
       let loginMember = { userId: member.id, password: member.pw }
@@ -170,8 +179,8 @@ export default new Vuex.Store({
     },
     getMember({ commit }, userId) {
       apiMember.getMember(userId).then((res) => {
-        commit("GET_MEMBER",res.data);
-      }).catch((err) => {console.log(err) });
+        commit("GET_MEMBER", res.data);
+      }).catch((err) => { console.log(err) });
     }
   },
   modules: {

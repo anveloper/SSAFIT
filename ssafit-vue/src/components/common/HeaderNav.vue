@@ -1,9 +1,9 @@
 <template>
   <header>
     <b-navbar type="dark" variant="secondary">
-      <div class="container-fluid">
+      <div id="nav-container" class="container-fluid">
         <div>
-          <b-navbar-brand :to="{ name: 'video' }">SSAFIT</b-navbar-brand>
+          <b-navbar-brand :to="{ name: 'video' }"><img id="logo" src="@/assets/logo-r.png"/></b-navbar-brand>
         </div>
         <div v-if="logonMember.userId != ''">
           <b-nav pills>
@@ -44,14 +44,17 @@ export default {
 };
 </script>
 
-<style>
-.nav-item > a {
+<style scoped>
+#logo{
+  height:30px;
+}
+#nav-container .nav-item > a {
   color: whitesmoke;
 }
-.nav-item > a:hover {
+#nav-container .nav-item > a:hover {
   color: rgb(141, 141, 141);
 }
-.nav-item > a:active {
+#nav-container .nav-item > a:active {
   color: rgb(187, 188, 255);
 }
 </style>

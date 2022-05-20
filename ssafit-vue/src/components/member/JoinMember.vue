@@ -16,7 +16,7 @@
           @keydown.tab="checkUserId"
           ref="inId"
         />
-        <span class="badge badge-danger mt-1" v-if="!availale.id" v-text="imsg">
+        <span class="badge badge-danger mt-1" v-if="!available.id" v-text="imsg">
         </span>
       </div>
       <!-- password input -->
@@ -28,7 +28,7 @@
           class="form-control"
           v-model="newMember.password"
           trim
-          :disabled="availale.id == false"
+          :disabled="available.id == false"
           @blur="inputPass"
           @keyup.13="inputPass"
           @keydown.tab="inputPass"
@@ -44,7 +44,7 @@
           class="form-control"
           v-model="passconfirm"
           trim
-          :disabled="availale.pw == false || availale.id == false"
+          :disabled="available.pw == false || available.id == false"
           ref="inPwc"
         />
         <span
@@ -68,13 +68,13 @@
           :disabled="
             passconfirm == '' ||
             newMember.password != passconfirm ||
-            availale.id == false
+            available.id == false
           "
           ref="inNick"
         />
         <span
           class="badge badge-danger mt-1"
-          v-if="!availale.nick"
+          v-if="!available.nick"
           v-text="nmsg"
         >
         </span>
@@ -110,7 +110,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["availale"]),
+    ...mapState(["available"]),
   },
   created() {
     this.$store.dispatch("joinInit");
@@ -146,14 +146,14 @@ export default {
       if (
         this.availale.id &&
         this.newMember.password == this.passconfirm &&
-        this.availale.nick
+        this.available.nick
       ) {
         this.$store.dispatch("join", this.newMember);
       } else {
-        if (!this.availale.id) document.getElementById("input-uid").focus();
+        if (!this.available.id) document.getElementById("input-uid").focus();
         else if (this.newMember.password != this.passconfirm)
           document.getElementById("input-pw").focus();
-        else if (!this.availale.nick)
+        else if (!this.available.nick)
           document.getElementById("input-nick").focus();
       }
     },

@@ -1,79 +1,118 @@
 <template>
   <div>
-    <h3>마이 페이지 {{ $route.params.userId }}</h3>
-    <div class="d-flex row">
-      <div class="col">
-        <label for="followListTable"
-          >내가 follow하는 사람 {{ followList.length }}명</label
+    <h3>{{ $route.params.userId }} 님의 정보</h3>
+    <div>
+      <div class="container col-md-8 col-lg-6 col-xl-6">
+        <h3 class="mt-4">회원가입</h3>
+        <!-- userId input -->
+        <div class="form-outline mb-2">
+          <label class="form-label" for="input-uid">아이디</label>
+          <input
+            type="text"
+            id="input-uid"
+            class="form-control"
+            v-model="logonMember.userId"
+            trim
+            @blur="checkUserId"
+            @keyup.13="checkUserId"
+            @keydown.tab="checkUserId"
+            ref="inId"
+          />
+          <span
+            class="badge badge-danger mt-1"
+            v-if="!availale.id"
+            v-text="imsg"
+          >
+          </span>
+        </div>
+        <!-- password input -->
+        <div class="form-outline mb-2">
+          <label class="form-label" for="input-pw">비밀번호</label>
+          <input
+            type="password"
+            id="input-pw"
+            class="form-control"
+            v-model="logonMember.password"
+            trim
+            :disabled="availale.id == false"
+            @blur="inputPass"
+            @keyup.13="inputPass"
+            @keydown.tab="inputPass"
+            ref="inPw"
+          />
+        </div>
+        <!-- password-c input -->
+        <div class="form-outline mb-2" hidden>
+          <label class="form-label" for="input-pwc">비밀번호 재확인</label>
+          <input
+            type="password"
+            id="input-pwc"
+            class="form-control"
+            v-model="passconfirm"
+            trim
+            :disabled="availale.pw == false || availale.id == false"
+            ref="inPwc"
+          />
+          <span
+            class="badge badge-danger mt-1"
+            v-if="newMember.password != passconfirm && passconfirm != ''"
+            v-text="pmsg"
+          >
+          </span>
+        </div>
+
+        <!-- username input -->
+        <div class="form-outline mb-2">
+          <label class="form-label" for="input-nick">닉네임</label>
+          <input
+            type="text"
+            id="input-nick"
+            class="form-control"
+            v-model="logonMember.username"
+            trim
+            @blur="checkUserName"
+            :disabled="
+              passconfirm == '' ||
+              newMember.password != passconfirm ||
+              availale.id == false
+            "
+            ref="inNick"
+          />
+          <span
+            class="badge badge-danger mt-1"
+            v-if="!availale.nick"
+            v-text="nmsg"
+          >
+          </span>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary btn-block mt-4"
+          @click="join"
         >
-        <b-table
-          id="followListTable"
-          class="w-100 mx-auto va-middle text-center"
-          sticky-header
-          :items="followList"
-          :fields="columns"
-          :dark="false"
-          :fixed="false"
-        >
-          <template v-slot:cell(detail)="{ item }">
-            <span
-              ><b-bnt @click="detail(item)"
-                ><i class="bi bi-heart-arrow"></i></b-bnt
-            ></span>
-          </template>
-        </b-table>
-      </div>
-      <div class="col">
-        <label for="LeadListTable"
-          >나를 follow하는 사람 {{ leadList.length }}명</label
-        >
-        <b-table
-          id="LeadListTable"
-          class="w-100 mx-auto va-middle text-center"
-          sticky-header
-          :items="leadList"
-          :fields="columns"
-          :dark="false"
-          :fixed="false"
-        >
-          <template v-slot:cell(detail)="{ item }">
-            <span
-              ><b-bnt @click="detail(item)"
-                ><i class="bi bi-heart-arrow"></i></b-bnt
-            ></span>
-          </template>
-        </b-table>
+          회원가입
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import {mapState} from 'vuex'
 
 export default {
   name: "myPage",
   data() {
     return {
-      columns: [
-        { key: "userId", label: "아이디", thClass: "w40" },
-        { key: "username", label: "닉네임", thClass: "w40" },
-        { key: "detail", label: "상세보기", thClass: "w20" },
-      ],
-      perPage: 10,
+
     };
   },
-  computed: {
-    ...mapState(["logonMember", "followList", "leadList", "zzimList"]),
+  computed:{
+    ...mapState(['logonMember', 'available']),
   },
-  created() {
-    this.$store.dispatch("getMember", this.$route.params.userId);
-  },
-  methods: {
-    detail(item) {
-      alert(item);
-    },
-  },
+  created(){
+
+  }
 };
 </script>
 
