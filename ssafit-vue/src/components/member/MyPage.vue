@@ -3,7 +3,6 @@
     <h3>{{ $route.params.userId }} 님의 정보</h3>
     <div>
       <div class="container col-md-8 col-lg-6 col-xl-6">
-        <h3 class="mt-4">회원가입</h3>
         <!-- userId input -->
         <div class="form-outline mb-2">
           <label class="form-label" for="input-uid">아이디</label>
@@ -13,17 +12,8 @@
             class="form-control"
             v-model="logonMember.userId"
             trim
-            @blur="checkUserId"
-            @keyup.13="checkUserId"
-            @keydown.tab="checkUserId"
-            ref="inId"
+            disabled
           />
-          <span
-            class="badge badge-danger mt-1"
-            v-if="!availale.id"
-            v-text="imsg"
-          >
-          </span>
         </div>
         <!-- password input -->
         <div class="form-outline mb-2">
@@ -34,15 +24,11 @@
             class="form-control"
             v-model="logonMember.password"
             trim
-            :disabled="availale.id == false"
-            @blur="inputPass"
-            @keyup.13="inputPass"
-            @keydown.tab="inputPass"
-            ref="inPw"
+            :disabled="!isModi"
           />
         </div>
         <!-- password-c input -->
-        <div class="form-outline mb-2" hidden>
+        <div class="form-outline mb-2" :hidden="!isModi">
           <label class="form-label" for="input-pwc">비밀번호 재확인</label>
           <input
             type="password"
@@ -50,12 +36,10 @@
             class="form-control"
             v-model="passconfirm"
             trim
-            :disabled="availale.pw == false || availale.id == false"
-            ref="inPwc"
           />
           <span
             class="badge badge-danger mt-1"
-            v-if="newMember.password != passconfirm && passconfirm != ''"
+            v-if="logonMember.password != passconfirm && passconfirm != ''"
             v-text="pmsg"
           >
           </span>
@@ -71,48 +55,83 @@
             v-model="logonMember.username"
             trim
             @blur="checkUserName"
-            :disabled="
-              passconfirm == '' ||
-              newMember.password != passconfirm ||
-              availale.id == false
-            "
+            :disabled="!isModi"
             ref="inNick"
           />
           <span
             class="badge badge-danger mt-1"
-            v-if="!availale.nick"
+            v-if="!available.nick"
             v-text="nmsg"
           >
           </span>
         </div>
-        <button
-          type="button"
-          class="btn btn-primary btn-block mt-4"
-          @click="join"
-        >
-          회원가입
-        </button>
+        <div v-if="this.logonMember">
+          <div v-if="!isModi">
+            <button
+              type="button"
+              class="btn btn-success btn-block mt-4"
+              @click="modify"
+            >
+              수정
+            </button>
+          </div>
+          <div v-else>
+            <button
+              type="button"
+              class="btn btn-danger btn-block mt-4"
+              @click="modify"
+            >
+              취소</button
+            ><button
+              type="button"
+              class="btn btn-primary btn-block mt-4"
+              @click="update"
+            >
+              완료
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 
 export default {
   name: "myPage",
   data() {
     return {
-
+      isModi: false,
+      passconfirm: "",
+      nmsg: "",
+      pmsg: "비밀번호가 일치하지 않습니다.",
     };
   },
-  computed:{
-    ...mapState(['logonMember', 'available']),
+  computed: {
+    ...mapState(["logonMember", "available"]),
   },
-  created(){
-
-  }
+  created() {},
+  methods: {
+    modify() {
+      this.isModi = !this.isModi;
+      this.passconfirm = "";
+    },
+    update() {
+      this.$store.dispatch("updateMember", this.logonMember);
+    },
+    checkUserName() {
+      if (this.newMember.username != "") {
+        this.$store.dispatch("checkUserName", this.logonMember.username);
+        this.$refs.inNick.focus();
+        this.nmsg = "이미 사용중인 닉네임입니다.";
+      } else {
+        this.$refs.inNick.focus();
+        this.nmsg = "닉네임을 입력해 주세요.";
+      }
+    },
+  },
 };
 </script>
 

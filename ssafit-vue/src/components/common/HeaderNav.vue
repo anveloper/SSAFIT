@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="fixed-top">
     <b-navbar type="dark" variant="secondary">
       <div id="nav-container" class="container-fluid">
         <div>

@@ -31,8 +31,7 @@ const checkLogin = () => (from, to, next) => {
 
 const routes = [
   {
-    path: '/',
-    alias: ['/video', '/'],
+    path: '/video',
     component: VideoView,
     children: [
       {

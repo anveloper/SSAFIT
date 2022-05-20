@@ -1,9 +1,12 @@
 <template>
   <div id="app">
     <header-nav></header-nav>
-    <b-container class="mt-3">
-      <router-view />
-    </b-container>
+    <div id="pageTop" />
+    <div>
+      <b-container class="mt-5">
+        <router-view />
+      </b-container>
+    </div>
   </div>
 </template>
 
@@ -28,5 +31,13 @@ export default {
 
 * {
   font-family: "GangwonEduPowerExtraBoldA", Helvetica, Arial, sans-serif;
+}
+
+#pageTop {
+  margin-top: 80px;
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 </style>
