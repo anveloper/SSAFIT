@@ -11,5 +11,8 @@ export default {
   },
   deleteReply(replySeq){
     return axiosService.delete(ROOT_URL+`/reply/${replySeq}`)
+  },
+  updateReply(reply){
+    return axiosService.put(ROOT_URL+`/reply`, reply)
   }
 }

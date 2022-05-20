@@ -121,6 +121,14 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
+    updateReply({commit}, reply){
+      apiReply.updateReply(reply)
+      .then(()=>{
+        commit
+      }).catch((err)=>{
+        console.log(err)
+      })
+    },
     memberLogin({ commit }, { member, call }) {
       let loginMember = { userId: member.id, password: member.pw }
       if (member.saveId) {
@@ -132,16 +140,16 @@ export default new Vuex.Store({
         document.cookie = "savedId=" + "; path=/; expires=" + -1 + ";"
       }
       apiMember.loginMember(loginMember)
-        .then((res) => {
-          commit('MEMBER_LOGIN', { logonMember: res.data.logonMember, token: res.data["auth-token"] })
-          if (call) router.push(call)
-          else router.push({ name: 'video' })
-        }).catch((err) => { console.log(err) })
+      .then((res) => {
+        commit('MEMBER_LOGIN', { logonMember: res.data.logonMember, token: res.data["auth-token"] })
+        if (call) router.push(call)
+        else router.push({ name: 'video' })
+      }).catch((err) => { console.log(err) })
     },
     joinInit({ commit }) {
-      commit("JOIN_INIT");
-    },
-    join({ commit }, payload) {
+        commit("JOIN_INIT");
+      },
+      join({ commit }, payload) {
       commit;
       apiMember.joinMember(payload).then(() => {
         router.push({ name: 'login' })
