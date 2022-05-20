@@ -12,4 +12,7 @@ export default {
   createVideo(video) {
     return axiosService.post(ROOT_URL + `/video`, video);
   },
+  getZzim(userId) {
+    return axiosService.get(ROOT_URL + `/video/zzim/${userId}`);
+  }
 }
