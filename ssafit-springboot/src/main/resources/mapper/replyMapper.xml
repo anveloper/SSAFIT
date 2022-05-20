@@ -20,7 +20,7 @@
 	<insert id="insertReply" parameterType="reply">
 		INSERT
 		  INTO sf_reply
-		VALUES (0, 0, #{youtubeId}, #{writer}, #{content})
+		VALUES (0, #{reSeq}, #{youtubeId}, #{writer}, #{content})
 	</insert>
 	
 	<update id="updateReply" parameterType="reply">
