@@ -28,6 +28,12 @@ export default new Vuex.Store({
     zzimList: []
   },
   getters: {
+    rootReply : state => {
+      return state.reply.filter(repl => repl.reSeq == 0)
+    },
+    reReply : (state) =>{
+      return state.reply.filter(repl => repl.reSeq != 0)
+    }
   },
   mutations: {
     GET_VIDEO(state, payload) {
