@@ -99,6 +99,7 @@ export default {
       return this.$store.getters.reReply
     }
   },
+  
   created() {
     const pathName = new URL(document.location).pathname.split("/");
     const id = pathName[pathName.length - 1];
