@@ -6,7 +6,10 @@ import VideoView from '@/views/VideoView.vue'
 import VideoList from '@/components/video/VideoList.vue'
 import VideoDetail from '../components/video/VideoDetail.vue'
 
+import MemberView from '@/views/MemberView.vue'
 import MyPage from '@/components/member/MyPage.vue'
+import FollowList from '@/components/member/FollowList.vue'
+import ZzimList from '@/components/member/ZzimList.vue'
 
 import LoginMember from '@/components/member/LoginMember.vue'
 import JoinMember from '@/components/member/JoinMember.vue'
@@ -28,7 +31,8 @@ const checkLogin = () => (from, to, next) => {
 
 const routes = [
   {
-    path: '/video',
+    path: '/',
+    alias: ['/video', '/'],
     component: VideoView,
     children: [
       {
@@ -44,9 +48,26 @@ const routes = [
     ]
   },
   {
-    path: '/member/:userId',
-    name: 'myPage',
-    component: MyPage,
+    path: '/member',
+    name: 'member',
+    component: MemberView,
+    children: [
+      {
+        path: ":userId",
+        name: "myPage",
+        component: MyPage
+      },
+      {
+        path: ":userId/follow",
+        name: "follow",
+        component: FollowList
+      },
+      {
+        path: ":userId/zzim",
+        name: "zzim",
+        component: ZzimList
+      },
+    ],
     beforeEnter: checkLogin(),
   },
   {

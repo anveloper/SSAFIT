@@ -1,6 +1,6 @@
 <template>
-  <div class="mt-4">
-    <div class="mt-4">
+  <div class="mx-auto my-auto">
+    <div class="mx-auto my-auto">
       <div class="container col-md-8 col-lg-6 col-xl-4">
         <h3 class="mt-4">로그인</h3>
         <!-- userId input -->
