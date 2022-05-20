@@ -14,11 +14,12 @@
           :fields="columns"
           :dark="false"
           :fixed="false"
+          @row-clicked="detail"
         >
           <template v-slot:cell(detail)="{ item }">
             <span
-              ><button class="btn btn-secondary" @click="detail(item.userId)"
-                ><i class="bi bi-heart-arrow"></i></button
+              ><button class="btn btn-secondary" @click="unfollow(item)">
+                <i class="bi bi-heart-arrow"></i></button
             ></span>
           </template>
         </b-table>
@@ -35,11 +36,12 @@
           :fields="columns"
           :dark="false"
           :fixed="false"
+          @row-clicked="detail"
         >
           <template v-slot:cell(detail)="{ item }">
             <span
-              ><button class="btn btn-secondary" @click="detail(item.userId)"
-                ><i class="bi bi-heart-arrow"></i></button
+              ><button class="btn btn-secondary" @click="block(item.userId)">
+                <i class="bi bi-heart-arrow"></i></button
             ></span>
           </template>
         </b-table>
@@ -58,7 +60,7 @@ export default {
       columns: [
         { key: "userId", label: "아이디", thClass: "w40" },
         { key: "username", label: "닉네임", thClass: "w40" },
-        { key: "detail", label: "상세보기", thClass: "w20" },
+        { key: "detail", label: "해제", thClass: "w20" },
       ],
       perPage: 10,
     };
@@ -71,7 +73,14 @@ export default {
   },
   methods: {
     detail(item) {
-      alert(item);
+      console.log(item);
+      this.$router.push(`/member/other/${item.userId}`);
+    },
+    unfollow(item) {
+      console.log(item);
+    },
+    block(item) {
+      console.log(item);
     },
   },
 };

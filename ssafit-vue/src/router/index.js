@@ -8,6 +8,7 @@ import VideoDetail from '../components/video/VideoDetail.vue'
 
 import MemberView from '@/views/MemberView.vue'
 import MyPage from '@/components/member/MyPage.vue'
+import SomeonePage from '@/components/member/SomeonePage.vue'
 import FollowList from '@/components/member/FollowList.vue'
 import ZzimList from '@/components/member/ZzimList.vue'
 
@@ -65,6 +66,11 @@ const routes = [
         path: ":userId/zzim",
         name: "zzim",
         component: ZzimList
+      },
+      {
+        path: "other/:userId",
+        name: "other",
+        component: SomeonePage
       },
     ],
     beforeEnter: checkLogin(),
