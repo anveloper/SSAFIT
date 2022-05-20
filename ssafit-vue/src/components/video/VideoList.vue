@@ -136,11 +136,14 @@ export default {
 };
 </script>
 
-<style >
-#__BVID__55___BV_tab_button__ {
-  color: rgb(99, 99, 99) !important;
+<style scoped>
+.nav-item .nav-link {
+  color: rgb(155, 155, 155);
 }
-#__BVID__55___BV_tab_button__ {
-  color: rgb(48, 48, 48);
+.nav-item .nav-link:hover {
+  color: rgb(58, 58, 58);
+}
+.nav-item .nav-link:active {
+  color: rgb(49, 50, 68);
 }
 </style>
