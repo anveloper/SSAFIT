@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>FOLLOW LIST</h3>
-    <div class="d-flex">
+    <div class="d-flex flex-wrap">
       <div class="col">
         <label for="followListTable"
           >내가 follow하는 사람 {{ followList.length }}명</label

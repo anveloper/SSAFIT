@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h3">마이 페이지</div>
+    <div class="h2">마이 페이지</div>
     <div class="row">
       <div class="col">
         <ul class="nav nav-pills d-flex justify-content-center" >
