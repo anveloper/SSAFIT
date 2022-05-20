@@ -1,8 +1,8 @@
 <template>
-  <div class="mx-auto my-auto">
+  <div class="container-fluid row justify-content-center align-items-center">
     <div class="mx-auto my-auto">
       <div class="container col-md-8 col-lg-6 col-xl-4">
-        <h3 class="mt-4">로그인</h3>
+        <h3 class="mt-5">로그인</h3>
         <!-- userId input -->
         <div class="form-outline mb-4">
           <input

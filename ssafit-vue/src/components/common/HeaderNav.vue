@@ -3,12 +3,16 @@
     <b-navbar type="dark" variant="secondary">
       <div id="nav-container" class="container-fluid">
         <div>
-          <b-navbar-brand :to="{ name: 'video' }"><img id="logo" src="@/assets/logo-r.png"/></b-navbar-brand>
+          <b-navbar-brand :to="{ name: 'video' }"
+            ><img id="logo" src="@/assets/logo-s.svg"
+          /></b-navbar-brand>
         </div>
         <div v-if="logonMember.userId != ''">
           <b-nav pills>
             <b-nav-item @click="logout">로그아웃</b-nav-item>
-            <b-nav-item :to="`/member/${logonMember.userId}`">마이페이지</b-nav-item>
+            <b-nav-item :to="`/member/${logonMember.userId}`"
+              >마이페이지</b-nav-item
+            >
           </b-nav>
         </div>
         <div v-else>
@@ -28,8 +32,7 @@ import { mapState, mapMutations } from "vuex";
 export default {
   name: "headerNav",
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     ...mapMutations(["MEMBER_LOGOUT"]),
@@ -45,8 +48,8 @@ export default {
 </script>
 
 <style scoped>
-#logo{
-  height:30px;
+#logo {
+  height: 30px;
 }
 #nav-container .nav-item > a {
   color: whitesmoke;
