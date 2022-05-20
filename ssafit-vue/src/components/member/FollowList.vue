@@ -12,7 +12,6 @@
           sticky-header
           :items="followList"
           :fields="columns"
-          :dark="false"
           :fixed="false"
           @row-clicked="detail"
         >
