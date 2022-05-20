@@ -16,7 +16,11 @@
           @keydown.tab="checkUserId"
           ref="inId"
         />
-        <span class="badge badge-danger mt-1" v-if="!available.id" v-text="imsg">
+        <span
+          class="badge badge-danger mt-1"
+          v-if="!available.id"
+          v-text="imsg"
+        >
         </span>
       </div>
       <!-- password input -->
@@ -32,7 +36,6 @@
           @blur="inputPass"
           @keyup.13="inputPass"
           @keydown.tab="inputPass"
-          ref="inPw"
         />
       </div>
       <!-- password-c input -->
@@ -45,7 +48,6 @@
           v-model="passconfirm"
           trim
           :disabled="available.pw == false || available.id == false"
-          ref="inPwc"
         />
         <span
           class="badge badge-danger mt-1"
@@ -70,7 +72,6 @@
             newMember.password != passconfirm ||
             available.id == false
           "
-          ref="inNick"
         />
         <span
           class="badge badge-danger mt-1"
@@ -122,10 +123,8 @@ export default {
     checkUserId() {
       if (this.newMember.userId != "") {
         this.$store.dispatch("checkUserId", this.newMember.userId);
-        this.$refs.inId.focus();
         this.imsg = "이미 사용중인 아이디입니다.";
       } else {
-        this.$refs.inId.focus();
         this.imsg = "아이디를 입력해 주세요.";
       }
     },
@@ -135,16 +134,14 @@ export default {
     checkUserName() {
       if (this.newMember.username != "") {
         this.$store.dispatch("checkUserName", this.newMember.username);
-        this.$refs.inNick.focus();
         this.nmsg = "이미 사용중인 닉네임입니다.";
       } else {
-        this.$refs.inNick.focus();
         this.nmsg = "닉네임을 입력해 주세요.";
       }
     },
     join() {
       if (
-        this.availale.id &&
+        this.available.id &&
         this.newMember.password == this.passconfirm &&
         this.available.nick
       ) {

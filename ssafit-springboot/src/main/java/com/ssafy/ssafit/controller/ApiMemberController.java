@@ -86,6 +86,22 @@ public class ApiMemberController {
 
 		return new ResponseEntity<Map<String, Object>>(result, status);
 	}
+	
+	@GetMapping("/other/{userId}")
+	public ResponseEntity<Map<String, Object>> getOtherMember(@PathVariable String userId) {
+		HttpStatus status = null;
+		HashMap<String, Object> result = new HashMap<>();	
+		System.out.println(userId+" other");
+		try {
+			result.put("followList", memberService.getFollowList(userId));
+			result.put("leadList", memberService.getLeadList(userId));
+			status = HttpStatus.OK;
+		} catch (Exception e) {
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		return new ResponseEntity<Map<String, Object>>(result, status);
+	}
 
 	@PostMapping("/join")
 	public ResponseEntity<Member> join(@RequestBody Member member) {

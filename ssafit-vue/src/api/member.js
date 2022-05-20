@@ -4,6 +4,9 @@ export default {
   getMember(userId) {
     return axiosService.get(`/member/${userId}`);
   },
+  getOtherMember(userId) {
+    return axiosService.get(`/member/other/${userId}`);
+  },
   loginMember(member) {
     return axiosService.post(`/member/login`, member);
   },

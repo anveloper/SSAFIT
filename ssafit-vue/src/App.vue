@@ -40,4 +40,18 @@ export default {
 *::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+#app {
+  background-image: url("@/assets/back.svg");
+  background-repeat: no-repeat;
+  background-size: 110%;
+  background-attachment: fixed;
+  height: 250vh;
+}
+#app .nav-link {
+  color: #343a40;
+}
+#app .nav-link:active {
+  color: #596b86;
+}
 </style>

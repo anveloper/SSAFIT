@@ -20,18 +20,23 @@ export default new Vuex.Store({
       password: '',
       username: ''
     },
+    followList: [],
+    leadList: [],
+    zzimList: [],
     savedId: '',
     available: { id: false, pw: false, nick: false, },
     page: 1,
-    followList: [],
-    leadList: [],
-    zzimList: []
+    otherMember: {
+      followList: [],
+      leadList: [],
+      zzimList: [],
+    }
   },
   getters: {
-    rootReply : state => {
+    rootReply: state => {
       return state.reply.filter(repl => repl.reSeq == 0)
     },
-    reReply : (state) =>{
+    reReply: (state) => {
       return state.reply.filter(repl => repl.reSeq != 0)
     }
   },
@@ -44,6 +49,9 @@ export default new Vuex.Store({
     },
     GET_ZZIM(state, payload) {
       state.zzimList = payload;
+    },
+    GET_OTHER_ZZIM(state, payload) {
+      state.otherMember.zzimList = payload;
     },
     GET_REPLY(state, payload) {
       state.reply = payload
@@ -69,27 +77,30 @@ export default new Vuex.Store({
       axiosService.defaults.headers["auth-token"] = token;
     },
     JOIN_INIT(state) {
-      state.availale.id = false;
-      state.availale.pw = false;
-      state.availale.nick = false;
+      state.available.id = false;
+      state.available.pw = false;
+      state.available.nick = false;
     },
     CHECK_USER_ID(state, ok) {
-      if (ok == 'ok') state.availale.id = true;
-      else state.availale.id = false;
+      if (ok == 'ok') state.available.id = true;
+      else state.available.id = false;
     },
     INPUT_PASS(state, bool) {
-      if (bool) state.availale.pw = true;
-      else state.availale.pw = false;
+      if (bool) state.available.pw = true;
+      else state.available.pw = false;
     },
     CHECK_USER_NAME(state, ok) {
-      if (ok == 'ok') state.availale.nick = true;
-      else state.availale.nick = false;
+      if (ok == 'ok') state.available.nick = true;
+      else state.available.nick = false;
     },
     GET_MEMBER(state, payload) {
       state.followList = payload.followList;
       state.leadList = payload.leadList;
-      state.zzimList = payload.zzimList;
-    }
+    },
+    GET_OTHER_MEMBER(state, payload) {
+      state.otherMember.followList = payload.followList;
+      state.otherMember.leadList = payload.leadList;
+    },
   },
   actions: {
     getVideo({ commit }, id) {
@@ -109,11 +120,15 @@ export default new Vuex.Store({
         })
     },
     getZzim({ commit }, userId) {
-      apiVideo.getZzim(userId).then((res) => {        
+      apiVideo.getZzim(userId).then((res) => {
         commit('GET_ZZIM', res.data.zzimList)
       }).catch((err) => { console.log(err) });
-    }
-    ,
+    },
+    getOtherZzim({ commit }, userId) {
+      apiVideo.getZzim(userId).then((res) => {
+        commit('GET_OTHER_ZZIM', res.data.zzimList)
+      }).catch((err) => { console.log(err) });
+    },
     getReply({ commit }, id) {
       apiReply.getReplyList(id)
         .then((res) => {
@@ -136,13 +151,13 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    updateReply({commit}, reply){
+    updateReply({ commit }, reply) {
       apiReply.updateReply(reply)
-      .then(()=>{
-        commit
-      }).catch((err)=>{
-        console.log(err)
-      })
+        .then(() => {
+          commit
+        }).catch((err) => {
+          console.log(err)
+        })
     },
     memberLogin({ commit }, { member, call }) {
       let loginMember = { userId: member.id, password: member.pw }
@@ -155,16 +170,16 @@ export default new Vuex.Store({
         document.cookie = "savedId=" + "; path=/; expires=" + -1 + ";"
       }
       apiMember.loginMember(loginMember)
-      .then((res) => {
-        commit('MEMBER_LOGIN', { logonMember: res.data.logonMember, token: res.data["auth-token"] })
-        if (call) router.push(call)
-        else router.push({ name: 'video' })
-      }).catch((err) => { console.log(err) })
+        .then((res) => {
+          commit('MEMBER_LOGIN', { logonMember: res.data.logonMember, token: res.data["auth-token"] })
+          if (call) router.push(call)
+          else router.push({ name: 'video' })
+        }).catch((err) => { console.log(err) })
     },
     joinInit({ commit }) {
-        commit("JOIN_INIT");
-      },
-      join({ commit }, payload) {
+      commit("JOIN_INIT");
+    },
+    join({ commit }, payload) {
       commit;
       apiMember.joinMember(payload).then(() => {
         router.push({ name: 'login' })
@@ -195,7 +210,12 @@ export default new Vuex.Store({
       apiMember.getMember(userId).then((res) => {
         commit("GET_MEMBER", res.data);
       }).catch((err) => { console.log(err) });
-    }
+    },
+    getOtherMember({ commit }, userId) {
+      apiMember.getOtherMember(userId).then((res) => {
+        commit("GET_OTHER_MEMBER", res.data);
+      }).catch((err) => { console.log(err) });
+    },
   },
   modules: {
   }
