@@ -39,8 +39,10 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	public void upViewCnt(Video video) {
-		video.setViewCnt(video.getViewCnt() + 1);
-		videoDao.updateVideo(video);
+		if (video != null) {
+			video.setViewCnt(video.getViewCnt() + 1);
+			videoDao.updateVideo(video);
+		}
 	}
 
 	@Override

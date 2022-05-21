@@ -90,8 +90,7 @@ public class ApiMemberController {
 	@GetMapping("/other/{userId}")
 	public ResponseEntity<Map<String, Object>> getOtherMember(@PathVariable String userId) {
 		HttpStatus status = null;
-		HashMap<String, Object> result = new HashMap<>();	
-		System.out.println(userId+" other");
+		HashMap<String, Object> result = new HashMap<>();
 		try {
 			result.put("followList", memberService.getFollowList(userId));
 			result.put("leadList", memberService.getLeadList(userId));
