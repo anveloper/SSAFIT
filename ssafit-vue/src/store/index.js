@@ -159,6 +159,28 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    zzimVideo({ commit }, { userId, youtubeId }) {
+      let flag = true;
+      let arr = this.state.zzimList;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].youtubeId == youtubeId) {
+          flag = false;
+          console.log(arr[i].youtubeId);
+          break;
+        }
+      }
+      if (flag) {
+        if (confirm("'찜' 하시겠습니까?"))
+          apiVideo.insertZzim(userId, youtubeId).then((res) => {
+            commit('GET_ZZIM', res.data);
+          }).catch((err) => { console.log(err) });
+      } else {
+        if (confirm("'찜'을 해제하시겠습니까?"))
+          apiVideo.deleteZzim(userId, youtubeId).then((res) => {
+            commit('GET_ZZIM', res.data);
+          }).catch((err) => { console.log(err) });
+      }
+    },
     memberLogin({ commit }, { member, call }) {
       let loginMember = { userId: member.id, password: member.pw }
       if (member.saveId) {
