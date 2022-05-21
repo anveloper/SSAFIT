@@ -6,7 +6,7 @@
   - **Vue update**
     - 영상 detail에서 찜하기 기능 추가. 이미 찜된 영상이면 눌렀을때 취소되도록 기능
     - sidebar 기능 처럼 만들어서 목록까지 노출이 되나, block 설정이 먹어서 메인 섹션이 클릭이 되지 않음..
-    - ![image](https://user-images.githubusercontent.com/90117593/169661824-5666be23-9486-423c-a06c-3e87aca5d165.png)
+    - ![image](https://user-images.githubusercontent.com/90117593/169661865-15b4597f-62fb-459b-8ab2-8594d63bd381.png)
 
 ---
 
