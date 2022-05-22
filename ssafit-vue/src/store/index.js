@@ -23,6 +23,7 @@ export default new Vuex.Store({
     followList: [],
     leadList: [],
     zzimList: [],
+    partVideos: [],
     savedId: '',
     available: { id: false, pw: false, nick: false, },
     page: 1,
@@ -162,13 +163,14 @@ export default new Vuex.Store({
     zzimVideo({ commit }, { userId, youtubeId }) {
       let flag = true;
       let arr = this.state.zzimList;
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].youtubeId == youtubeId) {
-          flag = false;
-          console.log(arr[i].youtubeId);
-          break;
+      if (arr)
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i].youtubeId == youtubeId) {
+            flag = false;
+            console.log(arr[i].youtubeId);
+            break;
+          }
         }
-      }
       if (flag) {
         if (confirm("'찜' 하시겠습니까?"))
           apiVideo.insertZzim(userId, youtubeId).then((res) => {
@@ -238,6 +240,35 @@ export default new Vuex.Store({
         commit("GET_OTHER_MEMBER", res.data);
       }).catch((err) => { console.log(err) });
     },
+    followMember({ commit }, { userId, followId }) {
+      let flag = true;
+      let arr = this.state.followList;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].userId == followId) {
+          flag = false;
+          break;
+        }
+      }
+      if (flag) {
+        if (confirm("'팔로우' 하시겠습니까?"))
+          apiMember.followMember(userId, followId).then((res) => {
+            commit('GET_MEMBER', res.data);
+          }).catch((err) => { console.log(err) });
+      } else {
+        if (confirm("'언팔로우'하시겠습니까?"))
+          apiMember.unfollowMember(userId, followId).then((res) => {
+            commit('GET_MEMBER', res.data);
+          }).catch((err) => { console.log(err) });
+      }
+    },
+    blockMember({ commit }, { userId, followId }) {
+      let sto = this;
+      if (confirm("상대방의 '팔로우'를 해제하시겠습니까?"))
+        apiMember.unfollowMember(followId, userId).then(() => {
+          commit;
+          sto.dispatch("getMember", this.state.logonMember.userId);
+        }).catch((err) => { console.log(err) });
+    }
   },
   modules: {
   }

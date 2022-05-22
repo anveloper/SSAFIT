@@ -3,13 +3,14 @@
     <b-navbar type="dark" variant="secondary">
       <div id="nav-container" class="container-fluid">
         <div>
-          <b-navbar-brand :to="{ name: 'video' }"
+          <b-navbar-brand :to="'/video'"
             ><img id="logo" src="@/assets/logo-s.svg"
           /></b-navbar-brand>
         </div>
         <div v-if="logonMember.userId != ''">
           <b-nav pills>
             <b-nav-item @click="logout">로그아웃</b-nav-item>
+            <b-nav-item :to="`/calender`">운동 일지</b-nav-item>
             <b-nav-item :to="`/member/${logonMember.userId}`"
               >마이페이지</b-nav-item
             >

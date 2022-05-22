@@ -60,19 +60,19 @@
 		INSERT INTO follow_member
 		VALUES ((SELECT member_seq 
 		          FROM sf_member 
-		         WHERE user_id = #{myId}), 
+		         WHERE user_id = #{userId}), 
 		        (SELECT member_seq 
 		          FROM sf_member 
-		         WHERE user_id = #{userId}))	
+		         WHERE user_id = #{followId}))	
 	</insert>
 	
 	<delete id="unFollowId" parameterType="HashMap">
 		DELETE FROM follow_member
 		 WHERE from_seq = (SELECT member_seq 
 		                     FROM sf_member 
-		                    WHERE user_id = #{myId})
+		                    WHERE user_id = #{userId})
 		   AND to_seq = (SELECT member_seq 
 				           FROM sf_member 
-				          WHERE user_id = #{userId})
+				          WHERE user_id = #{followId})
 	</delete>
 </mapper>

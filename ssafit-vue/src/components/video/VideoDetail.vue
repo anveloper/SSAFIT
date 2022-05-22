@@ -16,6 +16,7 @@
         style="font-family: initial"
         v-model="comment"
         placeholder="댓글 추가..."
+        @keyup.enter="createReply"
       ></b-form-input>
       <b-input-group-append>
         <b-button variant="info" @click="createReply">댓글 등록</b-button>
@@ -36,7 +37,18 @@
         class="flex-column align-items-start"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 style="font-size: 1rem">{{ repl.writer }}</h5>
+          <span>
+            <span style="font-size: 1rem">{{ repl.writer }}</span>
+            <button
+              class="btn btn-warning btn-sm ml-2 follow-btn"
+              @click="followMember(repl.writer)"
+              v-if="
+                logonMember.userId != '' && repl.writer != logonMember.userId
+              "
+            >
+              팔로우
+            </button>
+          </span>
           <b-button-group size="sm" v-if="repl.writer == logonMember.userId">
             <b-button variant="warning" @click="updateReply(index, repl)"
               >수정</b-button
@@ -51,9 +63,13 @@
           v-if="index == updateComment"
           style="font-family: initial"
         >
-          <b-form-input placeholder="?" v-model="newComment"></b-form-input>
+          <b-form-input
+            v-model="newComment"
+            @keyup.enter="update(repl)"
+            autofocus
+          ></b-form-input>
           <b-input-group-append>
-            <b-button variant="info" @click="update(repl)">등록</b-button>
+            <b-button variant="info" @click="update(repl)" >등록</b-button>
           </b-input-group-append>
         </b-input-group>
         <p class="mb-1" :id="`repl${index}`" v-else>{{ repl.content }}</p>
@@ -71,6 +87,8 @@
               <b-form-input
                 :placeholder="`${repl.writer}에게 답글쓰기...`"
                 v-model="reComment"
+                @keyup.enter="createReReply(repl)"
+                autofocus
               ></b-form-input>
               <b-input-group-append>
                 <b-button variant="info" @click="createReReply(repl)"
@@ -87,9 +105,19 @@
             v-show="repl.replySeq == rerepl.reSeq"
           >
             <div class="d-flex w-100 justify-content-between">
-              <h5 style="font-size: 0.8rem" class="mb-1">
-                {{ rerepl.writer }}
-              </h5>
+              <span>
+                <span style="font-size: 0.8rem">{{ rerepl.writer }}</span>
+                <button
+                  class="btn btn-warning btn-sm ml-2 follow-btn"
+                  @click="followMember(rerepl.writer)"
+                  v-if="
+                    logonMember.userId != '' &&
+                    rerepl.writer != logonMember.userId
+                  "
+                >
+                  팔로우
+                </button>
+              </span>
               <b-button-group
                 size="sm"
                 v-if="rerepl.writer == logonMember.userId"
@@ -102,11 +130,18 @@
                 >
               </b-button-group>
             </div>
-            <div v-if="rereCommentIdx != rerepl.replySeq">
-              {{ rerepl.content }}
-            </div>
-            <b-input-group class="mt-3" v-else style="font-family: initial">
-              <b-form-input v-model="newreComment"></b-form-input>
+
+            <div v-if="rereCommentIdx != rerepl.replySeq">{{rerepl.content}}</div>
+            <b-input-group
+              class="mt-3"
+              v-else
+              style="font-family: initial"
+            >
+              <b-form-input
+                v-model="newreComment"
+                @keyup.enter="updatere(rerepl)"
+                autofocus
+              ></b-form-input>
               <b-input-group-append>
                 <b-button variant="info" @click="updatere(rerepl)"
                   >등록</b-button
@@ -153,6 +188,7 @@ export default {
     this.$store.dispatch("getReply", id);
   },
   mounted() {
+    this.$store.dispatch("getMember", this.logonMember.userId);
     this.$store.dispatch("getZzim", this.logonMember.userId);
   },
   methods: {
@@ -183,6 +219,7 @@ export default {
         alert("내용을 입력하세요");
       }
       this.reComment = "";
+      this.reCommentIdx="-1";
     },
     setReComIdx(index) {
       this.reCommentIdx = index;
@@ -193,7 +230,9 @@ export default {
     },
     deleteReply(replySeq) {
       console.log(replySeq);
-      this.$store.dispatch("deleteReply", replySeq);
+      if (confirm("정말 삭제하시겠습니까??") == true){
+        this.$store.dispatch("deleteReply", replySeq);
+      }
     },
     updateReply(index, repl) {
       if (repl.reSeq == 0) {
@@ -219,9 +258,18 @@ export default {
       let userId = this.logonMember.userId;
       this.$store.dispatch("zzimVideo", { userId, youtubeId });
     },
+    followMember(followId) {
+      let userId = this.logonMember.userId;
+      this.$store.dispatch("followMember", { userId, followId });
+    },
   },
 };
 </script>
 
 <style>
+.follow-btn {
+  padding: 0.01rem 0.03rem !important;
+  font-size: 0.7rem !important;
+  line-height: 0.7rem !important;
+}
 </style>

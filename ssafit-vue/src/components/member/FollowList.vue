@@ -39,7 +39,7 @@
         >
           <template v-slot:cell(detail)="{ item }">
             <span
-              ><button class="btn btn-secondary" @click="block(item.userId)">
+              ><button class="btn btn-secondary" @click="block(item)">
                 <i class="bi bi-heart-arrow"></i></button
             ></span>
           </template>
@@ -65,7 +65,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["followList", "leadList"]),
+    ...mapState(["followList", "leadList", "logonMember"]),
   },
   created() {
     this.$store.dispatch("getMember", this.$route.params.userId);
@@ -75,11 +75,17 @@ export default {
       console.log(item);
       this.$router.push(`/member/other/${item.userId}`);
     },
-    unfollow(item) {
-      console.log(item);
+    unfollow(followId) {
+      this.$store.dispatch("followMember", {
+        userId: this.logonMember.userId,
+        followId: followId.userId,
+      });
     },
-    block(item) {
-      console.log(item);
+    block(otherId) {
+       this.$store.dispatch("blockMember", {
+        userId: this.logonMember.userId,
+        followId: otherId.userId,
+      });
     },
   },
 };

@@ -1,11 +1,15 @@
 <template>
-  <span class="fixed-top mt-5" v-if="logonMember.userId">
-    <div class="justify-content-end mt-4 row">
+  <span id="sideSpan" v-if="logonMember.userId">
+    <span class="justify-content-end mt-4 row">
       <button id="zbtn" class="btn btn-secondary mr-1" @click="sideOn">
         찜
       </button>
-      <div id="sideBar" class="overflow-auto col ml-1 mr-4 d-none d-lg-block" v-if="isOn">
-        <div >
+      <div
+        id="sideBar"
+        class="overflow-auto col ml-1 mr-4 d-none d-md-block"
+        v-if="isOn"
+      >
+        <div>
           <b-card-group columns class="row justify-content-center">
             <b-card
               v-for="video in zzimList"
@@ -13,19 +17,32 @@
               :img-src="`https://img.youtube.com/vi/${video.youtubeId}/0.jpg`"
               img-alt="Card image"
               img-top
-              style="max-width:300px;"
+              style="max-width: 300px"
             >
               <b-card-text>
                 <b-link :to="`/video/${video.youtubeId}`">{{
                   video.videoTitle
                 }}</b-link>
               </b-card-text>
-              <b-badge variant="danger">조회수 : {{ video.viewCnt }}</b-badge>
+              <div class="d-flex justify-content-between">
+                <span>
+                  <b-badge variant="secondary"
+                    >조회수 : {{ video.viewCnt }}</b-badge
+                  >
+                </span>
+                <button
+                  class="btn btn-danger ml-2 zzim-btn"
+                  @click="zzimVideo(video.youtubeId)"
+                  v-if="logonMember.userId"
+                >
+                  해제
+                </button>
+              </div>
             </b-card>
           </b-card-group>
         </div>
       </div>
-    </div>
+    </span>
   </span>
 </template>
 
@@ -38,14 +55,18 @@ export default {
       isOn: false,
     };
   },
+  computed: {
+    ...mapState(["zzimList", "logonMember"]),
+  },
   methods: {
     sideOn() {
       this.$store.dispatch("getZzim", this.logonMember.userId);
       this.isOn = !this.isOn;
     },
-  },
-  computed: {
-    ...mapState(["logonMember", "zzimList"]),
+    zzimVideo(youtubeId) {
+      let userId = this.logonMember.userId;
+      this.$store.dispatch("zzimVideo", { userId, youtubeId });
+    },
   },
   mounted() {
     this.$store.dispatch("getZzim", this.logonMember.userId);
@@ -54,13 +75,24 @@ export default {
 </script>
 
 <style>
+#sideSpan {
+  position: fixed;
+  right: 0px;
+  top: 40px;
+}
+
 #zbtn {
   max-height: 40px;
 }
+
 #sideBar {
   background: #343a4099;
   border-radius: 5px;
-  height: 80vh;
+  height: 90vh;
   max-width: 300px;
+}
+.zzim-btn {
+  padding: 0.2rem !important;
+  font-size: 0.8rem !important;
 }
 </style>
