@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,6 +50,26 @@ public class ApiVideoController {
 		return new ResponseEntity<List<Video>>(videoService.getVideoListByPartCode(code), HttpStatus.OK);
 	}
 
+	@PostMapping("/create")
+	public ResponseEntity<Video> createVideo(@RequestBody HashMap<String, String> param) {
+		HttpStatus status = null;
+		String youtubeId = param.get("youtubeId");
+		String title = param.get("title");
+		System.out.println("insertVideo : " + param.get("youtubeId") + " :: " + param.get("title"));
+		Video video = videoService.readVideoByYoutubeId(youtubeId);
+		if (video == null) {
+			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("youtubeId", youtubeId);
+			params.put("title", title);
+			videoService.createVideo(params);
+			status = HttpStatus.CREATED;
+		} else {
+			status = HttpStatus.OK;
+		}
+
+		return new ResponseEntity<Video>(video, status);
+	}
+
 	@GetMapping("/zzim/{userId}")
 	public ResponseEntity<Map<String, Object>> getZzim(@PathVariable String userId) {
 		HttpStatus status = null;
@@ -65,7 +86,7 @@ public class ApiVideoController {
 	}
 
 	@PostMapping("/zzim/{userId}/{youtubeId}")
-	public ResponseEntity<List<Video>> zzim(@PathVariable String userId, @PathVariable String youtubeId) {		
+	public ResponseEntity<List<Video>> zzim(@PathVariable String userId, @PathVariable String youtubeId) {
 		HashMap<String, String> params = new HashMap<>();
 		HttpStatus status = null;
 		params.put("userId", userId);
