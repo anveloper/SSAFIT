@@ -16,6 +16,7 @@
         style="font-family: initial"
         v-model="comment"
         placeholder="댓글 추가..."
+        @keyup.enter="createReply"
       ></b-form-input>
       <b-input-group-append>
         <b-button variant="info" @click="createReply">댓글 등록</b-button>
@@ -45,11 +46,12 @@
           style="font-family: initial"
         >
           <b-form-input
-            placeholder="?"
             v-model="newComment"
+            @keyup.enter="update(repl)"
+            autofocus
           ></b-form-input>
           <b-input-group-append>
-            <b-button variant="info" @click="update(repl)">등록</b-button>
+            <b-button variant="info" @click="update(repl)" >등록</b-button>
           </b-input-group-append>
         </b-input-group>
         <p class="mb-1" :id="`repl${index}`" v-else>{{ repl.content }}</p>
@@ -67,6 +69,8 @@
               <b-form-input
                 :placeholder="`${repl.writer}에게 답글쓰기...`"
                 v-model="reComment"
+                @keyup.enter="createReReply(repl)"
+                autofocus
               ></b-form-input>
               <b-input-group-append>
                 <b-button variant="info" @click="createReReply(repl)"
@@ -98,6 +102,8 @@
             >
               <b-form-input
                 v-model="newreComment"
+                @keyup.enter="updatere(rerepl)"
+                autofocus
               ></b-form-input>
               <b-input-group-append>
                 <b-button variant="info" @click="updatere(rerepl)">등록</b-button>
@@ -171,6 +177,7 @@ export default {
         alert("내용을 입력하세요");
       }
       this.reComment = "";
+      this.reCommentIdx="-1";
     },
     setReComIdx(index) {
       this.reCommentIdx = index;
@@ -181,7 +188,9 @@ export default {
     },
     deleteReply(replySeq) {
       console.log(replySeq);
-      this.$store.dispatch("deleteReply", replySeq);
+      if (confirm("정말 삭제하시겠습니까??") == true){
+        this.$store.dispatch("deleteReply", replySeq);
+      }
     },
     updateReply(index, repl) {
       if(repl.reSeq == 0) {
