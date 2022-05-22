@@ -7,8 +7,10 @@ export default {
   getVideo(youtubeId) {
     return axiosService.get(`/video/${youtubeId}`);
   },
-  createVideo(video) {
-    return axiosService.post(`/video`, video);
+  createVideo(youtubeId, title) {
+    console.log("Y : " + youtubeId)
+    console.log("T : " + title)
+    return axiosService.post(`/video/create`, { youtubeId: youtubeId, title: title });
   },
   getZzim(userId) {
     return axiosService.get(`/video/zzim/${userId}`);

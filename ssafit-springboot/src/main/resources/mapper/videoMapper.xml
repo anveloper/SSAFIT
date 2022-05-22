@@ -30,6 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		 WHERE video_title LIKE '%${key}%'
 	</select>
 	
+	<insert id="insertVideo" parameterType="HashMap">
+		INSERT INTO sf_video
+		VALUES (0, #{youtubeId}, #{title}, 0, 0)
+		
+	</insert>
+	
 	<!-- 유투브 아이디로 영상 가져오기 -->
 	<select id="selectVideoByYoutubeId" parameterType="String" resultMap="videoMap">
 		SELECT *

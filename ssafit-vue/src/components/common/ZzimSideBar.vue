@@ -79,6 +79,7 @@ export default {
   position: fixed;
   right: 0px;
   top: 40px;
+  z-index: 99;
 }
 
 #zbtn {

@@ -6,6 +6,7 @@ import { axiosService } from '@/api/index.js'
 import apiVideo from '@/api/video.js'
 import apiMember from "@/api/member.js"
 import apiReply from "@/api/reply.js"
+import apiYoutube from "@/api/youtube.js"
 
 Vue.use(Vuex)
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     leadList: [],
     zzimList: [],
     partVideos: [],
+    youtubeList: [],
     savedId: '',
     available: { id: false, pw: false, nick: false, },
     page: 1,
@@ -47,6 +49,15 @@ export default new Vuex.Store({
     },
     GET_VIDEOS(state, payload) {
       state.videos = payload;
+    },
+    SET_VIDEOS(state) {
+      state.partVideos = state.videos;
+    },
+    PART_VIDEO(state, payload) {
+      state.partVideos = payload;
+    },
+    SET_YOUTUBE_VIDEO(state, payload) {
+      state.youtubeList = payload;
     },
     GET_ZZIM(state, payload) {
       state.zzimList = payload;
@@ -104,21 +115,50 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    goHome({ commit }) {
+      apiVideo.getVideoList()
+        .then((res) => {
+          commit('GET_VIDEOS', res.data)
+        }).then(() => {
+          router.push('/video')
+        }).catch(() => {
+        })
+    },
     getVideo({ commit }, id) {
       apiVideo.getVideo(id)
         .then((res) => {
           commit('GET_VIDEO', res.data)
+        }).catch((err) => { console.log(err) })
+    },
+    getVideos({ commit }) {
+      apiVideo.getVideoList()
+        .then((res) => {
+          commit('GET_VIDEOS', res.data)
         }).catch((err) => {
           console.log(err);
         })
     },
-    getVideos() {
-      apiVideo.getVideoList()
-        .then((res) => {
-          this.commit('GET_VIDEOS', res.data)
-        }).catch((err) => {
-          console.log(err);
-        })
+    getPartVideo({ commit }, partCode) {
+      let partVideos = [];
+      this.state.videos.forEach((element) => {
+        if (element.partCode == partCode) {
+          partVideos.push(element);
+        }
+      });
+      commit('PART_VIDEO', partVideos);
+    },
+    getYoutubeApi({ commit }) {
+      apiYoutube.getYoutubeApi().then((res) => {
+        console.log(res.data.items)
+        commit("SET_YOUTUBE_VIDEO", res.data.items);
+      }).catch((err) => { console.log(err) });
+    },
+    createVideo({ commit }, { youtubeId, title }) {
+      apiVideo.createVideo(youtubeId, title).then((res) => {
+        commit('GET_VIDEO', res.data)
+      }).then(() => {
+        router.push(`/video/${youtubeId}`)
+      }).catch((err) => { console.log(err) });
     },
     getZzim({ commit }, userId) {
       apiVideo.getZzim(userId).then((res) => {

@@ -22,4 +22,6 @@ public interface VideoService {
 
 	List<Video> getZzim(String userId);
 
+	void createVideo(HashMap<String, String> params);
+
 }
