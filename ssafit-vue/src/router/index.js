@@ -15,7 +15,7 @@ import ZzimList from '@/components/member/ZzimList.vue'
 import LoginMember from '@/components/member/LoginMember.vue'
 import JoinMember from '@/components/member/JoinMember.vue'
 
-
+import CalenderView from'@/views/CalenderView.vue'
 
 Vue.use(VueRouter)
 
@@ -46,6 +46,11 @@ const routes = [
         component: VideoDetail
       },
     ]
+  },
+  {
+    path: '/calender',
+    name: 'calender',
+    component: CalenderView
   },
   {
     path: '/member',

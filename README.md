@@ -1,16 +1,31 @@
 ## SSAFIT
 
-- **220120 작업내역**
+- **220521 작업내역**
+  - **Spring update**
+    - 찜하기 post/delete에서 list를 반환하도록 수정
+  - **Vue update**
+    - 댓글 관련 기능 수정
+      - 대댓 오토포커스
+      - 삭제 시 alert
+    - 영상 detail에서 찜하기 기능 추가. 이미 찜된 영상이면 눌렀을때 취소되도록 기능
+    - sidebar 기능 처럼 만들어서 목록까지 노출이 되나, block 설정이 먹어서 메인 섹션이 클릭이 되지 않음..
+    - ![image](https://user-images.githubusercontent.com/90117593/169661865-15b4597f-62fb-459b-8ab2-8594d63bd381.png)
+
+---
+
+- **220520 작업내역**
   - **Spring update**
 
   - **Vue update**
     - 댓글 수정 기능 구현
-    - 대댓글 기능 추가
+    - 대댓글 기능 추가 (수정 및 삭제 추가)
     - MyPage 기능 컴포넌트 분리,
     - headerNav 상단고정,
     - 모든 범위에서 스크롤바 보이지 않도록 수정
     - 내정보 > 정보수정 구현중
-    - 팔로우 리스트에서 다른사람 상세보기 이동          
+    - 팔로우 리스트에서 다른사람 상세보기 이동
+    - 간단한 CSS 적용, 벡터 로고, 배너 등..          
+    - ![image](https://user-images.githubusercontent.com/90117593/169498793-a6f74d29-88f7-4990-af9c-96515673856c.png)
 
 ---
 
