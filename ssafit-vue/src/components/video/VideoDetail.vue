@@ -16,6 +16,7 @@
         style="font-family: initial"
         v-model="comment"
         placeholder="댓글 추가..."
+        @keyup.13="createReply"
       ></b-form-input>
       <b-input-group-append>
         <b-button variant="info" @click="createReply">댓글 등록</b-button>
@@ -36,7 +37,18 @@
         class="flex-column align-items-start"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 style="font-size: 1rem">{{ repl.writer }}</h5>
+          <span>
+            <span style="font-size: 1rem">{{ repl.writer }}</span>
+            <button
+              class="btn btn-warning btn-sm ml-2 follow-btn"
+              @click="followMember(repl.writer)"
+              v-if="
+                logonMember.userId != '' && repl.writer != logonMember.userId
+              "
+            >
+              팔로우
+            </button>
+          </span>
           <b-button-group size="sm" v-if="repl.writer == logonMember.userId">
             <b-button variant="warning" @click="updateReply(index, repl)"
               >수정</b-button
@@ -71,6 +83,7 @@
               <b-form-input
                 :placeholder="`${repl.writer}에게 답글쓰기...`"
                 v-model="reComment"
+                @keyup.13="createReReply(repl)"
               ></b-form-input>
               <b-input-group-append>
                 <b-button variant="info" @click="createReReply(repl)"
@@ -87,9 +100,19 @@
             v-show="repl.replySeq == rerepl.reSeq"
           >
             <div class="d-flex w-100 justify-content-between">
-              <h5 style="font-size: 0.8rem" class="mb-1">
-                {{ rerepl.writer }}
-              </h5>
+              <span>
+                <span style="font-size: 0.8rem">{{ rerepl.writer }}</span>
+                <button
+                  class="btn btn-warning btn-sm ml-2 follow-btn"
+                  @click="followMember(rerepl.writer)"
+                  v-if="
+                    logonMember.userId != '' &&
+                    rerepl.writer != logonMember.userId
+                  "
+                >
+                  팔로우
+                </button>
+              </span>
               <b-button-group
                 size="sm"
                 v-if="rerepl.writer == logonMember.userId"
@@ -153,6 +176,7 @@ export default {
     this.$store.dispatch("getReply", id);
   },
   mounted() {
+    this.$store.dispatch("getMember", this.logonMember.userId);
     this.$store.dispatch("getZzim", this.logonMember.userId);
   },
   methods: {
@@ -219,9 +243,18 @@ export default {
       let userId = this.logonMember.userId;
       this.$store.dispatch("zzimVideo", { userId, youtubeId });
     },
+    followMember(followId) {
+      let userId = this.logonMember.userId;
+      this.$store.dispatch("followMember", { userId, followId });
+    },
   },
 };
 </script>
 
 <style>
+.follow-btn {
+  padding: 0.01rem 0.03rem !important;
+  font-size: 0.7rem !important;
+  line-height: 0.7rem !important;
+}
 </style>

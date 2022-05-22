@@ -2,8 +2,8 @@
   <div id="app">
     <header-nav></header-nav>
     <div id="pageTop" />
-    <div>      
-      <b-container class="mt-5">
+    <div >      
+      <b-container class="mt-1 overflow-auto">
         <router-view />        
       </b-container>
       <zzim-side-bar></zzim-side-bar>
@@ -49,7 +49,7 @@ export default {
   background-repeat: no-repeat;
   background-size: 110%;
   background-attachment: fixed;
-  height: 250vh;
+  height: 100vh;
 }
 #app .nav-link {
   color: #343a40;

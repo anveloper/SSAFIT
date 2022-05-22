@@ -91,7 +91,7 @@ public class ApiVideoController {
 
 		try {
 			videoService.deleteZzim(params);
-			status = HttpStatus.NO_CONTENT;
+			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
 			status = HttpStatus.CONFLICT;
 		}

@@ -86,7 +86,7 @@ public class ApiMemberController {
 
 		return new ResponseEntity<Map<String, Object>>(result, status);
 	}
-	
+
 	@GetMapping("/other/{userId}")
 	public ResponseEntity<Map<String, Object>> getOtherMember(@PathVariable String userId) {
 		HttpStatus status = null;
@@ -98,7 +98,7 @@ public class ApiMemberController {
 		} catch (Exception e) {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		
+
 		return new ResponseEntity<Map<String, Object>>(result, status);
 	}
 
@@ -149,40 +149,46 @@ public class ApiMemberController {
 		return new ResponseEntity<String>("deleted : " + userId, status);
 	}
 
-	@GetMapping("/follow/{userId}")
-	public ResponseEntity<String> follow(@PathVariable String userId, HttpServletRequest req) {
+	@PostMapping("/follow/{userId}/{followId}")
+	public ResponseEntity<Map<String, Object>> follow(@PathVariable String userId, @PathVariable String followId) {
 		HttpStatus status = null;
-		String token = req.getHeader(HEADER_AUTH);
+
 		HashMap<String, String> params = new HashMap<>();
 		params.put("userId", userId);
+		params.put("followId", followId);
+
+		HashMap<String, Object> result = new HashMap<>();
 		try {
-			String myId = jwtUtil.getTokenId(token);
-			params.put("myId", myId);
 			memberService.followId(params);
+			result.put("followList", memberService.getFollowList(userId));
+			result.put("leadList", memberService.getLeadList(userId));
 			status = HttpStatus.CREATED;
 		} catch (Exception e) {
 			status = HttpStatus.CONFLICT;
 		}
 
-		return new ResponseEntity<String>("", status);
+		return new ResponseEntity<Map<String, Object>>(result, status);
 	}
 
-	@DeleteMapping("/follow/{userId}")
-	public ResponseEntity<String> unfollow(@PathVariable String userId, HttpServletRequest req) {
+	@DeleteMapping("/follow/{userId}/{followId}")
+	public ResponseEntity<Map<String, Object>> unfollow(@PathVariable String userId, @PathVariable String followId) {
 		HttpStatus status = null;
-		String token = req.getHeader(HEADER_AUTH);
+		System.out.println(userId + " :: " + followId);
 		HashMap<String, String> params = new HashMap<>();
 		params.put("userId", userId);
+		params.put("followId", followId);
+
+		HashMap<String, Object> result = new HashMap<>();
 		try {
-			String myId = jwtUtil.getTokenId(token);
-			params.put("myId", myId);
 			memberService.unFollowId(params);
-			status = HttpStatus.NO_CONTENT;
+			result.put("followList", memberService.getFollowList(userId));
+			result.put("leadList", memberService.getLeadList(userId));
+			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
 			status = HttpStatus.CONFLICT;
 		}
 
-		return new ResponseEntity<String>("", status);
+		return new ResponseEntity<Map<String, Object>>(result, status);
 	}
 
 	// id 중복체크 api
