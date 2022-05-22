@@ -18,6 +18,12 @@
             :fixed="false"
             @row-clicked="detail"
           >
+            <template v-slot:cell(detail)="{ item }">
+              <span v-if="logonMember.userId != item.userId"
+                ><button class="btn btn-secondary" @click="follow(item)">
+                  <i class="bi bi-heart-arrow"></i></button
+              ></span>
+            </template>
           </b-table>
         </div>
         <div class="col">
@@ -35,6 +41,12 @@
             :fixed="false"
             @row-clicked="detail"
           >
+            <template v-slot:cell(detail)="{ item }">
+              <span v-if="logonMember.userId != item.userId"
+                ><button class="btn btn-secondary" @click="follow(item)">
+                  <i class="bi bi-heart-arrow"></i></button
+              ></span>
+            </template>
           </b-table>
         </div>
       </div>
@@ -73,6 +85,7 @@ export default {
       columns: [
         { key: "userId", label: "아이디", thClass: "w40" },
         { key: "username", label: "닉네임", thClass: "w40" },
+        { key: "detail", label: "팔로우", thClass: "w20" },
       ],
     };
   },
@@ -86,13 +99,18 @@ export default {
   methods: {
     detail(item) {
       let rootId = this.logonMember.userId;
-      if (item.userId == rootId)
-        this.$router.push(`/member/${rootId}/follow`);
+      if (item.userId == rootId) this.$router.push(`/member/${rootId}/follow`);
       else {
         this.$router.push(`/member/other/${item.userId}`);
         this.$store.dispatch("getOtherMember", item.userId);
         this.$store.dispatch("getOtherZzim", item.userId);
       }
+    },
+    follow(followId) {
+      this.$store.dispatch("followMember", {
+        userId: this.logonMember.userId,
+        followId: followId.userId,
+      });
     },
   },
 };

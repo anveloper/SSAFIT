@@ -3,25 +3,23 @@
     <div class="h2">마이 페이지</div>
     <div class="row">
       <div class="col">
-        <ul class="nav nav-pills d-flex justify-content-center" >
-          <li class="nav-item">
-            <router-link class="nav-link" :to="`/member/${userId}`"
-              >내 정보</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="`/member/${userId}/follow`"
-              >팔로우</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="`/member/${userId}/zzim`"
-              >찜 목록</router-link
-            >
-          </li>
-        </ul>
+        <b-tabs class="" content-class="mt-3" align="center">
+          <b-tab
+            title="내 정보"
+            @click="move(`/member/${userId}`)"
+            active
+          ></b-tab>
+          <b-tab
+            title="팔로우"
+            @click="move(`/member/${userId}/follow`)"
+          ></b-tab>
+          <b-tab
+            title="찜 목록"
+            @click="move(`/member/${userId}/zzim`)"
+          ></b-tab>
+        </b-tabs>
         <router-view></router-view>
-      </div>      
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +33,11 @@ export default {
     };
   },
   components: {},
-  methods: {},
+  methods: {
+    move(url) {
+      this.$router.push(url);
+    },
+  },
 };
 </script>
 

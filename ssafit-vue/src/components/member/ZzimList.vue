@@ -15,7 +15,18 @@
               video.videoTitle
             }}</b-link>
           </b-card-text>
-          <b-badge variant="danger">조회수 : {{ video.viewCnt }}</b-badge>
+          <div class="d-flex justify-content-between">
+            <span>
+              <b-badge variant="danger">조회수 : {{ video.viewCnt }}</b-badge>
+            </span>
+            <button
+              class="btn btn-success ml-2 zzim-btn"
+              @click="zzimVideo(video.youtubeId)"
+              v-if="logonMember.userId"
+            >
+              찜
+            </button>
+          </div>
         </b-card>
       </b-card-group>
     </div>
@@ -31,7 +42,13 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["zzimList"]),
+    ...mapState(["zzimList", "logonMember"]),
+  },
+  methods:{
+    zzimVideo(youtubeId) {
+      let userId = this.logonMember.userId;
+      this.$store.dispatch("zzimVideo", { userId, youtubeId });
+    },
   },
   mounted() {
     this.$store.dispatch("getZzim", this.$route.params.userId);
@@ -40,4 +57,8 @@ export default {
 </script>
 
 <style>
+.zzim-btn {
+  padding: 0.2rem;
+  font-size: 0.8rem;
+}
 </style>

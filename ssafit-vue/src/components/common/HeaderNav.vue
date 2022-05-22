@@ -3,7 +3,7 @@
     <b-navbar type="dark" variant="secondary">
       <div id="nav-container" class="container-fluid">
         <div>
-          <b-navbar-brand :to="{ name: 'video' }"
+          <b-navbar-brand :to="'/video'"
             ><img id="logo" src="@/assets/logo-s.svg"
           /></b-navbar-brand>
         </div>
