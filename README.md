@@ -24,7 +24,7 @@
         ```   
       - 가져온 영상은 조회수나 찜버튼은 없으나, 디테일로 이동 시 DB에 insert되고 이동하도록 구성함
       - 운동부위는 미분류에서 확인가능
-    - ![image](https://user-images.githubusercontent.com/90117593/169698699-6d39b1eb-785b-40f7-9e00-32ca8d1c9010.png)
+    - ![image](https://user-images.githubusercontent.com/90117593/169698990-2698aca6-968f-4f19-a6c2-2f5664fc01df.png)
   - **추후 추가할 기능**
     - admin 아이디로 미분류 탭 이동 시, 영상별 운동부위 선택하여 수정가능하도록 구현
     - 
