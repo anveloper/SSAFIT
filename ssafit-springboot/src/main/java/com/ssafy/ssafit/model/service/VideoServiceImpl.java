@@ -60,4 +60,9 @@ public class VideoServiceImpl implements VideoService {
 		videoDao.deleteZzim(params);
 	}
 
+	@Override
+	public void createVideo(HashMap<String, String> params) {
+		videoDao.insertVideo(params);
+	}
+
 }
