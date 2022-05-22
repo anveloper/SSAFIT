@@ -1,6 +1,15 @@
 ## SSAFIT
 
-- **220120 작업내역**
+- **220521 작업내역**
+  - **Spring update**
+  - **Vue update**
+    - 댓글 관련 기능 수정
+      - 대댓 오토포커스
+      - 삭제 시 alert창
+
+---
+
+- **220520 작업내역**
   - **Spring update**
 
   - **Vue update**
@@ -13,6 +22,7 @@
     - 팔로우 리스트에서 다른사람 상세보기 이동
     - 간단한 CSS 적용, 벡터 로고, 배너 등..          
     - ![image](https://user-images.githubusercontent.com/90117593/169498793-a6f74d29-88f7-4990-af9c-96515673856c.png)
+
 ---
 
 - **220519 작업내역**
