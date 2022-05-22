@@ -65,8 +65,7 @@ public class ApiVideoController {
 	}
 
 	@PostMapping("/zzim/{userId}/{youtubeId}")
-	public ResponseEntity<String> zzim(@PathVariable String userId, @PathVariable String youtubeId) {
-		String msg = "";
+	public ResponseEntity<List<Video>> zzim(@PathVariable String userId, @PathVariable String youtubeId) {		
 		HashMap<String, String> params = new HashMap<>();
 		HttpStatus status = null;
 		params.put("userId", userId);
@@ -74,20 +73,17 @@ public class ApiVideoController {
 
 		try {
 			videoService.insertZzim(params);
-			msg = SUCESS;
 			status = HttpStatus.CREATED;
 		} catch (Exception e) {
-			msg = FAIL;
 			status = HttpStatus.CONFLICT;
 		}
 
-		return new ResponseEntity<String>(msg, status);
+		return new ResponseEntity<List<Video>>(videoService.getZzim(userId), status);
 
 	}
 
 	@DeleteMapping("/zzim/{userId}/{youtubeId}")
-	public ResponseEntity<String> unzzim(@PathVariable String userId, @PathVariable String youtubeId) {
-		String msg = "";
+	public ResponseEntity<List<Video>> unzzim(@PathVariable String userId, @PathVariable String youtubeId) {
 		HashMap<String, String> params = new HashMap<>();
 		HttpStatus status = null;
 		params.put("userId", userId);
@@ -95,14 +91,12 @@ public class ApiVideoController {
 
 		try {
 			videoService.deleteZzim(params);
-			msg = SUCESS;
 			status = HttpStatus.NO_CONTENT;
 		} catch (Exception e) {
-			msg = FAIL;
 			status = HttpStatus.CONFLICT;
 		}
 
-		return new ResponseEntity<String>(msg, status);
+		return new ResponseEntity<List<Video>>(videoService.getZzim(userId), status);
 
 	}
 

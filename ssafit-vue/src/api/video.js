@@ -14,5 +14,13 @@ export default {
   },
   getZzim(userId) {
     return axiosService.get(ROOT_URL + `/video/zzim/${userId}`);
+  },
+  insertZzim(userId, youtubeId) {
+    return axiosService.post(ROOT_URL
+      + `/video/zzim/${userId}/${youtubeId}`);
+  },
+  deleteZzim(userId, youtubeId) {
+    return axiosService.delete(ROOT_URL
+      + `/video/zzim/${userId}/${youtubeId}`);
   }
 }

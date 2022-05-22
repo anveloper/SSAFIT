@@ -2,21 +2,24 @@
   <div id="app">
     <header-nav></header-nav>
     <div id="pageTop" />
-    <div>
+    <div>      
       <b-container class="mt-5">
-        <router-view />
+        <router-view />        
       </b-container>
+      <zzim-side-bar></zzim-side-bar>
     </div>
   </div>
 </template>
 
 <script>
 import HeaderNav from "@/components/common/HeaderNav.vue";
+import ZzimSideBar from "@/components/common/ZzimSideBar.vue";
 
 export default {
   name: "App",
   components: {
     HeaderNav,
+    ZzimSideBar,
   },
   data() {
     return {
