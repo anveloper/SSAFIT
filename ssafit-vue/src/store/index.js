@@ -322,7 +322,7 @@ export default new Vuex.Store({
       apiRecord.getRecordList(userId)
       .then((res)=>{
         commit("GET_RECORD", res.data)
-      })
+      }).catch((err)=>{console.log(err)})
     },
     setDailyRecords({commit}, dailyRecords){
       commit("SET_DAILY_RECORDS", dailyRecords)
