@@ -2,6 +2,7 @@
 
 - **220522 작업내역**
   - **Spring update**
+    - videoController에서 새로운 영상 youtubeId와 title 받아서 DB에 저장하는 기능 추가 
   - **Vue update**
     - 댓글 관련 기능 수정
       - 대댓 오토포커스
@@ -12,10 +13,20 @@
       - 이미 팔로우 중이면 해제창이 뜨도록 구현
       - 다른 사람의 페이지에서도 팔로우/해제 가능하도록 수정
       - 나를 팔로우 하는 사람의 팔로우를 해제하는 기능 추가
-  - 추후 추가할 기능
-    - youtube API로부터 영사 가져오기
-      - DB에 없는 영상이면 디테일 페이지 이동 시 db에 저장 
-    - ㅁㄴㅇㄹ
+    - youtubeApi로 영상 가져오기
+      - API 키값으로 영상 10개를 가져오는 기능 추가(현재 검색은 하지 않고, '헬스'라는 고정값으로 영상을 가져옴
+      - ``` 
+          const baseURL = "https://www.googleapis.com/youtube/v3/search?"
+          + "&key=" + process.env.VUE_APP_YOUTUBE_KEY
+          + "&part=snippet"
+          + "&maxResults=10"
+          + "&regionCode=KR&q=" 
+        ```   
+      - 가져온 영상은 조회수나 찜버튼은 없으나, 디테일로 이동 시 DB에 insert되고 이동하도록 구성함
+      - 운동부위는 미분류에서 확인가능
+    - ![image](https://user-images.githubusercontent.com/90117593/169698699-6d39b1eb-785b-40f7-9e00-32ca8d1c9010.png)
+  - **추후 추가할 기능**
+    - admin 아이디로 미분류 탭 이동 시, 영상별 운동부위 선택하여 수정가능하도록 구현
     - 
 
 ---
