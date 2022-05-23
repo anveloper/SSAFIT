@@ -1,6 +1,16 @@
 <template>
   <div class="">
-    <h2>비디오 리스트</h2>
+    <div class="d-flex justify-content-between">
+      <span style="font-size: 1.8rem"> 비디오 리스트 </span>
+      <span>
+        <input
+          style="width: 4rem; text-align: center"
+          v-model="key"
+          name="key"
+          v-if="!isTube"
+        />
+      </span>
+    </div>
     <b-tabs class="" content-class="mt-3" align="center">
       <b-tab title="전체" @click="getVideos" active></b-tab>
       <b-tab title="전신" @click="getPartVideo(100)"></b-tab>
@@ -24,16 +34,13 @@
               <b-link
                 class="title"
                 :to="`/video/${video.youtubeId}`"
-                alt="video.videoTitle"
                 >{{ video.videoTitle | truncate(25, "...") }}</b-link
               >
             </b-card-text>
             <div class="d-flex justify-content-between">
-              <span>
-                <span class="view-cnt"
-                  ><i class="bi bi-eye"></i> {{ video.viewCnt }}</span
-                >
-              </span>
+              <span class="view-cnt"
+                ><i class="bi bi-eye"></i> {{ video.viewCnt }}</span
+              >
               <span v-if="!isUnknown || logonMember.userId != 'admin'">
                 <button
                   class="btn btn-success ml-2 zzim-btn"
@@ -55,7 +62,7 @@
                 ></b-form-select>
                 <button
                   class="btn btn-success update-btn"
-                  @click="updatePartCode(video.youtubeId)"
+                  @click="updatePartCode(video.youtubeId, video.partCode)"
                 >
                   수정
                 </button>
@@ -106,6 +113,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      key: "헬스",
       isTube: true,
       isUnknown: false,
       partCode: [],
@@ -139,13 +147,13 @@ export default {
     },
     getYoutubeApi() {
       this.isTube = false;
-      this.$store.dispatch("getYoutubeApi");
+      this.$store.dispatch("getYoutubeApi", this.key);
     },
     newVideo(youtubeId, title) {
       this.$store.dispatch("createVideo", { youtubeId, title });
     },
-    updatePartCode(youtubeId) {
-      let partCode = this.$refs[youtubeId][0].value;
+    updatePartCode(youtubeId, partCode) {
+      // let partCode = this.$refs[youtubeId][0].value;
       this.$store.dispatch("updatePartCode", { youtubeId, partCode });
     },
   },

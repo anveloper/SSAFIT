@@ -19,16 +19,14 @@
               img-top
               style="max-width: 300px"
             >
-              <b-card-text>
-                <b-link :to="`/video/${video.youtubeId}`">{{
+              <b-card-text class="title-box">
+                <b-link class="title" :to="`/video/${video.youtubeId}`">{{
                   video.videoTitle
                 }}</b-link>
               </b-card-text>
               <div class="d-flex justify-content-between">
-                <span>
-                  <b-badge variant="secondary"
-                    >조회수 : {{ video.viewCnt }}</b-badge
-                  >
+                <span class="view-cnt">
+                  <i class="bi bi-eye"></i> {{ video.viewCnt }}
                 </span>
                 <button
                   class="btn btn-danger ml-2 zzim-btn"
@@ -92,8 +90,21 @@ export default {
   height: 90vh;
   max-width: 300px;
 }
+
+.view-cnt,
 .zzim-btn {
   padding: 0.2rem !important;
   font-size: 0.8rem !important;
+}
+
+.title-box {
+  max-height: 1.2rem;
+  font-size: 1.1rem;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.title {
+  color: #343a40;
 }
 </style>

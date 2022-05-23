@@ -160,8 +160,8 @@ export default new Vuex.Store({
         commit('GET_VIDEOS', res.data)
       }).catch(() => { });
     },
-    getYoutubeApi({ commit }) {
-      apiYoutube.getYoutubeApi().then((res) => {
+    getYoutubeApi({ commit }, key) {
+      apiYoutube.getYoutubeApi(key).then((res) => {
         console.log(res.data.items)
         commit("SET_YOUTUBE_VIDEO", res.data.items);
       }).catch((err) => { console.log(err) });
