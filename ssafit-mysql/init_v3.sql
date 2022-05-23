@@ -178,6 +178,7 @@ CREATE TABLE IF NOT EXISTS `ssafit`.`ex_daily` (
   `weight` INT NULL DEFAULT 0,
   `reps` INT NULL DEFAULT 0,
   `sets` INT NULL DEFAULT 0,
+  `volume` INT NULL DEFAULT 0,
   PRIMARY KEY (`record_seq`),
   INDEX `ex_no_idx` (`ex_no` ASC) VISIBLE,
   INDEX `user_idx` (`user_seq` ASC) VISIBLE,
