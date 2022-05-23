@@ -7,6 +7,7 @@
         <router-view />
       </b-container>
       <zzim-side-bar></zzim-side-bar>
+      <map-view></map-view>
     </div>
   </div>
 </template>
@@ -14,12 +15,14 @@
 <script>
 import HeaderNav from "@/components/common/HeaderNav.vue";
 import ZzimSideBar from "@/components/common/ZzimSideBar.vue";
+import MapView from './components/common/MapView.vue';
 
 export default {
   name: "App",
   components: {
     HeaderNav,
     ZzimSideBar,
+    MapView,
   },
   data() {
     return {
