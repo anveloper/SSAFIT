@@ -65,4 +65,9 @@ public class VideoServiceImpl implements VideoService {
 		videoDao.insertVideo(params);
 	}
 
+	@Override
+	public void updatePartCode(HashMap<String, String> param) {
+		videoDao.updatePartCode(param);
+	}
+
 }

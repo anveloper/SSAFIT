@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,6 +68,21 @@ public class ApiVideoController {
 		}
 
 		return new ResponseEntity<Video>(video, status);
+	}
+
+	@PutMapping("/{youtubeId}/{partCode}")
+	public ResponseEntity<List<Video>> updatePartCode(@PathVariable String youtubeId, @PathVariable String partCode) {
+		HashMap<String, String> param = new HashMap<>();
+		HttpStatus status = null;
+		param.put("youtubeId", youtubeId);
+		param.put("partCode", partCode);
+		try {
+			videoService.updatePartCode(param);
+			status = HttpStatus.OK;
+		} catch (Exception e) {
+			status = HttpStatus.CONFLICT;
+		}
+		return new ResponseEntity<List<Video>>(videoService.getVideoListByPartCode("0"), HttpStatus.OK);
 	}
 
 	@GetMapping("/zzim/{userId}")

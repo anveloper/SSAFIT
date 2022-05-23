@@ -16,7 +16,7 @@ const baseURL = "https://www.googleapis.com/youtube/v3/search?"
 
 export default {
   getYoutubeApi() {
-    let value = encodeURI("헬스");
+    let value = encodeURI("운동");
     return axios.get(baseURL + value);
   }
 }

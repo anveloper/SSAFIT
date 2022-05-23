@@ -23,4 +23,6 @@ public interface VideoDao {
 	void deleteZzim(HashMap<String, String> params);
 
 	void insertVideo(HashMap<String, String> params);
+
+	void updatePartCode(HashMap<String, String> param);
 }

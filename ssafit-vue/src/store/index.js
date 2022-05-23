@@ -133,6 +133,11 @@ export default new Vuex.Store({
           console.log(err);
         })
     },
+    updatePartCode({ commit }, { youtubeId, partCode }) {
+      apiVideo.updatePartCode(youtubeId, partCode).then((res) => {
+        commit('GET_VIDEOS', res.data)
+      }).catch(() => { });
+    },
     getYoutubeApi({ commit }) {
       apiYoutube.getYoutubeApi().then((res) => {
         console.log(res.data.items)

@@ -21,17 +21,20 @@
             img-top
           >
             <b-card-text class="title-box">
-              <b-link class="title" :to="`/video/${video.youtubeId}`">{{
-                video.videoTitle
-              }}</b-link>
+              <b-link
+                class="title"
+                :to="`/video/${video.youtubeId}`"
+                alt="video.videoTitle"
+                >{{ video.videoTitle | truncate(25, "...") }}</b-link
+              >
             </b-card-text>
             <div class="d-flex justify-content-between">
               <span>
-                <span class="view-cnt" variant="danger"
+                <span class="view-cnt"
                   ><i class="bi bi-eye"></i> {{ video.viewCnt }}</span
                 >
               </span>
-              <span v-if="video.partCode != 0 || logonMember.userId != 'admin'">
+              <span v-if="!isUnknown || logonMember.userId != 'admin'">
                 <button
                   class="btn btn-success ml-2 zzim-btn"
                   @click="zzimVideo(video.youtubeId)"
@@ -40,10 +43,13 @@
                   찜
                 </button>
               </span>
-              <span class="d-flex" v-else>
+              <span
+                class="d-flex"
+                v-if="isUnknown && logonMember.userId == 'admin'"
+              >
                 <b-form-select
                   class="update-value"
-                  :value="video.partCode"
+                  v-model="video.partCode"
                   :options="options"
                   :ref="`${video.youtubeId}`"
                 ></b-form-select>
@@ -101,6 +107,7 @@ export default {
   data() {
     return {
       isTube: true,
+      isUnknown: false,
       partCode: [],
       options: [
         { value: 0, text: "미분류" },
@@ -123,6 +130,7 @@ export default {
     },
     getPartVideo(partCode) {
       this.isTube = true;
+      this.isUnknown = partCode == 0 ? true : false;
       this.$store.dispatch("getPartVideo", partCode);
     },
     zzimVideo(youtubeId) {
@@ -137,8 +145,17 @@ export default {
       this.$store.dispatch("createVideo", { youtubeId, title });
     },
     updatePartCode(youtubeId) {
-      console.log(youtubeId);
-      console.log(this.$refs);
+      let partCode = this.$refs[youtubeId][0].value;
+      this.$store.dispatch("updatePartCode", { youtubeId, partCode });
+    },
+  },
+  filters: {
+    truncate: function (text, length, suffix) {
+      if (text.length > length) {
+        return text.substring(0, length) + suffix;
+      } else {
+        return text;
+      }
     },
   },
 };

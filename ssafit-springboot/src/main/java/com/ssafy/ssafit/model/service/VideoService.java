@@ -24,4 +24,6 @@ public interface VideoService {
 
 	void createVideo(HashMap<String, String> params);
 
+	void updatePartCode(HashMap<String, String> param);
+
 }
