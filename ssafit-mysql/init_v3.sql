@@ -263,7 +263,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `ssafit`;
-INSERT INTO `ssafit`.`ex_daily` (`record_seq`, `user_seq`, `date`, `ex_no`, `weight`, `reps`, `sets`) VALUES (0, 9, '2022-05-22', 3, 30, 12, 3);
+INSERT INTO `ssafit`.`ex_daily` (`record_seq`, `user_seq`, `date`, `ex_no`, `weight`, `reps`, `sets`) 
+VALUES (0, 1, '2022-05-22', 3, 30, 12, 3);
 
 COMMIT;
 
@@ -273,6 +274,6 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `ssafit`;
-INSERT INTO `ssafit`.`ex_best` (`user_seq`, `ex_no`, `record`) VALUES (9, 9, 1000);
-INSERT INTO `ssafit`.`ex_best` (`user_seq`, `ex_no`, `record`) VALUES (10, 8, 2000);
+INSERT INTO `ssafit`.`ex_best` (`user_seq`, `ex_no`, `record`) VALUES (1, 9, 1000);
+INSERT INTO `ssafit`.`ex_best` (`user_seq`, `ex_no`, `record`) VALUES (1, 8, 2000);
 COMMIT;

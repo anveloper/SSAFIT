@@ -8,7 +8,7 @@ import com.ssafy.ssafit.model.dto.Video;
 public interface VideoDao {
 	List<Video> selectVideos();
 
-	List<Video> selectVideosByPartCode(int partCode);
+	List<Video> selectVideosByPartCode(String partCode);
 
 	List<Video> selectVideosByQuery(String key);
 
@@ -23,4 +23,6 @@ public interface VideoDao {
 	void deleteZzim(HashMap<String, String> params);
 
 	void insertVideo(HashMap<String, String> params);
+
+	void updatePartCode(HashMap<String, String> param);
 }

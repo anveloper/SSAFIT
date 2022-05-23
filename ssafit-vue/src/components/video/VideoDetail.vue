@@ -69,7 +69,7 @@
             autofocus
           ></b-form-input>
           <b-input-group-append>
-            <b-button variant="info" @click="update(repl)" >등록</b-button>
+            <b-button variant="info" @click="update(repl)">등록</b-button>
           </b-input-group-append>
         </b-input-group>
         <p class="mb-1" :id="`repl${index}`" v-else>{{ repl.content }}</p>
@@ -131,12 +131,10 @@
               </b-button-group>
             </div>
 
-            <div v-if="rereCommentIdx != rerepl.replySeq">{{rerepl.content}}</div>
-            <b-input-group
-              class="mt-3"
-              v-else
-              style="font-family: initial"
-            >
+            <div v-if="rereCommentIdx != rerepl.replySeq">
+              {{ rerepl.content }}
+            </div>
+            <b-input-group class="mt-3" v-else style="font-family: initial">
               <b-form-input
                 v-model="newreComment"
                 @keyup.enter="updatere(rerepl)"
@@ -188,8 +186,10 @@ export default {
     this.$store.dispatch("getReply", id);
   },
   mounted() {
-    this.$store.dispatch("getMember", this.logonMember.userId);
-    this.$store.dispatch("getZzim", this.logonMember.userId);
+    if (this.logonMember.userId) {
+      this.$store.dispatch("getMember", this.logonMember.userId);
+      this.$store.dispatch("getZzim", this.logonMember.userId);
+    }
   },
   methods: {
     createReply() {
@@ -219,7 +219,7 @@ export default {
         alert("내용을 입력하세요");
       }
       this.reComment = "";
-      this.reCommentIdx="-1";
+      this.reCommentIdx = "-1";
     },
     setReComIdx(index) {
       this.reCommentIdx = index;
@@ -230,7 +230,7 @@ export default {
     },
     deleteReply(replySeq) {
       console.log(replySeq);
-      if (confirm("정말 삭제하시겠습니까??") == true){
+      if (confirm("정말 삭제하시겠습니까??") == true) {
         this.$store.dispatch("deleteReply", replySeq);
       }
     },

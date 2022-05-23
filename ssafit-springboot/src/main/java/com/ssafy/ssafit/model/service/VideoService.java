@@ -10,7 +10,7 @@ public interface VideoService {
 
 	List<Video> getVideoListByQuery(String key);
 
-	List<Video> getVideoListByPartCode(int partCode);
+	List<Video> getVideoListByPartCode(String partCode);
 
 	Video readVideoByYoutubeId(String youtubeId);
 
@@ -23,5 +23,7 @@ public interface VideoService {
 	List<Video> getZzim(String userId);
 
 	void createVideo(HashMap<String, String> params);
+
+	void updatePartCode(HashMap<String, String> param);
 
 }

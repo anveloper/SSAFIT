@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +35,11 @@ public class ApiVideoController {
 		return new ResponseEntity<List<Video>>(videoService.getVideoList(), HttpStatus.OK);
 	}
 
+	@PostMapping("/partCode/{code}")
+	public ResponseEntity<List<Video>> partList(@PathVariable String code) {
+		return new ResponseEntity<List<Video>>(videoService.getVideoListByPartCode(code), HttpStatus.OK);
+	}
+
 	@GetMapping("/{youtubeId}")
 	public ResponseEntity<Video> videoById(@PathVariable String youtubeId) {
 		return new ResponseEntity<Video>(videoService.readVideoByYoutubeId(youtubeId), HttpStatus.PARTIAL_CONTENT);
@@ -45,17 +51,11 @@ public class ApiVideoController {
 		return new ResponseEntity<List<Video>>(videoService.getVideoListByQuery(key), HttpStatus.OK);
 	}
 
-	@GetMapping("/partCode/{code}")
-	public ResponseEntity<List<Video>> videoByPartCode(@PathVariable int code) {
-		return new ResponseEntity<List<Video>>(videoService.getVideoListByPartCode(code), HttpStatus.OK);
-	}
-
 	@PostMapping("/create")
 	public ResponseEntity<Video> createVideo(@RequestBody HashMap<String, String> param) {
 		HttpStatus status = null;
 		String youtubeId = param.get("youtubeId");
 		String title = param.get("title");
-		System.out.println("insertVideo : " + param.get("youtubeId") + " :: " + param.get("title"));
 		Video video = videoService.readVideoByYoutubeId(youtubeId);
 		if (video == null) {
 			HashMap<String, String> params = new HashMap<String, String>();
@@ -68,6 +68,21 @@ public class ApiVideoController {
 		}
 
 		return new ResponseEntity<Video>(video, status);
+	}
+
+	@PutMapping("/{youtubeId}/{partCode}")
+	public ResponseEntity<List<Video>> updatePartCode(@PathVariable String youtubeId, @PathVariable String partCode) {
+		HashMap<String, String> param = new HashMap<>();
+		HttpStatus status = null;
+		param.put("youtubeId", youtubeId);
+		param.put("partCode", partCode);
+		try {
+			videoService.updatePartCode(param);
+			status = HttpStatus.OK;
+		} catch (Exception e) {
+			status = HttpStatus.CONFLICT;
+		}
+		return new ResponseEntity<List<Video>>(videoService.getVideoListByPartCode("0"), HttpStatus.OK);
 	}
 
 	@GetMapping("/zzim/{userId}")

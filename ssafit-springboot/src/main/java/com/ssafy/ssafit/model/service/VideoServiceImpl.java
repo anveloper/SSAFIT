@@ -26,7 +26,7 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public List<Video> getVideoListByPartCode(int partCode) {
+	public List<Video> getVideoListByPartCode(String partCode) {
 		return videoDao.selectVideosByPartCode(partCode);
 	}
 
@@ -63,6 +63,11 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public void createVideo(HashMap<String, String> params) {
 		videoDao.insertVideo(params);
+	}
+
+	@Override
+	public void updatePartCode(HashMap<String, String> param) {
+		videoDao.updatePartCode(param);
 	}
 
 }
