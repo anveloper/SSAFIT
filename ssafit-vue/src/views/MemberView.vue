@@ -42,7 +42,4 @@ export default {
 </script>
 
 <style>
-#mem-card {
-  height: 80%;
-}
 </style>

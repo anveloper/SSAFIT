@@ -2,9 +2,9 @@
   <div id="app">
     <header-nav></header-nav>
     <div id="pageTop" />
-    <div >      
-      <b-container class="mt-1 overflow-auto">
-        <router-view />        
+    <div>
+      <b-container class="mt-1">
+        <router-view />
       </b-container>
       <zzim-side-bar></zzim-side-bar>
     </div>
@@ -47,13 +47,16 @@ export default {
 #app {
   background-image: url("@/assets/back.svg");
   background-repeat: no-repeat;
-  background-size: 110%;
+  background-size: 110%;  
   background-attachment: fixed;
+  background-position: bottom;
   height: 100vh;
 }
+
 #app .nav-link {
   color: #343a40;
 }
+
 #app .nav-link:active {
   color: #596b86;
 }
