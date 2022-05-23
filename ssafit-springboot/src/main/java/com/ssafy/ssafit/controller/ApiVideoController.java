@@ -34,6 +34,11 @@ public class ApiVideoController {
 		return new ResponseEntity<List<Video>>(videoService.getVideoList(), HttpStatus.OK);
 	}
 
+	@PostMapping("/partCode/{code}")
+	public ResponseEntity<List<Video>> partList(@PathVariable String code) {
+		return new ResponseEntity<List<Video>>(videoService.getVideoListByPartCode(code), HttpStatus.OK);
+	}
+
 	@GetMapping("/{youtubeId}")
 	public ResponseEntity<Video> videoById(@PathVariable String youtubeId) {
 		return new ResponseEntity<Video>(videoService.readVideoByYoutubeId(youtubeId), HttpStatus.PARTIAL_CONTENT);
@@ -45,17 +50,11 @@ public class ApiVideoController {
 		return new ResponseEntity<List<Video>>(videoService.getVideoListByQuery(key), HttpStatus.OK);
 	}
 
-	@GetMapping("/partCode/{code}")
-	public ResponseEntity<List<Video>> videoByPartCode(@PathVariable int code) {
-		return new ResponseEntity<List<Video>>(videoService.getVideoListByPartCode(code), HttpStatus.OK);
-	}
-
 	@PostMapping("/create")
 	public ResponseEntity<Video> createVideo(@RequestBody HashMap<String, String> param) {
 		HttpStatus status = null;
 		String youtubeId = param.get("youtubeId");
 		String title = param.get("title");
-		System.out.println("insertVideo : " + param.get("youtubeId") + " :: " + param.get("title"));
 		Video video = videoService.readVideoByYoutubeId(youtubeId);
 		if (video == null) {
 			HashMap<String, String> params = new HashMap<String, String>();
