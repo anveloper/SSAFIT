@@ -7,7 +7,7 @@ import apiVideo from '@/api/video.js'
 import apiMember from "@/api/member.js"
 import apiReply from "@/api/reply.js"
 import apiYoutube from "@/api/youtube.js"
-
+import apiRecord from "@/api/record.js"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -33,7 +33,9 @@ export default new Vuex.Store({
       followList: [],
       leadList: [],
       zzimList: [],
-    }
+    },
+    records:[],
+    dailyRecords:[],
   },
   getters: {
     rootReply: state => {
@@ -113,6 +115,12 @@ export default new Vuex.Store({
       state.otherMember.followList = payload.followList;
       state.otherMember.leadList = payload.leadList;
     },
+    GET_RECORD(state, payload){
+      state.records = payload
+    }, 
+    SET_DAILY_RECORDS(state, payload){
+      state.dailyRecords = payload
+    }
   },
   actions: {
     goHome({ commit }) {
@@ -308,6 +316,16 @@ export default new Vuex.Store({
           commit;
           sto.dispatch("getMember", this.state.logonMember.userId);
         }).catch((err) => { console.log(err) });
+    },
+    getRecord({commit}, userId){
+      commit;
+      apiRecord.getRecordList(userId)
+      .then((res)=>{
+        commit("GET_RECORD", res.data)
+      })
+    },
+    setDailyRecords({commit}, dailyRecords){
+      commit("SET_DAILY_RECORDS", dailyRecords)
     }
   },
   modules: {

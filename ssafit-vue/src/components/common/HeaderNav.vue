@@ -10,7 +10,7 @@
         <div v-if="logonMember.userId != ''">
           <b-nav pills>
             <b-nav-item @click="logout">로그아웃</b-nav-item>
-            <b-nav-item :to="`/calender`">운동 일지</b-nav-item>
+            <b-nav-item :to="`/calender/${logonMember.userId}/list`">운동 일지</b-nav-item>
             <b-nav-item :to="`/member/${logonMember.userId}`"
               >마이페이지</b-nav-item
             >
