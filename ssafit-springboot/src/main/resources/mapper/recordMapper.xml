@@ -3,5 +3,26 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.ssafit.model.dao.RecordDao">
+	<resultMap type="record" id="recordMap">
+		<id column="record_seq" property="recordSeq"/>
+		<result column="user_seq" property="userSeq"/>
+		<result column="ex_no" property="exNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="ex_name" property="exName"/>
+	</resultMap>
 	
+	<select id="selectRecordById" resultMap="recordMap" parameterType="String">
+		SELECT d.record_seq,  d.user_seq, d.ex_no, m.user_id, e.ex_name, d.date, d.weight, d.reps, d.sets
+		  FROM ex_daily as d
+		  LEFT JOIN sf_member as m
+		    ON m.member_seq = d.user_seq
+		  LEFT JOIN sf_ex as e
+		    ON e.ex_no = d.ex_no
+		 WHERE user_id = #{userId};
+	</select>
+	<insert id="insertRecord" parameterType="record">
+		INSERT INTO ex_daily
+		VALUES (0, #{userSeq}, #{date}, #{exNo}, #{weight}, #{reps}, #{sets})
+		
+	</insert>
 </mapper>
