@@ -3,7 +3,7 @@
     <h3>찜 리스트</h3>
     <div class="overflow-auto vh-100">
       <div>
-        <b-card-group columns >
+        <b-card-group columns>
           <b-card
             v-for="video in zzimList"
             :key="`${video.videoSeq}`"
@@ -17,11 +17,9 @@
               }}</b-link>
             </b-card-text>
             <div class="d-flex justify-content-between">
-              <span>
-                <span class="view-cnt"
-                  ><i class="bi bi-eye"></i> {{ video.viewCnt }}</span
-                >
-              </span>
+              <span class="view-cnt"
+                ><i class="bi bi-eye"></i> {{ video.viewCnt }}</span
+              >
               <button
                 class="btn btn-danger ml-2 zzim-btn"
                 @click="zzimVideo(video.youtubeId)"
@@ -61,6 +59,7 @@ export default {
 </script>
 
 <style>
+.view-cnt,
 .zzim-btn {
   padding: 0.2rem;
   font-size: 0.8rem;

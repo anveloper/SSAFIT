@@ -82,7 +82,7 @@ public class ApiVideoController {
 		} catch (Exception e) {
 			status = HttpStatus.CONFLICT;
 		}
-		return new ResponseEntity<List<Video>>(videoService.getVideoListByPartCode("0"), HttpStatus.OK);
+		return new ResponseEntity<List<Video>>(videoService.getVideoListByPartCode("0"), status);
 	}
 
 	@GetMapping("/zzim/{userId}")
