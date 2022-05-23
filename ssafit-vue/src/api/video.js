@@ -4,6 +4,9 @@ export default {
   getVideoList() {
     return axiosService.get(`/video`);
   },
+  getVideoPartList(partCode) {
+    return axiosService.post(`/video/partCode/${partCode}`);
+  },
   getVideo(youtubeId) {
     return axiosService.get(`/video/${youtubeId}`);
   },

@@ -8,7 +8,7 @@ import com.ssafy.ssafit.model.dto.Video;
 public interface VideoDao {
 	List<Video> selectVideos();
 
-	List<Video> selectVideosByPartCode(int partCode);
+	List<Video> selectVideosByPartCode(String partCode);
 
 	List<Video> selectVideosByQuery(String key);
 

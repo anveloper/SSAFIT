@@ -24,7 +24,6 @@ export default new Vuex.Store({
     followList: [],
     leadList: [],
     zzimList: [],
-    partVideos: [],
     youtubeList: [],
     savedId: '',
     available: { id: false, pw: false, nick: false, },
@@ -49,9 +48,6 @@ export default new Vuex.Store({
     },
     GET_VIDEOS(state, payload) {
       state.videos = payload;
-    },
-    SET_VIDEOS(state) {
-      state.partVideos = state.videos;
     },
     PART_VIDEO(state, payload) {
       state.partVideos = payload;
@@ -115,15 +111,6 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    goHome({ commit }) {
-      apiVideo.getVideoList()
-        .then((res) => {
-          commit('GET_VIDEOS', res.data)
-        }).then(() => {
-          router.push('/video')
-        }).catch(() => {
-        })
-    },
     getVideo({ commit }, id) {
       apiVideo.getVideo(id)
         .then((res) => {
@@ -139,13 +126,12 @@ export default new Vuex.Store({
         })
     },
     getPartVideo({ commit }, partCode) {
-      let partVideos = [];
-      this.state.videos.forEach((element) => {
-        if (element.partCode == partCode) {
-          partVideos.push(element);
-        }
-      });
-      commit('PART_VIDEO', partVideos);
+      apiVideo.getVideoPartList(partCode)
+        .then((res) => {
+          commit('GET_VIDEOS', res.data)
+        }).catch((err) => {
+          console.log(err);
+        })
     },
     getYoutubeApi({ commit }) {
       apiYoutube.getYoutubeApi().then((res) => {

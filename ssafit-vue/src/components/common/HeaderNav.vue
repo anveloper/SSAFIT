@@ -3,7 +3,7 @@
     <b-navbar type="dark" variant="secondary">
       <div id="nav-container" class="container-fluid">
         <div>
-          <b-navbar-brand @click="goHome"
+          <b-navbar-brand :to="`/video`"
             ><img id="logo" src="@/assets/logo-s.svg"
           /></b-navbar-brand>
         </div>
@@ -40,9 +40,6 @@ export default {
     logout() {
       this.MEMBER_LOGOUT();
     },
-    goHome(){
-      this.$store.dispatch("goHome");
-    }
   },
   computed: {
     ...mapState(["logonMember"]),
