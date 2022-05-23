@@ -8,6 +8,7 @@ import apiMember from "@/api/member.js"
 import apiReply from "@/api/reply.js"
 import apiYoutube from "@/api/youtube.js"
 import apiRecord from "@/api/record.js"
+import apiExcercise from "@/api/excercise.js"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     },
     records:[],
     dailyRecords:[],
+    workedDates:[],
+    excercises:[],
+    date:"2022-05-22"
   },
   getters: {
     rootReply: state => {
@@ -114,8 +118,18 @@ export default new Vuex.Store({
     GET_RECORD(state, payload){
       state.records = payload
     }, 
-    SET_DAILY_RECORDS(state, payload){
+    SET_DAILY_RECORDS(state, [payload, ymd]){
       state.dailyRecords = payload
+      state.date=ymd
+    },
+    SET_WORKED_DATES(state){
+      state.workedDates = [];
+      for(let i in state.records){
+        state.workedDates.push(state.records[i].date)
+      }
+    },
+    GET_EXCERCISES(state, payload){
+      state.excercises = payload;
     }
   },
   actions: {
@@ -309,15 +323,33 @@ export default new Vuex.Store({
         }).catch((err) => { console.log(err) });
     },
     getRecord({commit}, userId){
-      commit;
       apiRecord.getRecordList(userId)
       .then((res)=>{
         commit("GET_RECORD", res.data)
       }).catch((err)=>{console.log(err)})
     },
-    setDailyRecords({commit}, dailyRecords){
-      commit("SET_DAILY_RECORDS", dailyRecords)
-    }
+    writeRecord({commit}, record){
+      apiRecord.writeRecord(record)
+      .then((res)=>{
+        commit
+        console.log(res.data)
+        this.dispatch("getRecord", this.state.logonMember.userId)
+      }).catch((err)=>{
+        console.log(err)
+      })
+    },
+    setDailyRecords({commit}, [dailyRecords, ymd]){
+      commit("SET_DAILY_RECORDS", [dailyRecords, ymd])
+    },
+    setWorkedDates({commit}){
+      commit("SET_WORKED_DATES")
+    },
+    getExcercises({commit}){
+      apiExcercise.getExcerciseList()
+      .then((res) =>{
+        commit("GET_EXCERCISES", res.data)
+      }).catch((err) => {console.log(err)})
+    },
   },
   modules: {
   }
