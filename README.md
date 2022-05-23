@@ -1,5 +1,14 @@
 ## SSAFIT
 
+- **220523 작업내역**
+  - **Spring update**
+    - 
+  - **Vue update**
+    - 미분류 탭에 있는 youtube api로 가져온 영상들을 분류할 수 있도록 기능 추가 중
+    - css 일부 변경, card크기 동일하게 변경 중
+
+---
+
 - **220522 작업내역**
   - **Spring update**
     - videoController에서 새로운 영상 youtubeId와 title 받아서 DB에 저장하는 기능 추가 
@@ -27,7 +36,6 @@
     - ![image](https://user-images.githubusercontent.com/90117593/169698990-2698aca6-968f-4f19-a6c2-2f5664fc01df.png)
   - **추후 추가할 기능**
     - admin 아이디로 미분류 탭 이동 시, 영상별 운동부위 선택하여 수정가능하도록 구현
-    - 
 
 ---
 
