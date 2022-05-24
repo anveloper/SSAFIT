@@ -34,7 +34,12 @@ public class ApiRecordController {
 		System.out.println(record);
 		recordService.writeRecord(record);
 		return new ResponseEntity<String>(
-				"SUCESS",HttpStatus.OK);
-				
+				"SUCESS",HttpStatus.OK);	
+	}
+	
+	@PostMapping("/ex")
+	public ResponseEntity<List<Record>> listEx(@RequestBody Record record){
+		return new ResponseEntity<List<Record>>(
+				recordService.getListbyIdEx(record), HttpStatus.OK);
 	}
 }

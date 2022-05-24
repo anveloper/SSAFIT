@@ -38,7 +38,9 @@ export default new Vuex.Store({
     dailyRecords:[],
     workedDates:[],
     excercises:[],
-    date:"2022-05-22"
+    date:"",
+    exRecords:[],
+    chartShow:false
   },
   getters: {
     rootReply: state => {
@@ -130,6 +132,10 @@ export default new Vuex.Store({
     },
     GET_EXCERCISES(state, payload){
       state.excercises = payload;
+    },
+    GET_EX_RECORD(state, payload){
+      state.exRecords = payload;
+      state.chartShow = true;
     }
   },
   actions: {
@@ -350,6 +356,12 @@ export default new Vuex.Store({
         commit("GET_EXCERCISES", res.data)
       }).catch((err) => {console.log(err)})
     },
+    getExRecord({commit}, record){
+      apiRecord.getExRecord(record)
+      .then((res)=>{
+        commit("GET_EX_RECORD", res.data)
+      }).catch((err)=>{console.log(err)})
+    }
   },
   modules: {
   }

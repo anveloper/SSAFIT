@@ -6,5 +6,6 @@ import com.ssafy.ssafit.model.dto.Record;
 
 public interface RecordDao {
 	List<Record> selectRecordById(String userId);
+	List<Record> selectRecordByIdEx(Record record);
 	void insertRecord(Record record);
 }
