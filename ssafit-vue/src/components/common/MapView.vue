@@ -29,7 +29,7 @@ export default {
           lat: 36.3504567,
           lng: 127.3848187,
         },
-        level: 5,
+        level: 7,
       },
       isMap: false,
       map: null,

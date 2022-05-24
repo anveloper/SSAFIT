@@ -293,6 +293,13 @@ export default new Vuex.Store({
           commit('CHECK_USER_NAME', res.data);
         }).catch((err) => { console.log(err) });
     },
+    updateMember({ commit }, updateMember) {
+      apiMember.updateMember(updateMember).then((res) => {
+        commit('GET_MEMBER', res.data);
+        router.push(`/video`)
+        router.push(`/member/${updateMember.userId}`);
+      }).catch(() => { });
+    },
     getMember({ commit }, userId) {
       apiMember.getMember(userId).then((res) => {
         commit("GET_MEMBER", res.data);
