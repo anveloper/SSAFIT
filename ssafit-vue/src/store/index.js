@@ -136,6 +136,9 @@ export default new Vuex.Store({
     GET_EX_RECORD(state, payload) {
       state.exRecords = payload;
       state.chartShow = true;
+    },
+    ADD_RECORD(state, payload){
+      state.dailyRecords.push(payload)
     }
   },
   actions: {
@@ -348,11 +351,13 @@ export default new Vuex.Store({
     writeRecord({ commit }, record) {
       apiRecord.writeRecord(record)
         .then((res) => {
-          commit
           console.log(res.data)
           this.dispatch("getRecord", this.state.logonMember.userId)
+          commit("ADD_RECORD", record)
+          alert("등록되었습니다.")
         }).catch((err) => {
           console.log(err)
+          alert("모든 정보를 입력해 주세요!")
         })
     },
     setDailyRecords({ commit }, [dailyRecords, ymd]) {
