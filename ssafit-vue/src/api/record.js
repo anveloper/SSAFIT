@@ -6,5 +6,8 @@ export default{
   },
   writeRecord(record){
     return axiosService.post(`/record`,record)
+  },
+  getExRecord(record){
+    return axiosService.post(`/record/ex`,record)
   }
 }

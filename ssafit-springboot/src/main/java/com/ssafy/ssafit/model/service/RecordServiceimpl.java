@@ -25,6 +25,12 @@ public class RecordServiceimpl implements RecordService{
 		// TODO Auto-generated method stub
 		recordDao.insertRecord(record);
 	}
+
+	@Override
+	public List<Record> getListbyIdEx(Record record) {
+		// TODO Auto-generated method stub
+		return recordDao.selectRecordByIdEx(record);
+	}
 	
 	
 
