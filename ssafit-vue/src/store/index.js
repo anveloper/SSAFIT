@@ -257,7 +257,9 @@ export default new Vuex.Store({
           commit('MEMBER_LOGIN', { logonMember: res.data.logonMember, token: res.data["auth-token"] })
           if (call) router.push(call)
           else router.push({ name: 'video' })
-        }).catch((err) => { console.log(err) })
+        }).catch(() => {
+          alert('존재하지 않는 아이디이거나, 잘못된 접근입니다.')
+        })
     },
     joinInit({ commit }) {
       commit("JOIN_INIT");
