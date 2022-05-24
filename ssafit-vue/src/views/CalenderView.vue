@@ -2,7 +2,7 @@
   <div>
     <h2>Calender</h2>
     <b-row>
-      <b-col md="auto">
+      <b-col cols="4">
         <b-calendar  v-model="value" :date-info-fn="dateClass" @selected="onContext" locale="en-US"></b-calendar>
       </b-col>
       <b-col>

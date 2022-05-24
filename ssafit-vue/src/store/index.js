@@ -361,6 +361,14 @@ export default new Vuex.Store({
       .then((res)=>{
         commit("GET_EX_RECORD", res.data)
       }).catch((err)=>{console.log(err)})
+    },
+    deleteRecord({commit}, recordSeq){
+      apiRecord.deleteRecord(recordSeq)
+      .then((res)=>{
+        commit
+        console.log(res.data)
+        this.dispatch("getRecord", this.state.logonMember.userId)
+      }).catch((err)=>{console.log(err)})
     }
   },
   modules: {

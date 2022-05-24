@@ -8,4 +8,5 @@ public interface RecordDao {
 	List<Record> selectRecordById(String userId);
 	List<Record> selectRecordByIdEx(Record record);
 	void insertRecord(Record record);
+	void deleteRecord(int recordSeq);
 }
