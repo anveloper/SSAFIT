@@ -8,6 +8,7 @@
           v-model="key"
           name="key"
           v-if="!isTube"
+          @keyup.prevent.enter="getYoutubeApi"
         />
       </span>
     </div>

@@ -13,6 +13,9 @@ export default {
   joinMember(member) {
     return axiosService.post(`/member/join`, member)
   },
+  updateMember(member) {
+    return axiosService.put(`/member/${member.userId}`, member);
+  },
   checkUserId(userId) {
     return axiosService.post(`/member/join/checkId`, userId);
   },
