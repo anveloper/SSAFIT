@@ -99,9 +99,11 @@ name: 'LineChart',
   },
   computed: {
     ...mapState(["exRecords"]),
-    chartData : (this.exRecords)={
+    // chartData : (this.exRecords)={
       
-    }
+    // }
+  },
+  mounted(){
   }
 }
 </script>

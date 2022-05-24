@@ -39,6 +39,7 @@ public class ApiRecordController {
 	
 	@PostMapping("/ex")
 	public ResponseEntity<List<Record>> listEx(@RequestBody Record record){
+		System.out.println(record);
 		return new ResponseEntity<List<Record>>(
 				recordService.getListbyIdEx(record), HttpStatus.OK);
 	}
