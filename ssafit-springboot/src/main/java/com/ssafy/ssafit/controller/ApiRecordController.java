@@ -30,6 +30,8 @@ public class ApiRecordController {
 	
 	@PostMapping("")
 	public ResponseEntity<String> list(@RequestBody Record record){
+		record.setVolume(record.getSets()*record.getWeight()*record.getReps());
+		System.out.println(record);
 		recordService.writeRecord(record);
 		return new ResponseEntity<String>(
 				"SUCESS",HttpStatus.OK);

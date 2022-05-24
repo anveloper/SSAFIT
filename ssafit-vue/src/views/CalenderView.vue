@@ -19,7 +19,6 @@ export default {
       return {
         value: '',
         context: null,
-        workedDates:[],
         dailyRecords:[],
       }
     },
@@ -31,24 +30,20 @@ export default {
             this.dailyRecords.push(this.records[i])
           }
         }
-        this.$store.dispatch("setDailyRecords", this.dailyRecords)
+        this.$store.dispatch("setDailyRecords", [this.dailyRecords, ymd])
       },
-      dateClass(ymd) {  
+      dateClass(ymd) { 
+        this.$store.dispatch("setWorkedDates");
         return this.workedDates.includes(ymd) ? 'table-info' : ''
       },
     },
     computed: {
-      ...mapState(["logonMember", "records"]),
+      ...mapState(["logonMember", "records", "workedDates"]),
     },
     created() {
+      console.log( this.logonMember.userId)
       this.$store.dispatch("getRecord", this.logonMember.userId);
-      this.workedDates = [];
-      for(const i in this.records){
-          this.workedDates.push(this.records[i].date)
-        }
-    },
-    beforeMount() {
-        
+      this.$store.dispatch("setDailyRecords", this.dailyRecords);
     }
 }
 </script>

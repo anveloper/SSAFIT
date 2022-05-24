@@ -12,7 +12,7 @@
 	</resultMap>
 	
 	<select id="selectRecordById" resultMap="recordMap" parameterType="String">
-		SELECT d.record_seq,  d.user_seq, d.ex_no, m.user_id, e.ex_name, d.date, d.weight, d.reps, d.sets
+		SELECT d.record_seq,  d.user_seq, d.ex_no, m.user_id, e.ex_name, d.date, d.weight, d.reps, d.sets, d.volume
 		  FROM ex_daily as d
 		  LEFT JOIN sf_member as m
 		    ON m.member_seq = d.user_seq
@@ -22,7 +22,7 @@
 	</select>
 	<insert id="insertRecord" parameterType="record">
 		INSERT INTO ex_daily
-		VALUES (0, #{userSeq}, #{date}, #{exNo}, #{weight}, #{reps}, #{sets})
-		
+		VALUES (0, #{userSeq}, #{date}, #{exNo}, #{weight}, #{reps}, #{sets}, #{volume})
 	</insert>
+	
 </mapper>
