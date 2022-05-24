@@ -7,7 +7,7 @@
         <router-view />
       </b-container>
       <zzim-side-bar></zzim-side-bar>
-      <map-view></map-view>
+      <map-view v-show="logonMember.userId != ''"></map-view>
     </div>
   </div>
 </template>
@@ -15,7 +15,8 @@
 <script>
 import HeaderNav from "@/components/common/HeaderNav.vue";
 import ZzimSideBar from "@/components/common/ZzimSideBar.vue";
-import MapView from './components/common/MapView.vue';
+import MapView from "./components/common/MapView.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "App",
@@ -28,6 +29,9 @@ export default {
     return {
       logonUser: null,
     };
+  },
+  computed: {
+    ...mapState(["logonMember"]),
   },
 };
 </script>
@@ -50,7 +54,7 @@ export default {
 #app {
   background-image: url("@/assets/back.svg");
   background-repeat: no-repeat;
-  background-size: 110%;  
+  background-size: 110%;
   background-attachment: fixed;
   background-position: bottom;
   height: 100vh;

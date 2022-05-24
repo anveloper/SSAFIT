@@ -83,7 +83,6 @@ export default {
       }
       console.log(record)
       this.$store.dispatch("writeRecord", record)
-
     }
   }
 }

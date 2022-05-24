@@ -34,13 +34,13 @@ export default new Vuex.Store({
       leadList: [],
       zzimList: [],
     },
-    records:[],
-    dailyRecords:[],
-    workedDates:[],
-    excercises:[],
-    date:"",
-    exRecords:[],
-    chartShow:false
+    records: [],
+    dailyRecords: [],
+    workedDates: [],
+    excercises: [],
+    date: "",
+    exRecords: [],
+    chartShow: false
   },
   getters: {
     rootReply: state => {
@@ -117,23 +117,23 @@ export default new Vuex.Store({
       state.otherMember.followList = payload.followList;
       state.otherMember.leadList = payload.leadList;
     },
-    GET_RECORD(state, payload){
+    GET_RECORD(state, payload) {
       state.records = payload
-    }, 
-    SET_DAILY_RECORDS(state, [payload, ymd]){
-      state.dailyRecords = payload
-      state.date=ymd
     },
-    SET_WORKED_DATES(state){
+    SET_DAILY_RECORDS(state, [payload, ymd]) {
+      state.dailyRecords = payload
+      state.date = ymd
+    },
+    SET_WORKED_DATES(state) {
       state.workedDates = [];
-      for(let i in state.records){
+      for (let i in state.records) {
         state.workedDates.push(state.records[i].date)
       }
     },
-    GET_EXCERCISES(state, payload){
+    GET_EXCERCISES(state, payload) {
       state.excercises = payload;
     },
-    GET_EX_RECORD(state, payload){
+    GET_EX_RECORD(state, payload) {
       state.exRecords = payload;
       state.chartShow = true;
     }
@@ -143,6 +143,8 @@ export default new Vuex.Store({
       apiVideo.getVideo(id)
         .then((res) => {
           commit('GET_VIDEO', res.data)
+          this.getReplyList(id)
+          router.push(`/video/${id}`)
         }).catch((err) => { console.log(err) })
     },
     getVideos({ commit }) {
@@ -257,7 +259,9 @@ export default new Vuex.Store({
           commit('MEMBER_LOGIN', { logonMember: res.data.logonMember, token: res.data["auth-token"] })
           if (call) router.push(call)
           else router.push({ name: 'video' })
-        }).catch((err) => { console.log(err) })
+        }).catch(() => {
+          alert('존재하지 않는 아이디이거나, 잘못된 접근입니다.')
+        })
     },
     joinInit({ commit }) {
       commit("JOIN_INIT");
@@ -288,6 +292,13 @@ export default new Vuex.Store({
         .then((res) => {
           commit('CHECK_USER_NAME', res.data);
         }).catch((err) => { console.log(err) });
+    },
+    updateMember({ commit }, updateMember) {
+      apiMember.updateMember(updateMember).then((res) => {
+        commit('GET_MEMBER', res.data);
+        router.push(`/video`)
+        router.push(`/member/${updateMember.userId}`);
+      }).catch(() => { });
     },
     getMember({ commit }, userId) {
       apiMember.getMember(userId).then((res) => {
@@ -328,35 +339,36 @@ export default new Vuex.Store({
           sto.dispatch("getMember", this.state.logonMember.userId);
         }).catch((err) => { console.log(err) });
     },
-    getRecord({commit}, userId){
+    getRecord({ commit }, userId) {
       apiRecord.getRecordList(userId)
-      .then((res)=>{
-        commit("GET_RECORD", res.data)
-      }).catch((err)=>{console.log(err)})
+        .then((res) => {
+          commit("GET_RECORD", res.data)
+        }).catch((err) => { console.log(err) })
     },
-    writeRecord({commit}, record){
+    writeRecord({ commit }, record) {
       apiRecord.writeRecord(record)
-      .then((res)=>{
-        commit
-        console.log(res.data)
-        this.dispatch("getRecord", this.state.logonMember.userId)
-      }).catch((err)=>{
-        console.log(err)
-      })
+        .then((res) => {
+          commit
+          console.log(res.data)
+          this.dispatch("getRecord", this.state.logonMember.userId)
+        }).catch((err) => {
+          console.log(err)
+        })
     },
-    setDailyRecords({commit}, [dailyRecords, ymd]){
+    setDailyRecords({ commit }, [dailyRecords, ymd]) {
       commit("SET_DAILY_RECORDS", [dailyRecords, ymd])
     },
-    setWorkedDates({commit}){
+    setWorkedDates({ commit }) {
       commit("SET_WORKED_DATES")
     },
-    getExcercises({commit}){
+    getExcercises({ commit }) {
       apiExcercise.getExcerciseList()
-      .then((res) =>{
-        commit("GET_EXCERCISES", res.data)
-      }).catch((err) => {console.log(err)})
+        .then((res) => {
+          commit("GET_EXCERCISES", res.data)
+        }).catch((err) => { console.log(err) })
     },
-    getExRecord({commit}, record){
+    getExRecord({ commit }, record) {
+      console.log(record);
       apiRecord.getExRecord(record)
       .then((res)=>{
         commit("GET_EX_RECORD", res.data)
