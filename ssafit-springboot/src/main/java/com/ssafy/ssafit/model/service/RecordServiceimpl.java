@@ -31,6 +31,12 @@ public class RecordServiceimpl implements RecordService{
 		// TODO Auto-generated method stub
 		return recordDao.selectRecordByIdEx(record);
 	}
+
+	@Override
+	public void deleteRecord(int recordSeq) {
+		// TODO Auto-generated method stub
+		recordDao.deleteRecord(recordSeq);
+	}
 	
 	
 

@@ -73,25 +73,7 @@ name: 'LineChart',
   },
   data() {
     return {
-      chartData: {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July'
-        ],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, 39, 10, 40, 39, 80, 40]
-          }
-        ]
-      },
-      chartOptions: {
+      chartOptions : {
         responsive: true,
         maintainAspectRatio: false
       }
@@ -99,12 +81,24 @@ name: 'LineChart',
   },
   computed: {
     ...mapState(["exRecords"]),
-    // chartData : (this.exRecords)={
-      
-    // }
+    chartData(){
+      var dates = [];
+      var volumes = [];
+      for(var i = 0; i < this.exRecords.length; i++){
+        dates.push(this.exRecords[i].date)
+        volumes.push(this.exRecords[i].volume)
+      }
+      const labels = dates;
+      const datasets=[
+        {
+          label: this.exRecords[0].exName,
+          backgroundColor: '#007bff',
+          data: volumes
+        }
+      ]
+      return{ labels , datasets}
+    }
   },
-  mounted(){
-  }
 }
 </script>
 

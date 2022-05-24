@@ -6,7 +6,8 @@
       <div>{{record.exName}} {{record.sets}}세트</div>
       <b-row align-h="between">
         <b-col >{{record.weight}}kg X {{record.reps}}회</b-col>
-        <b-col style="text-align:right">{{record.volume}}kg</b-col>
+        <b-col style="text-align:right">총 볼륨 : {{record.volume}}kg</b-col>  
+          <b-button align-content="end" variant="danger" @click="deleteRecord(record.recordSeq, index)">삭제</b-button>
       </b-row>
       
       </b-list-group-item>
@@ -23,6 +24,11 @@ export default {
   methods:{
     getExRecord(record) {
       this.$store.dispatch("getExRecord",record)
+    },
+    deleteRecord(recordSeq,index){
+      this.$store.dispatch("deleteRecord",recordSeq)
+      this.dailyRecords.splice(index,1)
+      console.log(index)
     }
   }
 }

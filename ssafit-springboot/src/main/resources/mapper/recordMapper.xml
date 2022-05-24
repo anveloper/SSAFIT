@@ -35,5 +35,8 @@
 		INSERT INTO ex_daily
 		VALUES (0, #{userSeq}, #{date}, #{exNo}, #{weight}, #{reps}, #{sets}, #{volume})
 	</insert>
-	
+	<delete id="deleteRecord" parameterType="int">
+		DELETE FROM ex_daily
+		 WHERE record_seq = #{recordSeq}
+	</delete>
 </mapper>
