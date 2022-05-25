@@ -186,7 +186,7 @@ export default new Vuex.Store({
       apiVideo.createVideo(youtubeId, title).then((res) => {
         commit('GET_VIDEO', res.data)
       }).then(() => {
-        router.push(`/video/${youtubeId}`)
+        router.push(`/video/${youtubeId}`).catch(() => { })
       }).catch((err) => { console.log(err) });
     },
     getZzim({ commit }, userId) {

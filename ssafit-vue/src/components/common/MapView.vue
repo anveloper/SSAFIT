@@ -5,7 +5,7 @@
     </button>
     <!-- v-if로 부를 경우 오류남. 랜더된 div에 입히는 것. -->
     <span v-show="isMap">
-      <div class="map_wrap">
+      <div class="map_wrap col p-1">
         <div id="map" ref="map" :style="{ width, height }"></div>
         <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
         <div class="custom_zoomcontrol radius_border">
@@ -31,7 +31,7 @@ export default {
         },
         level: 7,
       },
-      isMap: false,
+      isMap: true,
       map: null,
       infowindow: null,
       ps: null,
@@ -117,9 +117,8 @@ export default {
   },
   mounted() {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
-    if (window.kakao && window.kakao.maps) {
-      window.addEventListener("resize", this.handleResize);
-    }
+
+    window.addEventListener("resize", this.handleResize);
   },
   beforeDestroy() {
     this.map.setCenter(

@@ -15,6 +15,7 @@ import ZzimList from '@/components/member/ZzimList.vue'
 import LoginMember from '@/components/member/LoginMember.vue'
 import JoinMember from '@/components/member/JoinMember.vue'
 
+
 import CalenderView from'@/views/CalenderView.vue'
 import CalenderList from'@/components/calender/CalenderList.vue'
 import CalenderRegist from'@/components/calender/CalenderRegist.vue'
@@ -62,13 +63,14 @@ const routes = [
         component: CalenderList
       },
       {
-        path:":id/regist",
-        name : "CalenderRegist",
+        path: ":id/regist",
+        name: "CalenderRegist",
         component: CalenderRegist
       }
-
-    ]
-  },{
+    ],
+    beforeEnter: checkLogin(),
+  },
+  {
     path: '/food/',
     name: 'food',
     component : FoodView,
