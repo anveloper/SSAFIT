@@ -20,9 +20,12 @@
               style="max-width: 300px"
             >
               <b-card-text class="title-box">
-                <b-link class="title" :to="`/video/${video.youtubeId}`">{{
-                  video.videoTitle
-                }}</b-link>
+                <b-link
+                  class="title"
+                  :to="`/video/${video.youtubeId}`"
+                  @click="goVideo(video.youtubeId)"
+                  >{{ video.videoTitle }}</b-link
+                >
               </b-card-text>
               <div class="d-flex justify-content-between">
                 <span class="view-cnt">
@@ -64,6 +67,9 @@ export default {
     zzimVideo(youtubeId) {
       let userId = this.logonMember.userId;
       this.$store.dispatch("zzimVideo", { userId, youtubeId });
+    },
+    goVideo(youtubeId) {
+      this.$store.dispatch("getVideo", youtubeId);
     },
   },
   mounted() {

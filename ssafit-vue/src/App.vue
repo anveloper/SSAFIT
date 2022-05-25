@@ -1,13 +1,16 @@
 <template>
   <div id="app">
-    <header-nav></header-nav>
-    <div id="pageTop" />
-    <div>
-      <b-container class="mt-1">
-        <router-view />
-      </b-container>
-      <zzim-side-bar></zzim-side-bar>
-      <map-view></map-view>
+    <home-view v-if="welcome"></home-view>
+    <div v-else>
+      <header-nav></header-nav>
+      <div id="pageTop" />
+      <div>
+        <b-container class="mt-1">
+          <router-view />
+        </b-container>
+        <zzim-side-bar></zzim-side-bar>
+        <map-view></map-view>
+      </div>
     </div>
   </div>
 </template>
@@ -15,7 +18,9 @@
 <script>
 import HeaderNav from "@/components/common/HeaderNav.vue";
 import ZzimSideBar from "@/components/common/ZzimSideBar.vue";
-import MapView from './components/common/MapView.vue';
+import MapView from "./components/common/MapView.vue";
+import { mapState } from "vuex";
+import HomeView from "./views/HomeView.vue";
 
 export default {
   name: "App",
@@ -23,11 +28,33 @@ export default {
     HeaderNav,
     ZzimSideBar,
     MapView,
+    HomeView,
   },
   data() {
     return {
-      logonUser: null,
+      welcome: true,
     };
+  },
+  methods: {
+    goMain() {
+      this.welcome = false;
+      this.$router.push("/video").catch(()=>{});
+    },
+    onScoll() {
+      const currentScrollPosition =
+        window.pageYOffset || document.documentElement.scrollTop;
+      if (currentScrollPosition < 0) return;
+      if (this.welcome) this.goMain();
+    },
+  },
+  computed: {
+    ...mapState(["logonMember"]),
+  },
+  mounted() {
+    window.addEventListener("scroll", this.onScoll);
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.onScoll);
   },
 };
 </script>
@@ -50,7 +77,7 @@ export default {
 #app {
   background-image: url("@/assets/back.svg");
   background-repeat: no-repeat;
-  background-size: 110%;  
+  background-size: 110%;
   background-attachment: fixed;
   background-position: bottom;
   height: 100vh;

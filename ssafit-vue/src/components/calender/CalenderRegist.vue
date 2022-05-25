@@ -36,7 +36,7 @@
           <b-list-group>
               <b-form-group >
                 <b-list-group-item v-for="ex in partEx" :key="ex.exNo">
-                  <b-form-radio v-model="selected" :value="`${ex.exNo}`">{{ex.exName}}</b-form-radio>
+                  <b-form-radio v-model="selected" :value="`${ex.exNo}/${ex.exName}`">{{ex.exName}}</b-form-radio>
                 </b-list-group-item>
               </b-form-group>
             </b-list-group>
@@ -76,14 +76,15 @@ export default {
       const record = {
         "userSeq" : this.logonMember.memberSeq,
         "date" : this.date,
-        "exNo" : this.selected,
+        "exNo" : this.selected.split("/")[0],
+        "exName" : this.selected.split("/")[1],
         "weight" : this.weight,
         "reps" : this.reps,
         "sets" : this.sets,
+        "volume" : this.sets*this.weight*this.reps
       }
       console.log(record)
       this.$store.dispatch("writeRecord", record)
-      this.router.push("")
     }
   }
 }

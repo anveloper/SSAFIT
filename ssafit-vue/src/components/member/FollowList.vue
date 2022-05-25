@@ -4,7 +4,7 @@
     <div class="d-flex flex-wrap">
       <div class="col">
         <label for="followListTable"
-          >내가 follow하는 사람 {{ followList.length }}명</label
+          >내가 follow하는 사람 {{ 0 + followList.length }}명</label
         >
         <b-table
           id="followListTable"
@@ -25,7 +25,7 @@
       </div>
       <div class="col">
         <label for="LeadListTable"
-          >나를 follow하는 사람 {{ leadList.length }}명</label
+          >나를 follow하는 사람 {{ 0 + leadList.length }}명</label
         >
         <b-table
           id="LeadListTable"
@@ -82,7 +82,7 @@ export default {
       });
     },
     block(otherId) {
-       this.$store.dispatch("blockMember", {
+      this.$store.dispatch("blockMember", {
         userId: this.logonMember.userId,
         followId: otherId.userId,
       });

@@ -8,4 +8,5 @@ public interface RecordService {
 	List<Record> getListbyId(String userId);
 	List<Record> getListbyIdEx(Record record);
 	void writeRecord(Record record);
+	void deleteRecord(int recordSeq);
 }

@@ -9,5 +9,8 @@ export default{
   },
   getExRecord(record){
     return axiosService.post(`/record/ex`,record)
+  },
+  deleteRecord(recordSeq){
+    return axiosService.delete(`/record/${recordSeq}`)
   }
 }

@@ -5,8 +5,8 @@
     </button>
     <!-- v-if로 부를 경우 오류남. 랜더된 div에 입히는 것. -->
     <span v-show="isMap">
-      <div class="map_wrap">
-        <div id="map" ref="map" style="width: 30vw; height: 30vh"></div>
+      <div class="map_wrap col p-1">
+        <div id="map" ref="map" :style="{ width, height }"></div>
         <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
         <div class="custom_zoomcontrol radius_border">
           <span @click="zoom(-1)"><i class="bi bi-plus"></i></span>
@@ -29,20 +29,27 @@ export default {
           lat: 36.3504567,
           lng: 127.3848187,
         },
-        level: 3,
+        level: 7,
       },
-      isMap: false,
+      isMap: true,
       map: null,
       infowindow: null,
       ps: null,
       markers: [],
-      width: 0,
-      height: 0,
+      width: 30 + "vw",
+      height: 30 + "vh",
     };
   },
   methods: {
     mapOn() {
       this.isMap = !this.isMap;
+      this.map.setCenter(
+        new kakao.maps.LatLng(
+          this.mapOption.center.lat,
+          this.mapOption.center.lng
+        )
+      );
+      this.map.setLevel(this.mapOption.level);
     },
     zoom(delta) {
       this.map.setLevel(this.map.getLevel() + delta);
@@ -79,7 +86,6 @@ export default {
       });
       this.ps = new kakao.maps.services.Places();
       this.ps.keywordSearch("대전 헬스", this.placesSearchCB);
-      this.map.relayout();
     },
     placesSearchCB(data, status, pagination) {
       console.log(pagination);
@@ -99,17 +105,14 @@ export default {
         position: new kakao.maps.LatLng(place.y, place.x),
       });
 
-      kakao.maps.event.addListener(
-        marker,
-        "click",
-        this.infoSet(marker, place.place_name)
-      );
-    },
-    infoSet(marker, place_name) {
-      this.infowindow.setContent(
-        '<div style="padding:5px;font-size:12px;">' + place_name + "</div>"
-      );
-      this.infowindow.open(this.map, marker);
+      kakao.maps.event.addListener(marker, "click", () => {
+        this.infowindow.setContent(
+          '<div style="padding:5px;font-size:12px;">' +
+            place.place_name +
+            "</div>"
+        );
+        this.infowindow.open(this.map, marker);
+      });
     },
   },
   mounted() {
@@ -118,11 +121,14 @@ export default {
     window.addEventListener("resize", this.handleResize);
   },
   beforeDestroy() {
-    try {
-      window.addEventListener("resize", this.handleResize);
-    } catch (exception) {
-      console.log("또 그 오류.. resize");
-    }
+    this.map.setCenter(
+      new kakao.maps.LatLng(
+        this.mapOption.center.lat,
+        this.mapOption.center.lng
+      )
+    );
+    this.map.setLevel(this.mapOption.level);
+    window.addEventListener("resize", this.handleResize);
   },
   watch: {
     "options.level"(cur, prev) {
@@ -139,7 +145,6 @@ export default {
 <style scoped>
 #map {
   margin-top: 4px;
-  position: relative;
   overflow: hidden;
   border-radius: 5px;
 }

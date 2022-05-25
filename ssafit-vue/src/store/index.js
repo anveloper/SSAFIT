@@ -9,6 +9,7 @@ import apiReply from "@/api/reply.js"
 import apiYoutube from "@/api/youtube.js"
 import apiRecord from "@/api/record.js"
 import apiExcercise from "@/api/excercise.js"
+import apiFood from "@/api/food.js"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -34,13 +35,14 @@ export default new Vuex.Store({
       leadList: [],
       zzimList: [],
     },
-    records:[],
-    dailyRecords:[],
-    workedDates:[],
-    excercises:[],
-    date:"",
-    exRecords:[],
-    chartShow:false
+    records: [],
+    dailyRecords: [],
+    workedDates: [],
+    excercises: [],
+    date: "",
+    exRecords: [],
+    chartShow: false,
+    totalCal:''
   },
   getters: {
     rootReply: state => {
@@ -117,25 +119,31 @@ export default new Vuex.Store({
       state.otherMember.followList = payload.followList;
       state.otherMember.leadList = payload.leadList;
     },
-    GET_RECORD(state, payload){
+    GET_RECORD(state, payload) {
       state.records = payload
-    }, 
-    SET_DAILY_RECORDS(state, [payload, ymd]){
-      state.dailyRecords = payload
-      state.date=ymd
     },
-    SET_WORKED_DATES(state){
+    SET_DAILY_RECORDS(state, [payload, ymd]) {
+      state.dailyRecords = payload
+      state.date = ymd
+    },
+    SET_WORKED_DATES(state) {
       state.workedDates = [];
-      for(let i in state.records){
+      for (let i in state.records) {
         state.workedDates.push(state.records[i].date)
       }
     },
-    GET_EXCERCISES(state, payload){
+    GET_EXCERCISES(state, payload) {
       state.excercises = payload;
     },
-    GET_EX_RECORD(state, payload){
+    GET_EX_RECORD(state, payload) {
       state.exRecords = payload;
       state.chartShow = true;
+    },
+    ADD_RECORD(state, payload){
+      state.dailyRecords.push(payload)
+    },
+    SET_TOTAL_CAL(state, payload){
+      state.totalCal = payload
     }
   },
   actions: {
@@ -143,6 +151,8 @@ export default new Vuex.Store({
       apiVideo.getVideo(id)
         .then((res) => {
           commit('GET_VIDEO', res.data)
+          this.getReplyList(id)
+          router.push(`/video/${id}`)
         }).catch((err) => { console.log(err) })
     },
     getVideos({ commit }) {
@@ -176,7 +186,7 @@ export default new Vuex.Store({
       apiVideo.createVideo(youtubeId, title).then((res) => {
         commit('GET_VIDEO', res.data)
       }).then(() => {
-        router.push(`/video/${youtubeId}`)
+        router.push(`/video/${youtubeId}`).catch(() => { })
       }).catch((err) => { console.log(err) });
     },
     getZzim({ commit }, userId) {
@@ -291,6 +301,13 @@ export default new Vuex.Store({
           commit('CHECK_USER_NAME', res.data);
         }).catch((err) => { console.log(err) });
     },
+    updateMember({ commit }, updateMember) {
+      apiMember.updateMember(updateMember).then((res) => {
+        commit('GET_MEMBER', res.data);
+        router.push(`/video`)
+        router.push(`/member/${updateMember.userId}`);
+      }).catch(() => { });
+    },
     getMember({ commit }, userId) {
       apiMember.getMember(userId).then((res) => {
         commit("GET_MEMBER", res.data);
@@ -330,39 +347,64 @@ export default new Vuex.Store({
           sto.dispatch("getMember", this.state.logonMember.userId);
         }).catch((err) => { console.log(err) });
     },
-    getRecord({commit}, userId){
+    getRecord({ commit }, userId) {
       apiRecord.getRecordList(userId)
-      .then((res)=>{
-        commit("GET_RECORD", res.data)
-      }).catch((err)=>{console.log(err)})
+        .then((res) => {
+          commit("GET_RECORD", res.data)
+        }).catch((err) => { console.log(err) })
     },
-    writeRecord({commit}, record){
+    writeRecord({ commit }, record) {
       apiRecord.writeRecord(record)
-      .then((res)=>{
-        commit
-        console.log(res.data)
-        this.dispatch("getRecord", this.state.logonMember.userId)
-      }).catch((err)=>{
-        console.log(err)
-      })
+        .then((res) => {
+          console.log(res.data)
+          this.dispatch("getRecord", this.state.logonMember.userId)
+          commit("ADD_RECORD", record)
+          alert("등록되었습니다.")
+        }).catch((err) => {
+          console.log(err)
+          alert("모든 정보를 입력해 주세요!")
+        })
     },
-    setDailyRecords({commit}, [dailyRecords, ymd]){
+    setDailyRecords({ commit }, [dailyRecords, ymd]) {
       commit("SET_DAILY_RECORDS", [dailyRecords, ymd])
     },
-    setWorkedDates({commit}){
+    setWorkedDates({ commit }) {
       commit("SET_WORKED_DATES")
     },
-    getExcercises({commit}){
+    getExcercises({ commit }) {
       apiExcercise.getExcerciseList()
-      .then((res) =>{
-        commit("GET_EXCERCISES", res.data)
-      }).catch((err) => {console.log(err)})
+        .then((res) => {
+          commit("GET_EXCERCISES", res.data)
+        }).catch((err) => { console.log(err) })
     },
-    getExRecord({commit}, record){
+    getExRecord({ commit }, record) {
+      console.log(record);
       apiRecord.getExRecord(record)
       .then((res)=>{
         commit("GET_EX_RECORD", res.data)
       }).catch((err)=>{console.log(err)})
+    },
+    deleteRecord({commit}, recordSeq){
+      apiRecord.deleteRecord(recordSeq)
+      .then((res)=>{
+        commit
+        console.log(res.data)
+        this.dispatch("getRecord", this.state.logonMember.userId)
+      }).catch((err)=>{console.log(err)})
+    },
+    getCalorie({commit}, memberSeq){
+      apiFood.getCal(memberSeq)
+      .then((res)=>{
+        commit("SET_TOTAL_CAL", res.data)
+      }).catch((err)=>console.log(err))
+    },
+    setCalories({commit}, calInfo){
+      apiFood.setCal(calInfo)
+      .then((res)=>{
+        commit
+        console.log(res.data)
+        this.dispatch("getCalorie",calInfo.memberSeq)
+      })
     }
   },
   modules: {

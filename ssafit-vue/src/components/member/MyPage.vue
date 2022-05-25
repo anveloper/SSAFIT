@@ -120,9 +120,10 @@ export default {
     },
     update() {
       this.$store.dispatch("updateMember", this.logonMember);
+      this.modify();
     },
     checkUserName() {
-      if (this.newMember.username != "") {
+      if (this.logonMember.username != "") {
         this.$store.dispatch("checkUserName", this.logonMember.username);
         this.$refs.inNick.focus();
         this.nmsg = "이미 사용중인 닉네임입니다.";
