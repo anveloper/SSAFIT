@@ -9,6 +9,7 @@ import apiReply from "@/api/reply.js"
 import apiYoutube from "@/api/youtube.js"
 import apiRecord from "@/api/record.js"
 import apiExcercise from "@/api/excercise.js"
+import apiFood from "@/api/food.js"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -40,7 +41,8 @@ export default new Vuex.Store({
     excercises: [],
     date: "",
     exRecords: [],
-    chartShow: false
+    chartShow: false,
+    totalCal:''
   },
   getters: {
     rootReply: state => {
@@ -139,6 +141,9 @@ export default new Vuex.Store({
     },
     ADD_RECORD(state, payload){
       state.dailyRecords.push(payload)
+    },
+    SET_TOTAL_CAL(state, payload){
+      state.totalCal = payload
     }
   },
   actions: {
@@ -386,6 +391,20 @@ export default new Vuex.Store({
         console.log(res.data)
         this.dispatch("getRecord", this.state.logonMember.userId)
       }).catch((err)=>{console.log(err)})
+    },
+    getCalorie({commit}, memberSeq){
+      apiFood.getCal(memberSeq)
+      .then((res)=>{
+        commit("SET_TOTAL_CAL", res.data)
+      }).catch((err)=>console.log(err))
+    },
+    setCalories({commit}, calInfo){
+      apiFood.setCal(calInfo)
+      .then((res)=>{
+        commit
+        console.log(res.data)
+        this.dispatch("getCalorie",calInfo.memberSeq)
+      })
     }
   },
   modules: {
