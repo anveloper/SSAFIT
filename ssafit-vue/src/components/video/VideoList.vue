@@ -90,18 +90,6 @@
                 >{{ video.snippet.title }}</b-link
               >
             </b-card-text>
-            <!-- <div class="d-flex justify-content-between">
-              <span>
-                <b-badge variant="danger">조회수 : {{ video.viewCnt }}</b-badge>
-              </span>
-              <button
-                class="btn btn-success ml-2 zzim-btn"
-                @click="zzimVideo(video.youtubeId)"
-                v-if="logonMember.userId"
-              >
-                찜
-              </button>
-            </div> -->
           </b-card>
         </b-card-group>
       </div>
