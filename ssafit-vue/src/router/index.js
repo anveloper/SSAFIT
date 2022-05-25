@@ -18,6 +18,9 @@ import JoinMember from '@/components/member/JoinMember.vue'
 import CalenderView from'@/views/CalenderView.vue'
 import CalenderList from'@/components/calender/CalenderList.vue'
 import CalenderRegist from'@/components/calender/CalenderRegist.vue'
+
+import FoodView from '@/views/FoodView.vue'
+
 Vue.use(VueRouter)
 
 const checkLogin = () => (from, to, next) => {
@@ -65,6 +68,10 @@ const routes = [
       }
 
     ]
+  },{
+    path: '/food/',
+    name: 'food',
+    component : FoodView,
   },
   {
     path: '/member',
