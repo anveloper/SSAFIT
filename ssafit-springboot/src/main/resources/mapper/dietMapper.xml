@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ssafy.ssafit.model.dao.DietDao">
+	<resultMap type="diet" id="dietMap">
+		<id column="food_seq" property="foodSeq"/>
+		<result column="member_seq" property="memberSeq"/>
+		<result column="food_name" property="foodName"/>
+		<result column="serving_size" property="servingSize"/>		
+		<result column="food_ate" property="foodAte"/>
+	</resultMap>
+	<select id="selectDiet" parameterType="int" resultMap="dietMap">
+		SELECT * FROM sf_food WHERE member_seq = #{memberSeq}
+	</select>
+	
+	<insert id="insertDiet"  parameterType="diet"  >
+		INSERT INTO sf_food
+		VALUES (#{memberSeq}, #{foodName}, #{servingSize}, #{cal}, #{carb}, #{protein}, #{fat}, 0, 0)
+	</insert>
+	
+	<delete id="deleteDiet" parameterType="int">
+		DELETE FROM sf_food
+		 WHERE food_seq = #{foodSeq}
+	</delete>
+ </mapper>

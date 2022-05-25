@@ -10,6 +10,7 @@ import apiYoutube from "@/api/youtube.js"
 import apiRecord from "@/api/record.js"
 import apiExcercise from "@/api/excercise.js"
 import apiFood from "@/api/food.js"
+import apiDiet from "@/api/diet.js"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -42,7 +43,14 @@ export default new Vuex.Store({
     date: "",
     exRecords: [],
     chartShow: false,
-    totalCal:''
+    totalCal:'',
+    eatenCal:'',
+    foodList:[],
+    nutri:{
+      carb:'',
+      pro:'',
+      fat:'',
+    },eattenFoods:[],
   },
   getters: {
     rootReply: state => {
@@ -144,6 +152,24 @@ export default new Vuex.Store({
     },
     SET_TOTAL_CAL(state, payload){
       state.totalCal = payload
+    },
+    SET_FOOD_LIST(state, payload){
+      state.foodList = payload
+    },
+    EAT_FOOD(state, food){
+      state.eattenFoods.push(food)
+      state.nutri.carb = +state.nutri.carb + +food.carb
+      state.nutri.pro = +state.nutri.pro + +food.protein
+      state.nutri.fat = +state.nutri.fat + +food.fat
+      state.eatenCal = +state.eatenCal + +food.cal
+    },
+    SPIT_FOOD(state, index){
+      const spitFood = state.eattenFoods[index];
+      state.nutri.carb = +state.nutri.carb - +spitFood.carb
+      state.nutri.pro = +state.nutri.pro - +spitFood.protein
+      state.nutri.fat = +state.nutri.fat - +spitFood.fat
+      state.eatenCal = +state.eatenCal - +spitFood.cal
+      state.eattenFoods.splice(index,1)
     }
   },
   actions: {
@@ -404,6 +430,39 @@ export default new Vuex.Store({
         commit
         console.log(res.data)
         this.dispatch("getCalorie",calInfo.memberSeq)
+      })
+    },
+    getDietList({commit}, memberSeq){
+      apiDiet.getDietList(memberSeq)
+      .then((res)=>{
+        commit("SET_FOOD_LIST", res.data)
+        console.log(res.data)
+      })
+    },
+    eatFood({commit},food){
+      commit("EAT_FOOD", food)
+    },
+    spitFood({commit}, index){
+      commit("SPIT_FOOD", index)
+    },
+    setNewFood({commit}, newFood){
+      apiDiet.setNewFood(newFood)
+      .then((res)=>{
+        commit
+        this.dispatch("getDietList",res.data.memberSeq)
+      }).catch((err)=>{
+        console.log(err)
+        alert("입력된 정보를 확인하세요")
+      })
+    },deleteFood({commit}, foodSeq){
+      apiDiet.deleteFood(foodSeq)
+      .then((res)=>{
+        res
+        commit
+        this.dispatch("getDietList", this.state.logonMember.memberSeq)
+      }).catch((err)=>{
+        console.log(err)
+        alert("삭제실패!")
       })
     }
   },
