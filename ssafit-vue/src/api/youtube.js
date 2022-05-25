@@ -3,7 +3,7 @@ import axios from 'axios';
 const baseURL = "https://www.googleapis.com/youtube/v3/search?"
   + "&key=" + process.env.VUE_APP_YOUTUBE_KEY
   + "&part=snippet"
-  + "&maxResults=10"
+  + "&maxResults=12"
   + "&regionCode=KR&q="
 
 // const axiosService = axios.create({

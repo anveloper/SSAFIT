@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <home-view v-if="welcome"></home-view>
+    <home-view v-if="welcome" @goMain="goMain()"></home-view>
     <div v-else>
       <header-nav></header-nav>
       <div id="pageTop" />
