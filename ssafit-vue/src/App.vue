@@ -80,7 +80,8 @@ export default {
   background-size: 110%;
   background-attachment: fixed;
   background-position: bottom;
-  height: 100vh;
+  min-height: 980px;
+  height: 100%;
 }
 
 #app .nav-link {
