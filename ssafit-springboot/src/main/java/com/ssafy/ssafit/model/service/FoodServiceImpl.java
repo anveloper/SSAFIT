@@ -23,5 +23,11 @@ public class FoodServiceImpl implements FoodService{
 		// TODO Auto-generated method stub
 		foodDao.setCal(food);
 	}
+
+	@Override
+	public void deleteCal(int memberSeq) {
+		// TODO Auto-generated method stub
+		foodDao.deleteCal(memberSeq);
+	}
 	
 }
