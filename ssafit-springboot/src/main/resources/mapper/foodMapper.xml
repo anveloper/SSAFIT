@@ -15,4 +15,8 @@
 		INSERT INTO sf_calories
 		VALUES (#{memberSeq}, #{cal})
 	</insert>
+	<delete id="deleteCal" parameterType="int">
+		DELETE FROM sf_calories
+		 WHERE member_seq = #{memberSeq}
+	</delete>
 </mapper>
