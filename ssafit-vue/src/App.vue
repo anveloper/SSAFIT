@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <home-view v-if="welcome"></home-view>
+    <home-view v-if="welcome" @goMain="goMain()"></home-view>
     <div v-else>
       <header-nav></header-nav>
       <div id="pageTop" />
@@ -63,7 +63,7 @@ export default {
 @import "/src/common/font/font.css";
 
 * {
-  font-family: "GangwonEduPowerExtraBoldA", Helvetica, Arial, sans-serif;
+  font-family: "GangwonEduPowerExtraBoldA", Helvetica, Arial, sans-serif;  
 }
 
 #pageTop {
@@ -80,7 +80,8 @@ export default {
   background-size: 110%;
   background-attachment: fixed;
   background-position: bottom;
-  height: 100vh;
+  min-height: 980px;
+  height: 100%;
 }
 
 #app .nav-link {

@@ -131,7 +131,7 @@ public class ApiMemberController {
 			status = HttpStatus.CONFLICT; //
 		}
 		return new ResponseEntity<Member>(memberService.getMember(userId), status);
-	} // memberSeq가 반드시 담겨있어야 함.
+	} // token이 반드시 담겨있어야 함.
 
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<String> delete(@PathVariable String userId, HttpServletRequest req) {

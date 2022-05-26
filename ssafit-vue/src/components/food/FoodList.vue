@@ -1,7 +1,8 @@
 <template>
-  <div style="height:200vh">
+  <div id="fooddiv">
     <h2>총 칼로리:  {{totalCal.cal}} 
-      <Strong v-if="eatenCal"> 남은 칼로리: {{totalCal.cal - eatenCal}}</Strong>
+      <Strong v-if="eatenCal"> 남은 칼로리: {{totalCal.cal - eatenCal}}   </Strong>
+      <b-button @click="resetCal">칼로리 정보 재설정</b-button>
     </h2>
     <b-row style="margin-bottom:20px">
       <b-col>
@@ -86,20 +87,20 @@
           </b-collapse>
         </b-card>
       </div>
-
   </b-col>
   <b-col cols="5">
     <b-row align-h="start">
       <b-col cols="4"><h2>음식 목록</h2></b-col>
       <b-col>
-        <b-button v-b-toggle.regist-collapse>새 음식 등록하기</b-button>
+        <b-button style="margin-right:10px" v-b-toggle.regist-collapse>음식 등록하기</b-button>
+        <b-button v-b-toggle.search-collapse>검색</b-button>
       </b-col>
     </b-row>
         <b-collapse id="regist-collapse" style="margin-bottom : 10px">
           <b-card bg-variant="dark" text-variant="white" title="직접 입력하기">
             <b-card-text>
               <b-row>
-                <b-row>
+                <b-row style="margin-bottom:10px">
                 <b-col>음식 이름 <b-form-input v-model="foodName" ></b-form-input></b-col>
                 <b-col>제공량 <b-form-input v-model="servingSize"></b-form-input></b-col>
                 <b-col>칼로리 <b-form-input v-model="cal"></b-form-input></b-col>
@@ -112,6 +113,31 @@
               </b-row>
             </b-card-text>
             <b-button @click="setNewFood" variant="primary">등록</b-button>
+          </b-card>
+        </b-collapse>
+        <b-collapse id="search-collapse" style="margin-bottom : 10px">
+          <b-card bg-variant="dark" text-variant="white" title="음식 검색">
+            <b-card-text>
+                <b-row style="margin-bottom:10px">
+                  <b-col>음식 이름 
+                  <b-button @click="search" size="sm" variant="primary">검색</b-button>
+                  <b-form-input v-model="foodName" ></b-form-input>
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-list-group>
+                    <b-list-group-item variant="dark" v-for="(food,index) in searchedFoods" :key="index">
+                      <div>{{food.foodName}}</div>
+                      <b-row align-h="between">
+                        <b-col >칼로리 {{food.cal}}</b-col>
+                        <b-col >CARB {{food.carb}}</b-col>
+                        <b-col >PROTEIN {{food.protein}}</b-col>
+                        <b-col >FAT {{food.fat}}</b-col>
+                      </b-row>
+                    </b-list-group-item>
+                  </b-list-group>
+                </b-row>
+            </b-card-text>
           </b-card>
         </b-collapse>
     <b-row style="margin-bottom : 10px">
@@ -196,18 +222,16 @@ export default {
         responsive: true,
         maintainAspectRatio: false
       },
-      
-        foodName : '',
-        servingSize : '',
-        cal : '',
-        carb : '',
-        protein : '',
-        fat : ''
-      
+      foodName : '',
+      servingSize : '',
+      cal : '',
+      carb : '',
+      protein : '',
+      fat : ''
     }
   },
   computed: {
-    ...mapState(['totalCal', 'foodList', 'nutri', 'logonMember', 'eattenFoods', 'eatenCal']),
+    ...mapState(['totalCal', 'foodList', 'nutri', 'logonMember', 'eattenFoods', 'eatenCal', 'searchedFoods']),
     carbData() {
       return {
         labels: ['탄수화물(g)', '남은 양(g)'],
@@ -266,6 +290,12 @@ export default {
     },
     deleteFood(foodSeq){
       this.$store.dispatch("deleteFood",foodSeq)
+    },
+    resetCal(){
+      this.$store.dispatch("deleteCal",this.logonMember.memberSeq)
+    },
+    search() {
+      this.$store.dispatch("searchFood",this.foodName)
     }
   }
 }
@@ -273,8 +303,10 @@ export default {
 
 <style scoped>
 .card-columns {
+    column-count: 2;    
+}
 
-    column-count: 2;
-    
+#fooddiv{
+  height:250%;
 }
 </style>

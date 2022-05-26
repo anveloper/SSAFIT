@@ -11,6 +11,8 @@ import apiRecord from "@/api/record.js"
 import apiExcercise from "@/api/excercise.js"
 import apiFood from "@/api/food.js"
 import apiDiet from "@/api/diet.js"
+import apiSearch from "@/api/foodSearch.js"
+import food from '@/api/food.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -50,7 +52,9 @@ export default new Vuex.Store({
       carb:'',
       pro:'',
       fat:'',
-    },eattenFoods:[],
+    },
+    eattenFoods:[],
+    searchedFoods:[],
   },
   getters: {
     rootReply: state => {
@@ -170,6 +174,23 @@ export default new Vuex.Store({
       state.nutri.fat = +state.nutri.fat - +spitFood.fat
       state.eatenCal = +state.eatenCal - +spitFood.cal
       state.eattenFoods.splice(index,1)
+    },
+    SEARCHED_FOODS(state, payload){
+      state.searchedFoods.length=0
+      for(let food of payload) {
+        state.searchedFoods.push({
+          memberSeq : state.logonMember.memberSeq,
+          foodName : food.DESC_KOR,
+          servingSize : food.SERVING_SIZE,
+          cal : food.NUTR_CONT1,
+          carb : food.NUTR_CONT2,
+          protein : food.NUTR_CONT3,
+          fat : food.NUTR_CONT4
+        })
+        console.log(food)
+      }
+      console.log(food)
+      console.log(state.searchedFoods)
     }
   },
   actions: {
@@ -463,6 +484,23 @@ export default new Vuex.Store({
       }).catch((err)=>{
         console.log(err)
         alert("삭제실패!")
+      })
+    },
+    deleteCal({commit},memberSeq){
+      apiFood.deleteCal(memberSeq)
+      .then((res)=>{
+        console.log(res.data)
+        commit
+        this.dispatch("getCalorie",memberSeq)
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    searchFood({commit},key){
+      apiSearch.searchFood(key)
+      .then((res)=>{
+        console.log(res.data.I2790.row)
+        commit("SEARCHED_FOODS", res.data.I2790.row)
       })
     }
   },

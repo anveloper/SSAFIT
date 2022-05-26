@@ -11,7 +11,7 @@
     ></iframe>
     <span class="fixed-bottom d-flex justify-content-center">
       <!-- <img src="@/assets/scroll.gif" /> -->
-      <img id="scrimg" src="@/assets/scroll.svg" />
+      <img id="scrimg" src="@/assets/scroll.svg" @click="goMain()"/>
     </span>
   </div>
 </template>
@@ -22,8 +22,11 @@ export default {
   data() {
     return {};
   },
-  methods: {},
-  mounted() {},
+  methods: {
+    goMain(){
+      this.$emit("goMain")
+    }
+  },
 };
 </script>
 
@@ -34,6 +37,7 @@ export default {
 }
 #scrimg {
   width: 33vw;
+  z-index: 99;
   animation: watch 1s linear infinite both;
 }
 

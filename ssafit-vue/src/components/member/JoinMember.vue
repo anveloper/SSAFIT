@@ -124,8 +124,15 @@ export default {
       if (this.newMember.userId != "") {
         this.$store.dispatch("checkUserId", this.newMember.userId);
         this.imsg = "이미 사용중인 아이디입니다.";
+        if (!this.available.id) {
+          this.$refs.inId.focus();
+        }
       } else {
         this.imsg = "아이디를 입력해 주세요.";
+          this.$refs.inId.focus();
+      }
+      if (this.available.id && this.newMember.password == "") {
+        this.$refs.inPw.focus();
       }
     },
     inputPass() {
