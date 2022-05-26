@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafit.model.dto.Video;
 import com.ssafy.ssafit.model.service.VideoService;
+import com.ssafy.ssafit.util.JWTUtil;
 
 @RestController
 @RequestMapping("/video")
@@ -26,9 +29,13 @@ public class ApiVideoController {
 	private static final String SUCESS = "sucess";
 	private static final String FAIL = "fail";
 	private static final String HEADER_AUTH = "auth-token";
+	private static final String ADMIN = "admin";
 
 	@Autowired
 	private VideoService videoService;
+
+	@Autowired
+	private JWTUtil jwtUtil;
 
 	@GetMapping("")
 	public ResponseEntity<List<Video>> list() {
@@ -71,14 +78,18 @@ public class ApiVideoController {
 	}
 
 	@PutMapping("/{youtubeId}/{partCode}")
-	public ResponseEntity<List<Video>> updatePartCode(@PathVariable String youtubeId, @PathVariable String partCode) {
+	public ResponseEntity<List<Video>> updatePartCode(@PathVariable String youtubeId, @PathVariable String partCode,
+			HttpServletRequest req) {
 		HashMap<String, String> param = new HashMap<>();
 		HttpStatus status = null;
 		param.put("youtubeId", youtubeId);
 		param.put("partCode", partCode);
+		String token = req.getHeader(HEADER_AUTH);
 		try {
-			videoService.updatePartCode(param);
-			status = HttpStatus.OK;
+			if (jwtUtil.getTokenId(token).equals(ADMIN)) {
+				videoService.updatePartCode(param);
+				status = HttpStatus.OK;
+			}
 		} catch (Exception e) {
 			status = HttpStatus.CONFLICT;
 		}
