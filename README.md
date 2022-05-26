@@ -6,7 +6,8 @@
   - **Vue update**
     - 식품처 공공 데이터 API로 음식 영양요소 불러오기 기능 구현완료
   - **프로젝트 발표 준비** 
-    - ![df](https://docs.google.com/presentation/d/1ods_kxltORI4wiHDmyvK4bt8AO5wKEIXJrsFN2Vvy8g/edit?usp=sharing)
+    - https://docs.google.com/presentation/d/1ods_kxltORI4wiHDmyvK4bt8AO5wKEIXJrsFN2Vvy8g/edit?usp=sharing
+    - 공유문서 작성
 
 ---
 
