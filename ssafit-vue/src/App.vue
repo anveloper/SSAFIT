@@ -80,7 +80,7 @@ export default {
   background-size: 110%;
   background-attachment: fixed;
   background-position: bottom;
-  min-height:980px;
+  min-height: 980px;
   height: 100%;
 }
 

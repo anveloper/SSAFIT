@@ -87,7 +87,6 @@
           </b-collapse>
         </b-card>
       </div>
-
   </b-col>
   <b-col cols="5">
     <b-row align-h="start">
@@ -126,14 +125,19 @@
                   </b-col>
                 </b-row>
                 <b-row>
-                  <b-col>제공량 <b-form-input v-model="servingSize"></b-form-input></b-col>
-                  <b-col>칼로리 <b-form-input v-model="cal"></b-form-input></b-col>
-                  <b-col>탄수 <b-form-input v-model="carb"></b-form-input></b-col>
-                  <b-col>단백질 <b-form-input v-model="protein"></b-form-input></b-col>
-                  <b-col>지방 <b-form-input v-model="fat"></b-form-input></b-col>
+                  <b-list-group>
+                    <b-list-group-item variant="dark" v-for="(food,index) in searchedFoods" :key="index">
+                      <div>{{food.foodName}}</div>
+                      <b-row align-h="between">
+                        <b-col >칼로리 {{food.cal}}</b-col>
+                        <b-col >CARB {{food.carb}}</b-col>
+                        <b-col >PROTEIN {{food.protein}}</b-col>
+                        <b-col >FAT {{food.fat}}</b-col>
+                      </b-row>
+                    </b-list-group-item>
+                  </b-list-group>
                 </b-row>
             </b-card-text>
-            <b-button @click="setNewFood" variant="primary">등록</b-button>
           </b-card>
         </b-collapse>
     <b-row style="margin-bottom : 10px">
@@ -227,7 +231,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['totalCal', 'foodList', 'nutri', 'logonMember', 'eattenFoods', 'eatenCal']),
+    ...mapState(['totalCal', 'foodList', 'nutri', 'logonMember', 'eattenFoods', 'eatenCal', 'searchedFoods']),
     carbData() {
       return {
         labels: ['탄수화물(g)', '남은 양(g)'],
