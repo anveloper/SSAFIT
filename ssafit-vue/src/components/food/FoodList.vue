@@ -1,5 +1,5 @@
 <template>
-  <div style="height:200vh">
+  <div id="fooddiv">
     <h2>총 칼로리:  {{totalCal.cal}} 
       <Strong v-if="eatenCal"> 남은 칼로리: {{totalCal.cal - eatenCal}}   </Strong>
       <b-button @click="resetCal">칼로리 정보 재설정</b-button>
@@ -303,8 +303,10 @@ export default {
 
 <style scoped>
 .card-columns {
+    column-count: 2;    
+}
 
-    column-count: 2;
-    
+#fooddiv{
+  height:250%;
 }
 </style>

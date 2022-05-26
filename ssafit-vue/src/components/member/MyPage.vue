@@ -119,8 +119,15 @@ export default {
       this.passconfirm = "";
     },
     update() {
-      this.$store.dispatch("updateMember", this.logonMember);
-      this.modify();
+      if (this.logonMember.password == this.passconfirm && this.available.nick) {
+        this.$store.dispatch("updateMember", this.logonMember);
+        this.modify();
+      } else {
+        if (this.logonMember.password != this.passconfirm)
+          document.getElementById("input-pw").focus();
+        else if (!this.available.nick)
+          document.getElementById("input-nick").focus();
+      }
     },
     checkUserName() {
       if (this.logonMember.username != "") {
