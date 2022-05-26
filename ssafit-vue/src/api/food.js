@@ -6,5 +6,8 @@ export default{
   },
   setCal(calInfo){
     return axiosService.post(`/food`,calInfo)
+  },
+  deleteCal(memberSeq){
+    return axiosService.delete(`/food/${memberSeq}`)
   }
 }

@@ -11,6 +11,7 @@ import apiRecord from "@/api/record.js"
 import apiExcercise from "@/api/excercise.js"
 import apiFood from "@/api/food.js"
 import apiDiet from "@/api/diet.js"
+import apiSearch from "@/api/foodSearch.js"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -463,6 +464,23 @@ export default new Vuex.Store({
       }).catch((err)=>{
         console.log(err)
         alert("삭제실패!")
+      })
+    },
+    deleteCal({commit},memberSeq){
+      apiFood.deleteCal(memberSeq)
+      .then((res)=>{
+        console.log(res.data)
+        commit
+        this.dispatch("getCalorie",memberSeq)
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    searchFood({commit},key){
+      apiSearch.searchFood(key)
+      .then((res)=>{
+        console.log(res.data)
+        commit
       })
     }
   },
