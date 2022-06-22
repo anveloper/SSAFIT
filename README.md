@@ -2,8 +2,10 @@
 
 - **220526 작업내역**
   - **Spring update**
-    - 음식 컨트롤러 수정, token 사용하는 부분 수정(유저 정보수정, 영상 부위정보 수정)
   - **Vue update**
+    - 식단관리 음식 검색 탭 추가
+      - 영양성분 Open Api를 활용하여 음식 성분 검색 기능 추가
+    - 음식 컨트롤러 수정, token 사용하는 부분 수정(유저 정보수정, 영상 부위정보 수정)
     - 식품처 공공 데이터 API로 음식 영양요소 불러오기 기능 구현완료
   - **프로젝트 발표 준비** 
     - https://docs.google.com/presentation/d/1ods_kxltORI4wiHDmyvK4bt8AO5wKEIXJrsFN2Vvy8g/edit?usp=sharing
@@ -12,19 +14,21 @@
 ---
 
 - **220525 작업내역**
+
   - **Spring update**
     - 식단관리 컨트롤러 추가
       - 유저별 칼로리 데이터
     - 유저별 추가한 음식 DB 세팅 
+
   - **Vue update**
     - 식단관리 탭 추가
       - 개인 몸무게, 신장 대비 칼로리 계산기능 및 필요 영양소 제공
       - 음식을 추가하며 오늘 섭취한 영양성분 자동으로 계산
       - api 연동 예정
-    - Welcome page 구현
-      - 간단한 트랜지션 영상으로 웰컴페이지 구현, 
-      - 스크롤 이벤트를 감지하여 메인 서비스로 이동
-  
+      - Welcome page 구현
+        - 간단한 트랜지션 영상으로 웰컴페이지 구현, 
+        - 스크롤 이벤트를 감지하여 메인 서비스로 이동
+
 ---
 
 - **220524 작업내역**
@@ -81,7 +85,7 @@
           + "&part=snippet"
           + "&maxResults=10"
           + "&regionCode=KR&q=" 
-        ```   
+        ```
       - 가져온 영상은 조회수나 찜버튼은 없으나, 디테일로 이동 시 DB에 insert되고 이동하도록 구성함
       - 운동부위는 미분류에서 확인가능
     - ![image](https://user-images.githubusercontent.com/90117593/169698990-2698aca6-968f-4f19-a6c2-2f5664fc01df.png)
