@@ -2,10 +2,19 @@
 
 - **220526 작업내역**
   - **Spring update**
+<<<<<<< HEAD
     - 
   - **Vue update**
     - 식단관리 음식 검색 탭 추가
       - 영양성분 Open Api를 활용하여 음식 성분 검색 기능 추가
+=======
+    - 음식 컨트롤러 수정, token 사용하는 부분 수정(유저 정보수정, 영상 부위정보 수정)
+  - **Vue update**
+    - 식품처 공공 데이터 API로 음식 영양요소 불러오기 기능 구현완료
+  - **프로젝트 발표 준비** 
+    - https://docs.google.com/presentation/d/1ods_kxltORI4wiHDmyvK4bt8AO5wKEIXJrsFN2Vvy8g/edit?usp=sharing
+    - 공유문서 작성
+>>>>>>> master
 
 ---
 
